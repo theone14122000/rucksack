@@ -1,0 +1,80 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+
+  /* Brand Palette */
+  --brand-deep-brown: #3A2618;
+  --brand-espresso: #241811;
+  --brand-warm-brown: #604533;
+  --brand-sand: #B69B7C;
+  --brand-beige: #D8C5A9;
+  --brand-cream: #F4EFE6;
+  --brand-offwhite: #FAF8F3;
+  --brand-charcoal: #24211E;
+  --brand-taupe: #8D7A67;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--brand-offwhite);
+  color: var(--brand-charcoal);
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background-color: var(--brand-sand);
+  color: var(--brand-espresso);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--brand-cream);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--brand-sand);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--brand-warm-brown);
+}
+
+/* Subtle luxury grain overlay */
+.bg-grain {
+  background-image: radial-gradient(rgba(58, 38, 24, 0.05) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+.bg-grain-dark {
+  background-image: radial-gradient(rgba(216, 197, 169, 0.08) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+/* Typography Helpers */
+.font-editorial {
+  font-family: var(--font-serif);
+  letter-spacing: -0.015em;
+}
+
+/* Card & Button Transitions */
+.luxury-card {
+  background: var(--brand-offwhite);
+  border: 1px solid rgba(182, 155, 124, 0.25);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.luxury-card:hover {
+  border-color: var(--brand-sand);
+  box-shadow: 0 20px 40px -15px rgba(36, 24, 17, 0.12), 0 0 15px rgba(182, 155, 124, 0.15);
+  transform: translateY(-4px);
+}

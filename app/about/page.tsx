@@ -1,0 +1,207 @@
+import React from "react";
+import { Metadata } from "next";
+import {
+  Mountain,
+  MapPin,
+  Users,
+  Award,
+  Heart,
+  Shield,
+  Globe,
+  Compass,
+  ArrowRight,
+} from "lucide-react";
+import { Breadcrumbs } from "@/components/navigation/Breadcrumbs";
+import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "About Rucksack Adventures | Himalayan Travel Experts Since 2018",
+  description:
+    "Learn about Rucksack Adventures — a Shimla-based premium tour operator specialising in curated Himalayan journeys, domestic & international travel, and trekking expeditions across India.",
+};
+
+const stats = [
+  { icon: Award, value: "8+", label: "Years of Experience" },
+  { icon: Star, value: "4.6", label: "Google Rating" },
+  { icon: Users, value: "242+", label: "Verified Ratings" },
+  { icon: Globe, value: "50+", label: "Destinations Covered" },
+];
+
+const values = [
+  {
+    icon: Mountain,
+    title: "Mountain-First Philosophy",
+    description:
+      "Every itinerary is designed with deep respect for Himalayan ecosystems. We partner with local communities, eco-lodges, and follow Leave No Trace principles on every trek and journey.",
+  },
+  {
+    icon: Heart,
+    title: "Genuine Care",
+    description:
+      "Travel is personal. We listen first — to your pace, your interests, your comfort level — before crafting a single suggestion. Your journey should feel like yours, not a template.",
+  },
+  {
+    icon: Shield,
+    title: "Safety as a Standard",
+    description:
+      "Certified mountain guides, verified vehicles, real-time weather monitoring, and emergency protocols are non-negotiable on every Rucksack Adventures trip.",
+  },
+  {
+    icon: Compass,
+    title: "Local Expertise",
+    description:
+      "Rooted in Shimla, we know these mountains intimately. Our team comprises locals who have walked every trail, driven every mountain road, and tasted every regional cuisine.",
+  },
+];
+
+import { Star } from "lucide-react";
+
+export default function AboutPage() {
+  return (
+    <div className="pt-24 pb-20 bg-brand-offwhite">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Breadcrumbs items={[{ label: "About" }]} />
+
+        {/* Hero Section */}
+        <div className="py-12 border-b border-brand-sand/30 mb-16">
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-sand block mb-3">
+            Our Story
+          </span>
+          <h1 className="font-editorial text-4xl sm:text-6xl font-bold text-brand-deep tracking-tight mb-6 max-w-4xl">
+            Born in the Himalayas. Built for the Curious.
+          </h1>
+          <p className="text-base sm:text-lg text-brand-charcoal/80 max-w-3xl leading-relaxed">
+            Rucksack Adventures began in 2018 with a simple conviction: that the most
+            meaningful travel happens when you slow down, go deeper, and let the landscape
+            lead. Founded in Mehli, Shimla, we have grown from a local trekking outfit
+            into a full-service travel atelier covering India and select international
+            destinations.
+          </p>
+        </div>
+
+        {/* Stats */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
+          {stats.map((stat) => (
+            <div
+              key={stat.label}
+              className="bg-brand-cream/40 border border-brand-sand/30 rounded-sm p-6 text-center"
+            >
+              <stat.icon className="w-5 h-5 text-brand-sand mx-auto mb-3" />
+              <p className="font-editorial text-3xl font-bold text-brand-deep">
+                {stat.value}
+              </p>
+              <p className="text-xs text-brand-taupe mt-1 uppercase tracking-wider">
+                {stat.label}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* Philosophy */}
+        <div className="mb-20">
+          <div className="text-center mb-12">
+            <span className="text-xs font-semibold uppercase tracking-widest text-brand-sand">
+              What We Believe
+            </span>
+            <h2 className="font-editorial text-3xl sm:text-4xl font-bold text-brand-deep mt-2">
+              Travel Should Be Deliberate
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {values.map((val) => (
+              <div
+                key={val.title}
+                className="bg-brand-cream/30 border border-brand-sand/30 rounded-sm p-8 hover:border-brand-deep hover:shadow-luxury transition-all duration-300"
+              >
+                <val.icon className="w-8 h-8 text-brand-sand mb-4" />
+                <h3 className="font-editorial text-xl font-bold text-brand-deep mb-3">
+                  {val.title}
+                </h3>
+                <p className="text-sm text-brand-charcoal/80 leading-relaxed">
+                  {val.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* What We Do */}
+        <div className="mb-20 py-12 border-t border-brand-sand/30">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <span className="text-xs font-semibold uppercase tracking-widest text-brand-sand block mb-3">
+                What We Do
+              </span>
+              <h2 className="font-editorial text-3xl sm:text-4xl font-bold text-brand-deep mb-6">
+                End-to-End Travel, Perfected
+              </h2>
+              <div className="space-y-4 text-sm text-brand-charcoal/80 leading-relaxed">
+                <p>
+                  From the first conversation to the last mile of your journey, we handle
+                  every detail. Curated itineraries, verified accommodations, experienced
+                  guides, seamless transport, and round-the-hour support — all under one
+                  roof.
+                </p>
+                <p>
+                  We specialise in Himalayan treks, domestic holidays across India, and
+                  international getaways to Southeast Asia, Dubai, and beyond. Our taxi
+                  services cover Shimla, Manali, and the wider Himachal region, while our
+                  dedicated Amarnath Yatra packages have helped hundreds of pilgrims
+                  complete the sacred journey safely.
+                </p>
+                <p>
+                  Bus and railway booking assistance ensures that reaching your
+                  destination is as effortless as the journey itself.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-brand-cream/40 border border-brand-sand/40 rounded-sm p-8 space-y-4">
+              {[
+                "Curated Himalayan Treks",
+                "Domestic & International Packages",
+                "Premium Taxi & Cab Services",
+                "Amarnath Yatra Tours",
+                "Volvo & Bus Booking",
+                "Railway & Toy Train Booking",
+                "Custom Group & Corporate Travel",
+                "Honeymoon & Family Packages",
+              ].map((item) => (
+                <div key={item} className="flex items-center gap-3">
+                  <div className="w-1.5 h-1.5 rounded-full bg-brand-sand shrink-0" />
+                  <span className="text-sm text-brand-charcoal">{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* CTA */}
+        <div className="text-center py-12 border-t border-brand-sand/30">
+          <h2 className="font-editorial text-3xl font-bold text-brand-deep mb-4">
+            Ready to Begin?
+          </h2>
+          <p className="text-sm text-brand-taupe mb-8 max-w-lg mx-auto">
+            Tell us where you want to go. We will handle everything else.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-2 px-8 py-3 bg-brand-deep text-brand-offwhite text-xs font-semibold uppercase tracking-wider rounded-sm hover:bg-brand-warm transition-colors"
+            >
+              Plan Your Journey
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+            <Link
+              href="/destinations"
+              className="inline-flex items-center gap-2 px-8 py-3 border border-brand-sand/40 text-brand-deep text-xs font-semibold uppercase tracking-wider rounded-sm hover:bg-brand-cream transition-colors"
+            >
+              Explore Destinations
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
