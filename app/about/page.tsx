@@ -2,7 +2,6 @@ import React from "react";
 import { Metadata } from "next";
 import {
   Mountain,
-  MapPin,
   Users,
   Award,
   Heart,
@@ -10,6 +9,7 @@ import {
   Globe,
   Compass,
   ArrowRight,
+  Star,
 } from "lucide-react";
 import { Breadcrumbs } from "@/components/navigation/Breadcrumbs";
 import Link from "next/link";
@@ -53,8 +53,6 @@ const values = [
       "Rooted in Shimla, we know these mountains intimately. Our team comprises locals who have walked every trail, driven every mountain road, and tasted every regional cuisine.",
   },
 ];
-
-import { Star } from "lucide-react";
 
 export default function AboutPage() {
   return (
