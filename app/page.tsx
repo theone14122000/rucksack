@@ -231,7 +231,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* SECTION 09 — SPECIALIZED SERVICES SUMMARY (Taxi, Amarnath, Bus, Railway) */}
+      {/* SECTION 09 — SPECIALIZED SERVICES SUMMARY (Taxi, Pilgrimage, Bus, Railway) */}
       <section className="py-20 bg-brand-offwhite border-b border-brand-sand/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
@@ -242,7 +242,7 @@ export default async function HomePage() {
               Specialized Transport & Pilgrimage Desk
             </h2>
             <p className="text-sm sm:text-base text-brand-charcoal/80 leading-relaxed">
-              Operating our own private fleet and reservation desks from Mehli, Shimla to ensure uninterrupted mountain travel.
+              Operating our own private fleet and reservation desks from Kasumpti, Shimla to ensure uninterrupted mountain travel.
             </p>
           </div>
 
@@ -272,27 +272,27 @@ export default async function HomePage() {
               </div>
             </div>
 
-            {/* Service 2: Amarnath Yatra */}
+            {/* Service 2: Pilgrimage Tour */}
             <div className="bg-brand-cream/30 border border-brand-sand/30 rounded-sm p-7 flex flex-col justify-between hover:border-brand-deep transition-all duration-300">
               <div className="space-y-4">
                 <div className="w-12 h-12 rounded-sm bg-brand-deep text-brand-sand flex items-center justify-center">
                   <Mountain className="w-6 h-6 text-brand-sand" />
                 </div>
                 <h3 className="font-editorial text-2xl font-bold text-brand-deep">
-                  Amarnath Yatra Tours
+                  Pilgrimage Tour Packages
                 </h3>
                 <p className="text-xs sm:text-sm text-brand-charcoal/80 leading-relaxed">
-                  Comprehensive pilgrimage coordination including helicopter slots from Baltal and Pahalgam, compulsory health certificate guidance, and verified luxury camp lodgings.
+                  Comprehensive pilgrimage coordination including helicopter slots, compulsory health certificate guidance, and verified comfortable lodgings across Char Dham and temple circuits.
                 </p>
                 <ul className="text-xs text-brand-taupe space-y-1.5 pt-2">
                   <li>✓ Helicopter ticket pre-registration support</li>
-                  <li>✓ Private vehicle transfers from Srinagar</li>
+                  <li>✓ Private vehicle transfers from railhead / airport</li>
                   <li>✓ Dedicated medical guidelines & packing advisory</li>
                 </ul>
               </div>
               <div className="pt-6 mt-4 border-t border-brand-sand/20">
-                <Button variant="outline" size="sm" href="/amarnath-yatra" fullWidth>
-                  View Amarnath Tour Details →
+                <Button variant="outline" size="sm" href="/pilgrimage-tour" fullWidth>
+                  View Pilgrimage Tour Details →
                 </Button>
               </div>
             </div>
@@ -359,7 +359,7 @@ export default async function HomePage() {
               Begin Your Travel Story
             </h2>
             <p className="text-xs sm:text-sm text-brand-taupe max-w-md mx-auto">
-              Share your travel aspirations. Our planners in Mehli, Shimla craft each journey individually.
+              Share your travel aspirations. Our planners in Kasumpti, Shimla craft each journey individually.
             </p>
           </div>
 

@@ -32,7 +32,7 @@ export const HeroSection: React.FC = () => {
                 <Sparkles className="w-3.5 h-3.5 text-brand-sand" />
                 <span>Premier Himalayan Travel Operator</span>
                 <span className="text-brand-taupe">•</span>
-                <span className="text-brand-taupe font-normal">Mehli, Shimla</span>
+                <span className="text-brand-taupe font-normal">Kasumpti, Shimla</span>
               </div>
 
               {/* Editorial Display Heading */}

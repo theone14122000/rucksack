@@ -119,7 +119,7 @@ export const ImagePlaceholder: React.FC<ImagePlaceholderProps> = ({
           {label || "Rucksack Adventures"}
         </p>
         <span className="text-[11px] text-brand-taupe tracking-wider uppercase mt-0.5 flex items-center gap-1">
-          <MapPin className="w-3 h-3 text-brand-sand" /> Mehli, Shimla
+          <MapPin className="w-3 h-3 text-brand-sand" /> Kasumpti, Shimla
         </span>
       </div>
 

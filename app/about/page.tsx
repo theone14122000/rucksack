@@ -71,7 +71,7 @@ export default function AboutPage() {
           <p className="text-base sm:text-lg text-brand-charcoal/80 max-w-3xl leading-relaxed">
             Rucksack Adventures began in 2018 with a simple conviction: that the most
             meaningful travel happens when you slow down, go deeper, and let the landscape
-            lead. Founded in Mehli, Shimla, we have grown from a local trekking outfit
+            lead. Founded in Kasumpti, Shimla, we have grown from a local trekking outfit
             into a full-service travel atelier covering India and select international
             destinations.
           </p>
@@ -143,10 +143,10 @@ export default function AboutPage() {
                 </p>
                 <p>
                   We specialise in Himalayan treks, domestic holidays across India, and
-                  international getaways to Southeast Asia, Dubai, and beyond. Our taxi
+                  international getaways to Nepal, Bhutan, Southeast Asia, Dubai, and beyond. Our taxi
                   services cover Shimla, Manali, and the wider Himachal region, while our
-                  dedicated Amarnath Yatra packages have helped hundreds of pilgrims
-                  complete the sacred journey safely.
+                  dedicated Pilgrimage Tour packages have helped hundreds of pilgrims
+                  complete sacred journeys safely.
                 </p>
                 <p>
                   Bus and railway booking assistance ensures that reaching your
@@ -160,7 +160,7 @@ export default function AboutPage() {
                 "Curated Himalayan Treks",
                 "Domestic & International Packages",
                 "Premium Taxi & Cab Services",
-                "Amarnath Yatra Tours",
+                "Pilgrimage Tour Packages",
                 "Volvo & Bus Booking",
                 "Railway & Toy Train Booking",
                 "Custom Group & Corporate Travel",

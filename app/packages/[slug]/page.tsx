@@ -230,7 +230,7 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
                 </p>
                 <p className="flex items-center gap-2">
                   <MapPin className="w-4 h-4 text-brand-sand shrink-0" />
-                  Operated from Mehli, Shimla
+                  Operated from Kasumpti, Shimla
                 </p>
                 <p className="flex items-center gap-2">
                   <Calendar className="w-4 h-4 text-brand-sand shrink-0" />
@@ -246,7 +246,7 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
                   Reserve This Journey
                 </a>
                 <a
-                  href={`https://wa.me/919816034567?text=Hello%20Rucksack%20Adventures%2C%20I%20am%20interested%20in%20the%20${encodeURIComponent(
+                  href={`https://wa.me/917018678064?text=Hello%20Rucksack%20Adventures%2C%20I%20am%20interested%20in%20the%20${encodeURIComponent(
                     pkg.title
                   )}%20package`}
                   target="_blank"

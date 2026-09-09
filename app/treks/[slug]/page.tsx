@@ -262,7 +262,7 @@ export default async function TrekDetailPage({ params }: TrekPageProps) {
                   Book This Expedition
                 </a>
                 <a
-                  href={`https://wa.me/919816034567?text=Hello%20Rucksack%20Adventures%2C%20I%20am%20enquiring%20about%20the%20${encodeURIComponent(
+                  href={`https://wa.me/917018678064?text=Hello%20Rucksack%20Adventures%2C%20I%20am%20enquiring%20about%20the%20${encodeURIComponent(
                     trek.name
                   )}%20trek`}
                   target="_blank"

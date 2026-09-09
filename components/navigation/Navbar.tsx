@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, Phone, Compass, ChevronDown, Mountain } from "lucide-react";
+import { Menu, Phone, Compass, ChevronDown } from "lucide-react";
 import { Button } from "../ui/Button";
 import { MobileMenu } from "./MobileMenu";
 import { EnquiryModal } from "../ui/EnquiryModal";
@@ -39,7 +39,7 @@ export const Navbar: React.FC = () => {
 
   const services = [
     { href: "/taxi-services", title: "Shimla Taxi Services", desc: "Local & outstation cabs" },
-    { href: "/amarnath-yatra", title: "Amarnath Yatra", desc: "Helicopter & trekking tours" },
+    { href: "/pilgrimage-tour", title: "Pilgrimage Tour", desc: "Sacred Char Dham & temple circuits" },
     { href: "/bus-booking", title: "Volvo & Bus Booking", desc: "Himalayan highway routes" },
     { href: "/railway-booking", title: "Railway Booking", desc: "Toy train & IRCTC assistance" },
   ];
@@ -57,15 +57,19 @@ export const Navbar: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           {/* Brand Crest & Title */}
           <Link href="/" className="group flex items-center gap-3">
-            <div className="w-10 h-10 rounded-sm bg-brand-deep text-brand-sand flex items-center justify-center border border-brand-sand/40 transition-transform duration-500 group-hover:scale-105 shadow-xs">
-              <Mountain className="w-5 h-5 text-brand-sand" />
+            <div className="w-10 h-10 rounded-sm bg-white border border-brand-sand/40 overflow-hidden flex items-center justify-center transition-transform duration-500 group-hover:scale-105 shadow-xs">
+              <img
+                src="/images/logo.jpeg"
+                alt="Rucksack Adventures logo"
+                className="w-full h-full object-contain"
+              />
             </div>
             <div>
               <span className="font-editorial text-xl sm:text-2xl font-bold tracking-tight text-brand-deep leading-none block">
                 Rucksack Adventures
               </span>
               <span className="text-[9px] uppercase tracking-[0.2em] text-brand-taupe font-medium block mt-0.5">
-                Mehli, Shimla • Est. 2018
+                Shimla • Est. 2018
               </span>
             </div>
           </Link>
@@ -100,7 +104,7 @@ export const Navbar: React.FC = () => {
               <button
                 className={cn(
                   "flex items-center gap-1 transition-colors duration-200 py-1 hover:text-brand-deep",
-                  pathname.includes("services") || pathname.includes("booking") || pathname.includes("amarnath")
+                  pathname.includes("services") || pathname.includes("booking") || pathname.includes("pilgrimage")
                     ? "text-brand-deep font-semibold"
                     : "text-brand-charcoal/80"
                 )}
@@ -158,11 +162,11 @@ export const Navbar: React.FC = () => {
           {/* Desktop Right CTAs */}
           <div className="hidden lg:flex items-center gap-4">
             <a
-              href="tel:+919816034567"
+              href="tel:+917018678064"
               className="flex items-center gap-2 text-xs font-semibold text-brand-deep tracking-wider uppercase hover:text-brand-warm transition-colors py-1.5 px-3 rounded-sm border border-brand-sand/30"
             >
               <Phone className="w-3.5 h-3.5 text-brand-sand" />
-              +91 98160 34567
+              7018678064
             </a>
             <Button
               variant="primary"
@@ -177,7 +181,7 @@ export const Navbar: React.FC = () => {
           {/* Mobile Actions: Call Button & Hamburger */}
           <div className="flex items-center gap-2.5 lg:hidden">
             <a
-              href="tel:+919816034567"
+              href="tel:+917018678064"
               className="p-2 rounded-sm border border-brand-sand/40 text-brand-deep hover:bg-brand-cream transition-colors"
               aria-label="Call Rucksack Adventures"
             >

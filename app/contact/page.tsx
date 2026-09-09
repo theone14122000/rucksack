@@ -7,7 +7,7 @@ import { EnquiryForm } from "@/components/ui/EnquiryForm";
 export const metadata: Metadata = {
   title: "Contact Rucksack Adventures | Get in Touch",
   description:
-    "Reach out to Rucksack Adventures for travel enquiries, bookings, and custom itineraries. Located in Mehli, Shimla. Call, email, or WhatsApp us.",
+    "Reach out to Rucksack Adventures for travel enquiries, bookings, and custom itineraries. Located in Kasumpti, Shimla. Call, email, or WhatsApp us.",
 };
 
 export const revalidate = 0;
@@ -16,14 +16,14 @@ const contactMethods = [
   {
     icon: Phone,
     label: "Phone",
-    value: "+91 98765 43210",
-    href: "tel:+919876543210",
+    value: "7018678064",
+    href: "tel:+917018678064",
   },
   {
     icon: MessageCircle,
     label: "WhatsApp",
-    value: "+91 98765 43210",
-    href: "https://wa.me/919876543210",
+    value: "7018678064",
+    href: "https://wa.me/917018678064",
   },
   {
     icon: Mail,
@@ -34,8 +34,8 @@ const contactMethods = [
   {
     icon: MapPin,
     label: "Office",
-    value: "Near Mehli Chowk, Shimla, Himachal Pradesh — 171013",
-    href: "https://maps.google.com/?q=Mehli+Shimla+Himachal+Pradesh",
+    value: "Chotta Shimla to Kusumpti Rd, SDA Complex, Kasumpti, Shimla, Himachal Pradesh 171009",
+    href: "https://maps.google.com/?q=SDA+Complex+Kasumpti+Shimla+Himachal+Pradesh+171009",
   },
   {
     icon: Clock,

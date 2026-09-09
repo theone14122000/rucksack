@@ -11,10 +11,10 @@ export function getLocalBusinessSchema() {
     email: initialSiteSettings.email,
     address: {
       "@type": "PostalAddress",
-      streetAddress: "Near Mehli Chowk",
-      addressLocality: "Mehli, Shimla",
+      streetAddress: "Chotta Shimla to Kusumpti Rd, SDA Complex, Kasumpti",
+      addressLocality: "Shimla",
       addressRegion: "Himachal Pradesh",
-      postalCode: "171013",
+      postalCode: "171009",
       addressCountry: "IN",
     },
     geo: {

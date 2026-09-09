@@ -1,78 +1,67 @@
 import React from "react";
 import { Metadata } from "next";
-import {
-  Mountain,
-  Heart,
-  Shield,
-  Clock,
-  MapPin,
-  CheckCircle2,
-  AlertTriangle,
-} from "lucide-react";
+import { CheckCircle2, AlertTriangle } from "lucide-react";
 import { Breadcrumbs } from "@/components/navigation/Breadcrumbs";
 import { EnquiryForm } from "@/components/ui/EnquiryForm";
 
 export const metadata: Metadata = {
-  title: "Amarnath Yatra 2026 | Helicopter & Trekking Tours | Rucksack Adventures",
+  title: "Pilgrimage Tour Packages | Char Dham, Temples & Sacred Circuits",
   description:
-    "Book your Amarnath Yatra with Rucksack Adventures. Helicopter services, trekking routes via Baltal & Pahalgam, full medical support, and end-to-end arrangements from Srinagar.",
+    "Book your Pilgrimage Tour with Rucksack Adventures. Helicopter services, Char Dham circuits, temple tours, full medical support, and end-to-end arrangements from Kasumpti, Shimla.",
 };
 
-const routes = [
+const circuits = [
   {
-    name: "Baltal Route (Trek)",
-    duration: "1–2 Days",
-    distance: "14 km one way",
+    name: "Char Dham Circuit",
+    duration: "9–11 Days",
     difficulty: "Moderate to Challenging",
     description:
-      "The shortest trekking route to the Amarnath cave. Steep ascent through beautiful valley. Helicopter option available for the return journey.",
+      "The sacred Uttarakhand circuit of Yamunotri, Gangotri, Kedarnath, and Badrinath. Helicopter options available for Kedarnath. Complete registration, medical, and stay support included.",
   },
   {
-    name: "Pahalgam Route (Traditional)",
+    name: "Vaishno Devi & Kashmir Temples",
     duration: "3–4 Days",
-    distance: "36 km one way",
-    difficulty: "Challenging",
+    difficulty: "Easy to Moderate",
     description:
-      "The traditional and scenic pilgrimage route. Passes through Lidder Valley, Sheshnag Lake, and Panchtarni. Recommended for those who want the full spiritual experience.",
+      "Trek to the holy Vaishno Devi shrine at Katra with helicopter and ropeway options, combined with Srinagar temple heritage trails. Ideal for families and senior citizens.",
   },
   {
-    name: "Helicopter Service",
-    duration: "Same Day",
-    distance: "N/A",
+    name: "Monastic & Temple Trails",
+    duration: "5–7 Days",
     difficulty: "Easy",
     description:
-      "Fly from Baltal or Pahalgam helipad directly to the cave shrine. Ideal for elderly pilgrims and those with time constraints. Includes darshan assistance.",
+      "Buddhist monastic circuits across Ladakh and Spiti, Varanasi and Rishikesh Ganga Aarti experiences, and Himalayan temple towns — peaceful journeys with VIP access where available.",
   },
 ];
 
 const inclusions = [
-  "Srinagar airport/station pickup & drop",
-  "Hotel/camp accommodation at base camp",
-  "Yatra registration & permits",
+  "Nearest airport / station pickup & drop",
+  "Hotel / camp accommodation at base locations",
+  "Yatra registration & permits assistance",
   "Helicopter tickets (if applicable)",
   "Medical kit & first-aid support",
-  "Experienced trek guide & porters",
-  "All meals during the trek",
+  "Experienced tour escort & porters",
+  "All meals during the circuit",
   "Emergency communication equipment",
 ];
 
 const requirements = [
-  "Compulsory Yatra registration through official portal",
+  "Compulsory yatra registration through official portals where applicable",
   "Valid government-issued photo ID",
-  "Medical fitness certificate (required for all routes)",
+  "Medical fitness certificate (required for high-altitude circuits)",
   "Travel insurance recommended",
   "Warm clothing layers, trekking shoes, rain gear",
-  "Minimum age: 13 years (with medical certificate)",
+  "Minimum age as per respective shrine board guidelines",
 ];
 
-export default function AmarnathYatraPage() {
+export default function PilgrimageTourPage() {
   return (
     <div className="pt-24 pb-20 bg-brand-offwhite">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Breadcrumbs
           items={[
             { label: "Services", href: "#" },
-            { label: "Amarnath Yatra" },
+            { label: "Pilgrimage Tour" },
           ]}
         />
 
@@ -81,10 +70,10 @@ export default function AmarnathYatraPage() {
             Sacred Journey
           </span>
           <h1 className="font-editorial text-4xl sm:text-6xl font-bold text-brand-deep tracking-tight mb-4">
-            Amarnath Yatra 2026
+            Pilgrimage Tour Packages
           </h1>
           <p className="text-sm sm:text-base text-brand-charcoal/80 max-w-3xl leading-relaxed">
-            Undertake one of India&apos;s most revered pilgrimages with the assurance of
+            Undertake India&apos;s most revered sacred journeys with the assurance of
             safety, comfort, and expert guidance. We handle registration, transport,
             accommodation, medical support, and every logistical detail — so you can
             focus entirely on the spiritual experience.
@@ -99,49 +88,45 @@ export default function AmarnathYatraPage() {
               Important: Registration Required
             </p>
             <p className="text-xs text-brand-charcoal/80 leading-relaxed">
-              All pilgrims must register through the official Shri Amarnathji Shrine Board (SASB)
-              portal before undertaking the yatra. We assist with the complete registration process
+              Most major pilgrimages require registration through official shrine board
+              portals before undertaking the journey. We assist with the complete registration process
               and ensure all documentation is in order.
             </p>
           </div>
         </div>
 
-        {/* Routes */}
+        {/* Circuits */}
         <div className="mb-20">
           <div className="text-center mb-10">
             <span className="text-xs font-semibold uppercase tracking-widest text-brand-sand">
               Choose Your Path
             </span>
             <h2 className="font-editorial text-3xl sm:text-4xl font-bold text-brand-deep mt-2">
-              Three Ways to the Cave
+              Sacred Circuits We Operate
             </h2>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {routes.map((route) => (
+            {circuits.map((circuit) => (
               <div
-                key={route.name}
+                key={circuit.name}
                 className="bg-brand-cream/30 border border-brand-sand/30 rounded-sm p-7 hover:border-brand-deep hover:shadow-luxury transition-all duration-300"
               >
                 <h3 className="font-editorial text-xl font-bold text-brand-deep mb-3">
-                  {route.name}
+                  {circuit.name}
                 </h3>
                 <div className="grid grid-cols-2 gap-3 mb-4">
                   <div>
                     <p className="text-[10px] uppercase tracking-widest text-brand-taupe">Duration</p>
-                    <p className="text-xs font-semibold text-brand-deep">{route.duration}</p>
-                  </div>
-                  <div>
-                    <p className="text-[10px] uppercase tracking-widest text-brand-taupe">Distance</p>
-                    <p className="text-xs font-semibold text-brand-deep">{route.distance}</p>
+                    <p className="text-xs font-semibold text-brand-deep">{circuit.duration}</p>
                   </div>
                   <div>
                     <p className="text-[10px] uppercase tracking-widest text-brand-taupe">Difficulty</p>
-                    <p className="text-xs font-semibold text-brand-deep">{route.difficulty}</p>
+                    <p className="text-xs font-semibold text-brand-deep">{circuit.difficulty}</p>
                   </div>
                 </div>
                 <p className="text-xs text-brand-charcoal/80 leading-relaxed">
-                  {route.description}
+                  {circuit.description}
                 </p>
               </div>
             ))}
@@ -190,7 +175,7 @@ export default function AmarnathYatraPage() {
             </h2>
           </div>
           <div className="bg-brand-cream/40 border border-brand-sand/40 p-6 sm:p-10 rounded-sm shadow-luxury">
-            <EnquiryForm defaultTravelType="Amarnath" />
+            <EnquiryForm defaultTravelType="Pilgrimage" />
           </div>
         </div>
       </div>

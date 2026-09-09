@@ -1,5 +1,5 @@
 import React from "react";
-import { Star, ShieldCheck, MapPin, Compass, Award } from "lucide-react";
+import { Star, ShieldCheck, MapPin, Compass, Award, Headset } from "lucide-react";
 
 export const TrustStrip: React.FC = () => {
   const stats = [
@@ -7,7 +7,7 @@ export const TrustStrip: React.FC = () => {
       icon: <Award className="w-5 h-5 text-brand-sand" />,
       number: "8+ Years",
       label: "Of Mountain Heritage",
-      caption: "Operating from Mehli, Shimla since 2018",
+      caption: "Operating from Kasumpti, Shimla since 2018",
     },
     {
       icon: <Star className="w-5 h-5 text-brand-sand fill-brand-sand/30" />,
@@ -27,12 +27,18 @@ export const TrustStrip: React.FC = () => {
       label: "Himachal Chauffeurs & Guides",
       caption: "Vetted mountain-route specialists",
     },
+    {
+      icon: <Headset className="w-5 h-5 text-brand-sand" />,
+      number: "24/7",
+      label: "Service",
+      caption: "Always-on travel concierge",
+    },
   ];
 
   return (
     <section className="bg-brand-cream/40 border-y border-brand-sand/30 py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 divide-y sm:divide-y-0 sm:divide-x divide-brand-sand/20">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-10 divide-y sm:divide-y-0 sm:divide-x divide-brand-sand/20">
           {stats.map((stat, idx) => (
             <div
               key={idx}

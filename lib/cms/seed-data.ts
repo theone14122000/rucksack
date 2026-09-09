@@ -3,11 +3,11 @@ import { Destination, Package, Trek, Experience, Testimonial, FAQ, SiteSettings 
 export const initialSiteSettings: SiteSettings = {
   brandName: "Rucksack Adventures",
   tagline: "Curated Journeys Across the Himalayas and Beyond",
-  location: "Mehli, Shimla, Himachal Pradesh, India",
-  address: "Near Mehli Chowk, Mehli, Shimla, Himachal Pradesh 171013, India",
-  phone: "+91 98160 34567",
-  alternatePhone: "+91 94180 89123",
-  whatsapp: "+91 98160 34567",
+  location: "Kasumpti, Shimla, Himachal Pradesh, India",
+  address: "Chotta Shimla to Kusumpti Rd, SDA Complex, Kasumpti, Shimla, Himachal Pradesh 171009",
+  phone: "7018678064",
+  alternatePhone: "7018678064",
+  whatsapp: "7018678064",
   email: "curate@rucksackadventures.com",
   experienceYears: "8+",
   rating: 4.6,
@@ -20,7 +20,7 @@ export const initialSiteSettings: SiteSettings = {
   },
   seoDefaults: {
     title: "Rucksack Adventures | Premium Travel Agency in Shimla, Himachal Pradesh",
-    description: "Explore curated Himalayan journeys, custom tour packages, trekking expeditions, Amarnath Yatra, and trusted taxi services from Mehli, Shimla with 8+ years of expertise.",
+    description: "Explore curated Himalayan journeys, custom tour packages, trekking expeditions, Pilgrimage Tour packages, Nepal and Bhutan holidays, and trusted taxi services from Kasumpti, Shimla with 8+ years of expertise.",
     keywords: [
       "travel agency in Shimla",
       "Himachal tour packages",
@@ -28,7 +28,9 @@ export const initialSiteSettings: SiteSettings = {
       "Leh Ladakh tour packages",
       "Himalayan trekking expeditions",
       "Shimla taxi service",
-      "Amarnath Yatra tour",
+      "Pilgrimage Tour packages",
+      "Nepal tour packages",
+      "Bhutan tour packages",
       "Rucksack Adventures",
     ],
   },
@@ -191,6 +193,36 @@ export const initialDestinations: Destination[] = [
     seoDescription: "Curated Malaysia holiday packages. Island leisure, city breaks, and seamless transit.",
   },
   {
+    id: "dest-nepal",
+    name: "Nepal",
+    slug: "nepal",
+    region: "Central Himalayas",
+    isDomestic: false,
+    shortDescription: "Prayer-flagged stupas of Kathmandu, sunrise over Annapurna from Pokhara, and jungle safaris in Chitwan.",
+    fullDescription: "Nepal blends living heritage with towering Himalayan panoramas. Wander the medieval durbar squares of Kathmandu Valley, watch dawn break over the Annapurna range from Sarangkot, glide across Phewa Lake in Pokhara, and track one-horned rhinos through Chitwan's tall grasslands — all with seamless cross-border assistance from India.",
+    bestTimeToVisit: "October to December & March to May",
+    highlights: ["Kathmandu Durbar Square & Boudhanath Stupa", "Pokhara Phewa Lake & Sarangkot Sunrise", "Chitwan Jungle Safari & One-Horned Rhinos", "Bhaktapur Medieval Heritage Walk", "Nagarkot Everest Panorama"],
+    packagesCount: 3,
+    featured: true,
+    seoTitle: "Nepal Tour Packages from India | Kathmandu, Pokhara & Chitwan",
+    seoDescription: "Curated Nepal holidays with Rucksack Adventures. Kathmandu heritage, Pokhara lakeside retreats, and Chitwan safaris with complete travel assistance.",
+  },
+  {
+    id: "dest-bhutan",
+    name: "Bhutan",
+    slug: "bhutan",
+    region: "Eastern Himalayas",
+    isDomestic: false,
+    shortDescription: "Tiger's Nest clinging to cliffs, fortress dzongs of Paro and Thimphu, and the world's happiest mountain kingdom.",
+    fullDescription: "The last Himalayan kingdom rewards the mindful traveler. Hike to the iconic Taktsang (Tiger's Nest) Monastery, explore the grand dzongs of Paro and Punakha, cross the Dochula Pass with its 108 memorial chortens, and experience Bhutan's philosophy of Gross National Happiness through farmhouse stays and traditional hot stone baths.",
+    bestTimeToVisit: "March to May & September to November",
+    highlights: ["Taktsang Tiger's Nest Monastery Hike", "Paro & Punakha Dzong Heritage Tours", "Dochula Pass 108 Chortens Panorama", "Thimphu Buddha Dordenma & Weekend Market", "Traditional Hot Stone Bath & Farmhouse Stay"],
+    packagesCount: 3,
+    featured: true,
+    seoTitle: "Bhutan Tour Packages from India | Paro, Thimphu & Tiger's Nest",
+    seoDescription: "Handcrafted Bhutan journeys with Rucksack Adventures. Tiger's Nest hike, heritage dzongs, and authentic cultural immersion with permit assistance.",
+  },
+  {
     id: "dest-andaman",
     name: "Andaman & Nicobar",
     slug: "andaman-nicobar",
@@ -236,7 +268,7 @@ export const initialPackages: Package[] = [
       "Daily breakfast and artisanal Himalayan dinners",
       "All inner line permits, environmental fees, and green tax",
       "High-altitude first aid kit and emergency portable oxygen canister",
-      "Local Himalayan trip coordinator from Mehli, Shimla office"
+      "Local Himalayan trip coordinator from Kasumpti, Shimla office"
     ],
     exclusions: [
       "Airfare / Train tickets to and from Chandigarh or Shimla",
@@ -613,7 +645,7 @@ export const initialExperiences: Experience[] = [
     category: "Luxury",
     shortDescription: "Five-star heritage palaces, premier boutique eco-lodges, private helicopter transfers, and dedicated concierge.",
     fullDescription: "For the discerning traveler who values privacy, exceptional architecture, and bespoke culinary mastery. We partner with the finest heritage properties across India and abroad.",
-    highlights: ["Wildflower Hall & Oberoi Shimla Stays", "Private Helicopter Transfers to Kedarnath & Amarnath", "Boutique Tea Estate Bungalows in Darjeeling", "Personal 24/7 Travel Concierge"],
+    highlights: ["Wildflower Hall & Oberoi Shimla Stays", "Private Helicopter Transfers for Pilgrimage Circuits", "Boutique Tea Estate Bungalows in Darjeeling", "Personal 24/7 Travel Concierge"],
     featured: true,
   },
   {
@@ -621,9 +653,9 @@ export const initialExperiences: Experience[] = [
     name: "Sacred Spiritual Pilgrimages",
     slug: "spiritual-journeys",
     category: "Spiritual",
-    shortDescription: "Mindfully planned pilgrimages to Amarnath Yatra, Char Dham, Vaishno Devi, and sacred monastic circuits.",
+    shortDescription: "Mindfully planned Pilgrimage Tour circuits to Char Dham, Vaishno Devi, and sacred monastic trails.",
     fullDescription: "Pilgrimages should be seamless, peaceful, and spiritually uplifting. Rucksack Adventures handles all mandatory registrations, medical advisories, VIP passes, helicopter bookings, and comfortable lodgings.",
-    highlights: ["Amarnath Yatra by Helicopter & Trek", "Uttarakhand Char Dham Yatra (Kedarnath, Badrinath, Gangotri, Yamunotri)", "Buddhist Monastic Circuits in Ladakh & Spiti", "Varanasi & Rishikesh Ganga Aarti VIP Access"],
+    highlights: ["Pilgrimage Tour by Helicopter & Trek", "Uttarakhand Char Dham Yatra (Kedarnath, Badrinath, Gangotri, Yamunotri)", "Buddhist Monastic Circuits in Ladakh & Spiti", "Varanasi & Rishikesh Ganga Aarti VIP Access"],
     featured: true,
   },
   {
@@ -651,10 +683,10 @@ export const initialTestimonials: Testimonial[] = [
   {
     id: "test-2",
     customerName: "Dr. Arvind Swaminathan",
-    review: "We booked our Amarnath Yatra package with Rucksack Adventures from Mehli, Shimla. The helicopter slots from Baltal, the medical paperwork guidance, and the stay arrangements in Sonamarg were handled with extraordinary diligence. Highly trustworthy team.",
+    review: "We booked our Pilgrimage Tour package with Rucksack Adventures from Kasumpti, Shimla. The helicopter slots for Kedarnath, the medical paperwork guidance, and the stay arrangements en route were handled with extraordinary diligence. Highly trustworthy team.",
     rating: 5,
     date: "July 2025",
-    destination: "Amarnath Yatra",
+    destination: "Pilgrimage Tour",
     tripType: "Pilgrimage"
   },
   {
@@ -681,7 +713,7 @@ export const initialFAQs: FAQ[] = [
   {
     id: "faq-1",
     question: "Where is Rucksack Adventures located?",
-    answer: "Our physical operations center and office is based at Mehli Chowk, Mehli, Shimla, Himachal Pradesh (PIN 171013). We welcome travelers to visit us or reach out via WhatsApp and phone.",
+    answer: "Our physical operations center and office is based at Chotta Shimla to Kusumpti Rd, SDA Complex, Kasumpti, Shimla, Himachal Pradesh 171009. We welcome travelers to visit us or reach out via WhatsApp and phone.",
     category: "general"
   },
   {
@@ -710,8 +742,8 @@ export const initialFAQs: FAQ[] = [
   },
   {
     id: "faq-6",
-    question: "How do you assist with the Amarnath Yatra?",
-    answer: "We manage complete Amarnath Yatra packages including helicopter ticket booking (Pahalgam or Baltal), compulsory health certificate guidance, verified hotel and luxury tent bookings, and ground taxi transfers from Srinagar or Jammu.",
+    question: "How do you assist with the Pilgrimage Tour?",
+    answer: "We manage complete Pilgrimage Tour packages including helicopter ticket booking, compulsory health certificate guidance, verified hotel and luxury tent bookings, and ground taxi transfers from the nearest railhead or airport.",
     category: "booking"
   }
 ];

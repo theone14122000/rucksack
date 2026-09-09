@@ -128,9 +128,9 @@ export default function TermsPage() {
             </p>
             <p className="mt-2">
               <strong className="text-brand-deep">Rucksack Adventures</strong><br />
-              Near Mehli Chowk, Shimla, Himachal Pradesh — 171013<br />
+              Chotta Shimla to Kusumpti Rd, SDA Complex, Kasumpti, Shimla, Himachal Pradesh 171009<br />
               Email: info@rucksackadventures.com<br />
-              Phone: +91 98765 43210
+              Phone: 7018678064
             </p>
           </section>
         </div>

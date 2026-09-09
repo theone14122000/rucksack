@@ -112,7 +112,7 @@ export const DomesticInternationalSplit: React.FC = () => {
               </h3>
 
               <p className="text-xs sm:text-sm text-brand-charcoal/80 leading-relaxed mb-6">
-                Tailored international escapes to Bali, Dubai, Thailand, Singapore, and Malaysia with boutique villas, verified chauffeurs, and visa coordination.
+                Tailored international escapes to Bali, Dubai, Thailand, Singapore, Malaysia, Nepal, and Bhutan with boutique villas, verified chauffeurs, and visa coordination.
               </p>
 
               {/* Visual Placeholder */}
@@ -120,7 +120,7 @@ export const DomesticInternationalSplit: React.FC = () => {
                 <ImagePlaceholder
                   aspectRatio="16:9"
                   category="Global Escapes"
-                  label="Bali, Dubai & Thailand"
+                  label="Bali, Dubai & Himalayas"
                 />
               </div>
 
@@ -140,6 +140,12 @@ export const DomesticInternationalSplit: React.FC = () => {
                 </span>
                 <span className="flex items-center gap-1.5">
                   <CheckCircle2 className="w-3.5 h-3.5 text-brand-sand" /> Malaysia Rainforests
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-brand-sand" /> Nepal Himalayan Heritage
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-brand-sand" /> Bhutan Tiger&apos;s Nest Trails
                 </span>
                 <span className="flex items-center gap-1.5">
                   <CheckCircle2 className="w-3.5 h-3.5 text-brand-sand" /> Guaranteed Visa Assistance

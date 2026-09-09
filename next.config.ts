@@ -3,6 +3,15 @@ import path from "path";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  async redirects() {
+    return [
+      {
+        source: "/amarnath-yatra",
+        destination: "/pilgrimage-tour",
+        permanent: true,
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {

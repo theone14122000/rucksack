@@ -7,7 +7,7 @@ import { getPackages } from "@/lib/cms/store";
 export const metadata: Metadata = {
   title: "Tour Packages | Handcrafted Journeys Across India & Beyond",
   description:
-    "Discover handcrafted tour packages for Spiti Valley, Kashmir, Leh Ladakh, Bali, and Dubai curated by Rucksack Adventures in Mehli, Shimla.",
+    "Discover handcrafted tour packages for Spiti Valley, Kashmir, Leh Ladakh, Bali, and Dubai curated by Rucksack Adventures in Kasumpti, Shimla.",
 };
 
 export const revalidate = 0;

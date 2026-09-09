@@ -6,7 +6,7 @@ import { Button } from "./Button";
 
 interface EnquiryFormProps {
   defaultDestination?: string;
-  defaultTravelType?: "Domestic" | "International" | "Trek" | "Taxi" | "Amarnath" | "Other";
+  defaultTravelType?: "Domestic" | "International" | "Trek" | "Taxi" | "Pilgrimage" | "Other";
   onSuccess?: () => void;
   className?: string;
 }
@@ -67,7 +67,7 @@ export const EnquiryForm: React.FC<EnquiryFormProps> = ({
 • Dates: ${formData.travelDate || "Upcoming"}
 • Name: ${formData.name || "Traveler"}`
     );
-    window.open(`https://wa.me/919816034567?text=${text}`, "_blank");
+    window.open(`https://wa.me/917018678064?text=${text}`, "_blank");
   };
 
   if (submitted) {
@@ -78,7 +78,7 @@ export const EnquiryForm: React.FC<EnquiryFormProps> = ({
           Enquiry Received with Gratitude
         </h3>
         <p className="text-sm text-brand-charcoal/80 mb-6 max-w-md mx-auto leading-relaxed">
-          Our senior trip curator from our Mehli, Shimla operations center will contact you within 4 hours with a customized itinerary plan.
+          Our senior trip curator from our Kasumpti, Shimla operations center will contact you within 4 hours with a customized itinerary plan.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
           <Button
@@ -143,7 +143,7 @@ export const EnquiryForm: React.FC<EnquiryFormProps> = ({
           <input
             type="tel"
             required
-            placeholder="+91 98160 00000"
+            placeholder="e.g. 7018678064"
             value={formData.phone}
             onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
             className="w-full bg-brand-offwhite border border-brand-sand/40 rounded-sm px-3.5 py-2.5 text-sm text-brand-charcoal focus:border-brand-deep focus:ring-1 focus:ring-brand-deep outline-hidden transition-all"
@@ -179,7 +179,7 @@ export const EnquiryForm: React.FC<EnquiryFormProps> = ({
             <option value="International">International Escape</option>
             <option value="Trek">Himalayan Trekking Expedition</option>
             <option value="Taxi">Shimla / Himachal Taxi Service</option>
-            <option value="Amarnath">Amarnath Yatra</option>
+            <option value="Pilgrimage">Pilgrimage Tour</option>
             <option value="Other">Bus / Railway / Custom</option>
           </select>
         </div>

@@ -147,7 +147,7 @@ export default async function DestinationDetailPage({ params }: DestinationPageP
                     Operating Desk
                   </span>
                   <p className="text-xs text-brand-charcoal/85">
-                    Mehli Operations Center, Shimla. All packages customized directly by local destination heads.
+                    Kasumpti Operations Center, Shimla. All packages customized directly by local destination heads.
                   </p>
                 </div>
 

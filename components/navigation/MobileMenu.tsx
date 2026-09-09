@@ -19,7 +19,7 @@ const navLinks = [
   { href: "/treks", label: "Himalayan Treks" },
   { href: "/experiences", label: "Curated Experiences" },
   { href: "/taxi-services", label: "Shimla Taxi Services" },
-  { href: "/amarnath-yatra", label: "Amarnath Yatra" },
+  { href: "/pilgrimage-tour", label: "Pilgrimage Tour" },
   { href: "/bus-booking", label: "Bus Booking" },
   { href: "/railway-booking", label: "Railway Booking" },
   { href: "/about", label: "About Our Story" },
@@ -43,13 +43,22 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
         >
           {/* Top Bar */}
           <div className="p-6 flex items-center justify-between border-b border-brand-sand/20">
-            <div>
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-sm bg-white overflow-hidden flex items-center justify-center shrink-0">
+                <img
+                  src="/images/logo.jpeg"
+                  alt="Rucksack Adventures logo"
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <div>
               <span className="font-editorial text-2xl font-bold tracking-tight text-brand-offwhite">
                 Rucksack Adventures
               </span>
               <p className="text-[10px] uppercase tracking-widest text-brand-sand font-medium">
-                Mehli, Shimla • Est. 2018
+                Shimla • Est. 2018
               </p>
+              </div>
             </div>
             <button
               onClick={onClose}
@@ -98,13 +107,13 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
 
             <div className="grid grid-cols-2 gap-2">
               <a
-                href="tel:+919816034567"
+                href="tel:+917018678064"
                 className="flex items-center justify-center gap-1.5 py-2.5 text-xs text-brand-cream border border-brand-sand/30 rounded-sm hover:bg-brand-espresso/60 transition-colors"
               >
                 <Phone className="w-3.5 h-3.5 text-brand-sand" /> Call Office
               </a>
               <a
-                href="https://wa.me/919816034567"
+                href="https://wa.me/917018678064"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-1.5 py-2.5 text-xs text-brand-cream bg-[#25D366]/20 border border-[#25D366]/40 rounded-sm hover:bg-[#25D366]/30 transition-colors"
@@ -116,7 +125,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
             <div className="pt-2 text-[11px] text-brand-taupe space-y-1">
               <p className="flex items-center gap-1.5">
                 <MapPin className="w-3.5 h-3.5 text-brand-sand shrink-0" />
-                Near Mehli Chowk, Shimla, Himachal Pradesh 171013
+                Chotta Shimla to Kusumpti Rd, SDA Complex, Kasumpti, Shimla 171009
               </p>
               <p className="flex items-center gap-1.5">
                 <Mail className="w-3.5 h-3.5 text-brand-sand shrink-0" />

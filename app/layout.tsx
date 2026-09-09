@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     template: "%s | Rucksack Adventures",
   },
   description:
-    "Curated Himalayan journeys, high altitude trekking expeditions, custom domestic & international tour packages, Amarnath Yatra, and trusted taxi services based in Mehli, Shimla.",
+    "Curated Himalayan journeys, high altitude trekking expeditions, custom domestic & international tour packages, Pilgrimage Tour packages, and trusted taxi services based in Kasumpti, Shimla.",
   keywords: [
     "travel agency in Shimla",
     "Himachal tour packages",
@@ -24,7 +24,9 @@ export const metadata: Metadata = {
     "Chopta Chandrashila Trek",
     "Bhaba Pass Trek",
     "Triund Trek",
-    "Amarnath Yatra",
+    "Pilgrimage Tour packages",
+    "Nepal tour packages",
+    "Bhutan tour packages",
     "Shimla taxi service",
     "Rucksack Adventures",
   ],
@@ -37,16 +39,19 @@ export const metadata: Metadata = {
     siteName: "Rucksack Adventures",
     title: "Rucksack Adventures | Premium Travel Agency in Shimla",
     description:
-      "Explore curated Himalayan journeys, custom tour packages, trekking expeditions, and reliable taxi services from Mehli, Shimla with 8+ years of expertise.",
+      "Explore curated Himalayan journeys, custom tour packages, trekking expeditions, and reliable taxi services from Kasumpti, Shimla with 8+ years of expertise.",
   },
   twitter: {
     card: "summary_large_image",
     title: "Rucksack Adventures | Curated Himalayan Journeys",
-    description: "Premium travel company based in Mehli, Shimla, Himachal Pradesh.",
+    description: "Premium travel company based in Kasumpti, Shimla, Himachal Pradesh.",
   },
   robots: {
     index: true,
     follow: true,
+  },
+  icons: {
+    icon: "/images/logo.jpeg",
   },
 };
 

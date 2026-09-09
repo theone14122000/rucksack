@@ -108,7 +108,7 @@ export interface Enquiry {
   phone: string;
   email: string;
   destination: string;
-  travelType: "Domestic" | "International" | "Trek" | "Taxi" | "Amarnath" | "Other";
+  travelType: "Domestic" | "International" | "Trek" | "Taxi" | "Pilgrimage" | "Other";
   travelDate: string;
   travellersCount: string;
   budget?: string;

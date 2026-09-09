@@ -9,7 +9,7 @@ interface EnquiryModalProps {
   isOpen: boolean;
   onClose: () => void;
   defaultDestination?: string;
-  defaultTravelType?: "Domestic" | "International" | "Trek" | "Taxi" | "Amarnath" | "Other";
+  defaultTravelType?: "Domestic" | "International" | "Trek" | "Taxi" | "Pilgrimage" | "Other";
   title?: string;
   subtitle?: string;
 }
@@ -20,7 +20,7 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({
   defaultDestination = "",
   defaultTravelType = "Domestic",
   title = "Plan Your Curated Journey",
-  subtitle = "Directly designed by our mountain specialists in Mehli, Shimla",
+  subtitle = "Directly designed by our mountain specialists in Kasumpti, Shimla",
 }) => {
   return (
     <AnimatePresence>
