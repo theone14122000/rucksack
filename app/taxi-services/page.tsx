@@ -52,7 +52,7 @@ const features = [
 
 export default function TaxiServicesPage() {
   return (
-    <div className="pt-24 pb-20 bg-brand-offwhite">
+    <div className="pt-24 pb-20 bg-brand-cream">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Breadcrumbs
           items={[
@@ -61,11 +61,11 @@ export default function TaxiServicesPage() {
           ]}
         />
 
-        <div className="py-12 border-b border-brand-sand/30 mb-16">
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-sand block mb-2">
+        <div className="py-12 border-b border-brand-brown/30 mb-16">
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-brown block mb-2">
             Transport
           </span>
-          <h1 className="font-editorial text-4xl sm:text-6xl font-bold text-brand-deep tracking-tight mb-4">
+          <h1 className="font-editorial text-4xl sm:text-6xl font-bold text-brand-black tracking-tight mb-4">
             Shimla Taxi & Cab Services
           </h1>
           <p className="text-sm sm:text-base text-brand-charcoal/80 max-w-3xl leading-relaxed">
@@ -80,10 +80,10 @@ export default function TaxiServicesPage() {
           {features.map((feat) => (
             <div
               key={feat.title}
-              className="bg-brand-cream/30 border border-brand-sand/30 rounded-sm p-6 hover:border-brand-deep hover:shadow-luxury transition-all duration-300"
+              className="bg-brand-cream/30 border border-brand-brown/30 rounded-sm p-6 hover:border-brand-black hover:shadow-luxury transition-all duration-300"
             >
-              <feat.icon className="w-6 h-6 text-brand-sand mb-3" />
-              <h3 className="font-editorial text-lg font-bold text-brand-deep mb-2">
+              <feat.icon className="w-6 h-6 text-brand-brown mb-3" />
+              <h3 className="font-editorial text-lg font-bold text-brand-black mb-2">
                 {feat.title}
               </h3>
               <p className="text-xs text-brand-charcoal/80 leading-relaxed">
@@ -96,10 +96,10 @@ export default function TaxiServicesPage() {
         {/* Popular Routes */}
         <div className="mb-20">
           <div className="text-center mb-10">
-            <span className="text-xs font-semibold uppercase tracking-widest text-brand-sand">
+            <span className="text-xs font-semibold uppercase tracking-widest text-brand-brown">
               Popular Routes
             </span>
-            <h2 className="font-editorial text-3xl sm:text-4xl font-bold text-brand-deep mt-2">
+            <h2 className="font-editorial text-3xl sm:text-4xl font-bold text-brand-black mt-2">
               Where We Take You
             </h2>
           </div>
@@ -108,33 +108,33 @@ export default function TaxiServicesPage() {
             {routes.map((route) => (
               <div
                 key={`${route.from}-${route.to}`}
-                className="bg-brand-cream/40 border border-brand-sand/30 rounded-sm p-5 flex items-center justify-between hover:border-brand-deep transition-colors"
+                className="bg-brand-cream/40 border border-brand-brown/30 rounded-sm p-5 flex items-center justify-between hover:border-brand-black transition-colors"
               >
                 <div>
-                  <p className="text-sm font-semibold text-brand-deep">
+                  <p className="text-sm font-semibold text-brand-black">
                     {route.from} → {route.to}
                   </p>
                   <p className="text-[11px] text-brand-taupe mt-0.5">
                     {route.distance} · {route.duration}
                   </p>
                 </div>
-                <ArrowRight className="w-4 h-4 text-brand-sand" />
+                <ArrowRight className="w-4 h-4 text-brand-brown" />
               </div>
             ))}
           </div>
         </div>
 
         {/* Enquiry */}
-        <div className="max-w-4xl mx-auto py-12 border-t border-brand-sand/30">
+        <div className="max-w-4xl mx-auto py-12 border-t border-brand-brown/30">
           <div className="text-center mb-8">
-            <span className="text-xs font-semibold uppercase tracking-widest text-brand-sand">
+            <span className="text-xs font-semibold uppercase tracking-widest text-brand-brown">
               Book a Cab
             </span>
-            <h2 className="font-editorial text-3xl font-bold text-brand-deep mt-2">
+            <h2 className="font-editorial text-3xl font-bold text-brand-black mt-2">
               Request a Quote
             </h2>
           </div>
-          <div className="bg-brand-cream/40 border border-brand-sand/40 p-6 sm:p-10 rounded-sm shadow-luxury">
+          <div className="bg-brand-cream/40 border border-brand-brown/40 p-6 sm:p-10 rounded-sm shadow-luxury">
             <EnquiryForm defaultTravelType="Taxi" />
           </div>
         </div>

@@ -10,12 +10,12 @@ export const metadata: Metadata = {
 
 export default function TermsPage() {
   return (
-    <div className="pt-24 pb-20 bg-brand-offwhite">
+    <div className="pt-24 pb-20 bg-brand-cream">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <Breadcrumbs items={[{ label: "Terms & Conditions" }]} />
 
-        <div className="py-12 border-b border-brand-sand/30 mb-12">
-          <h1 className="font-editorial text-4xl sm:text-5xl font-bold text-brand-deep tracking-tight mb-4">
+        <div className="py-12 border-b border-brand-brown/30 mb-12">
+          <h1 className="font-editorial text-4xl sm:text-5xl font-bold text-brand-black tracking-tight mb-4">
             Terms & Conditions
           </h1>
           <p className="text-xs text-brand-taupe">
@@ -25,7 +25,7 @@ export default function TermsPage() {
 
         <div className="prose-brand space-y-8 text-sm text-brand-charcoal/85 leading-relaxed">
           <section>
-            <h2 className="font-editorial text-xl font-bold text-brand-deep mb-3">
+            <h2 className="font-editorial text-xl font-bold text-brand-black mb-3">
               1. Booking & Payment
             </h2>
             <ul className="list-disc pl-5 space-y-1">
@@ -38,7 +38,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="font-editorial text-xl font-bold text-brand-deep mb-3">
+            <h2 className="font-editorial text-xl font-bold text-brand-black mb-3">
               2. Cancellation Policy
             </h2>
             <ul className="list-disc pl-5 space-y-1">
@@ -51,7 +51,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="font-editorial text-xl font-bold text-brand-deep mb-3">
+            <h2 className="font-editorial text-xl font-bold text-brand-black mb-3">
               3. Changes & Rescheduling
             </h2>
             <p>
@@ -63,7 +63,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="font-editorial text-xl font-bold text-brand-deep mb-3">
+            <h2 className="font-editorial text-xl font-bold text-brand-black mb-3">
               4. Travel Insurance
             </h2>
             <p>
@@ -74,7 +74,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="font-editorial text-xl font-bold text-brand-deep mb-3">
+            <h2 className="font-editorial text-xl font-bold text-brand-black mb-3">
               5. Health & Fitness
             </h2>
             <p>
@@ -86,7 +86,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="font-editorial text-xl font-bold text-brand-deep mb-3">
+            <h2 className="font-editorial text-xl font-bold text-brand-black mb-3">
               6. Itinerary Changes
             </h2>
             <p>
@@ -98,7 +98,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="font-editorial text-xl font-bold text-brand-deep mb-3">
+            <h2 className="font-editorial text-xl font-bold text-brand-black mb-3">
               7. Liability
             </h2>
             <p>
@@ -110,7 +110,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="font-editorial text-xl font-bold text-brand-deep mb-3">
+            <h2 className="font-editorial text-xl font-bold text-brand-black mb-3">
               8. Governing Law
             </h2>
             <p>
@@ -120,14 +120,14 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="font-editorial text-xl font-bold text-brand-deep mb-3">
+            <h2 className="font-editorial text-xl font-bold text-brand-black mb-3">
               9. Contact
             </h2>
             <p>
               For questions regarding these terms:
             </p>
             <p className="mt-2">
-              <strong className="text-brand-deep">Rucksack Adventures</strong><br />
+              <strong className="text-brand-black">Rucksack Adventures</strong><br />
               Chotta Shimla to Kusumpti Rd, SDA Complex, Kasumpti, Shimla, Himachal Pradesh 171009<br />
               Email: info@rucksackadventures.com<br />
               Phone: 7018678064

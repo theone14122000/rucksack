@@ -17,16 +17,16 @@ export default async function ExperiencesPage() {
   const experiences = await getExperiences();
 
   return (
-    <div className="pt-24 pb-20 bg-brand-offwhite">
+    <div className="pt-24 pb-20 bg-brand-cream">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Breadcrumbs items={[{ label: "Experiences" }]} />
 
         {/* Page Header */}
-        <div className="py-8 border-b border-brand-sand/30 mb-12">
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-sand block mb-2">
+        <div className="py-8 border-b border-brand-brown/30 mb-12">
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-brown block mb-2">
             Tailored Perspectives
           </span>
-          <h1 className="font-editorial text-4xl sm:text-6xl font-bold text-brand-deep tracking-tight mb-4">
+          <h1 className="font-editorial text-4xl sm:text-6xl font-bold text-brand-black tracking-tight mb-4">
             Curated Travel Experiences
           </h1>
           <p className="text-sm sm:text-base text-brand-charcoal/80 max-w-2xl leading-relaxed">
@@ -39,17 +39,17 @@ export default async function ExperiencesPage() {
           {experiences.map((exp) => (
             <div
               key={exp.id}
-              className="bg-brand-cream/30 border border-brand-sand/30 rounded-sm p-7 flex flex-col justify-between hover:border-brand-deep hover:shadow-luxury transition-all duration-300"
+              className="bg-brand-cream/30 border border-brand-brown/30 rounded-sm p-7 flex flex-col justify-between hover:border-brand-black hover:shadow-luxury transition-all duration-300"
             >
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-brand-sand bg-brand-deep px-2.5 py-0.5 rounded-xs">
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-brand-brown bg-brand-black px-2.5 py-0.5 rounded-xs">
                     {exp.category}
                   </span>
-                  <Sparkles className="w-4 h-4 text-brand-sand" />
+                  <Sparkles className="w-4 h-4 text-brand-brown" />
                 </div>
 
-                <h2 className="font-editorial text-2xl sm:text-3xl font-bold text-brand-deep">
+                <h2 className="font-editorial text-2xl sm:text-3xl font-bold text-brand-black">
                   {exp.name}
                 </h2>
 
@@ -57,23 +57,23 @@ export default async function ExperiencesPage() {
                   {exp.fullDescription}
                 </p>
 
-                <div className="pt-4 border-t border-brand-sand/20 space-y-2">
-                  <span className="text-[11px] font-semibold uppercase tracking-wider text-brand-deep block">
+                <div className="pt-4 border-t border-brand-brown/20 space-y-2">
+                  <span className="text-[11px] font-semibold uppercase tracking-wider text-brand-black block">
                     Signature Elements:
                   </span>
                   {exp.highlights.map((h, i) => (
                     <p key={i} className="text-xs text-brand-taupe flex items-center gap-2">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-brand-sand shrink-0" />
+                      <CheckCircle2 className="w-3.5 h-3.5 text-brand-brown shrink-0" />
                       <span>{h}</span>
                     </p>
                   ))}
                 </div>
               </div>
 
-              <div className="pt-6 mt-4 border-t border-brand-sand/20">
+              <div className="pt-6 mt-4 border-t border-brand-brown/20">
                 <a
                   href="#custom-experience-form"
-                  className="w-full py-2.5 px-4 rounded-sm bg-brand-offwhite border border-brand-sand/40 hover:bg-brand-deep hover:text-brand-offwhite text-brand-deep text-xs font-semibold uppercase tracking-wider text-center block transition-colors"
+                  className="w-full py-2.5 px-4 rounded-sm bg-brand-cream border border-brand-brown/40 hover:bg-brand-black hover:text-brand-cream text-brand-black text-xs font-semibold uppercase tracking-wider text-center block transition-colors"
                 >
                   Design This Style →
                 </a>
@@ -83,12 +83,12 @@ export default async function ExperiencesPage() {
         </div>
 
         {/* Custom Experience Builder Form */}
-        <div id="custom-experience-form" className="max-w-4xl mx-auto py-12 border-t border-brand-sand/30">
+        <div id="custom-experience-form" className="max-w-4xl mx-auto py-12 border-t border-brand-brown/30">
           <div className="text-center mb-8 space-y-2">
-            <span className="text-xs font-semibold uppercase tracking-widest text-brand-sand">
+            <span className="text-xs font-semibold uppercase tracking-widest text-brand-brown">
               Custom Travel Atelier
             </span>
-            <h2 className="font-editorial text-3xl sm:text-4xl font-bold text-brand-deep">
+            <h2 className="font-editorial text-3xl sm:text-4xl font-bold text-brand-black">
               Design a Bespoke Journey
             </h2>
             <p className="text-xs sm:text-sm text-brand-taupe">
@@ -96,7 +96,7 @@ export default async function ExperiencesPage() {
             </p>
           </div>
 
-          <div className="bg-brand-cream/40 border border-brand-sand/40 p-6 sm:p-10 rounded-sm shadow-luxury">
+          <div className="bg-brand-cream/40 border border-brand-brown/40 p-6 sm:p-10 rounded-sm shadow-luxury">
             <EnquiryForm defaultTravelType="Other" />
           </div>
         </div>

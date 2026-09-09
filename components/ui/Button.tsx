@@ -30,27 +30,27 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const baseStyles =
-      "inline-flex items-center justify-center font-medium tracking-wide transition-all duration-300 rounded-sm select-none focus:outline-hidden focus:ring-2 focus:ring-brand-sand/50 disabled:opacity-50 disabled:pointer-events-none";
+      "inline-flex items-center justify-center font-medium tracking-wide transition-all duration-300 rounded-sm select-none focus:outline-hidden focus:ring-2 focus:ring-brand-brown/30 disabled:opacity-50 disabled:pointer-events-none";
 
     const sizeStyles = {
-      sm: "text-xs px-3.5 py-1.5 gap-1.5",
+      sm: "text-xs px-4 py-2 gap-1.5",
       md: "text-sm px-5 py-2.5 gap-2",
-      lg: "text-base px-7 py-3.5 gap-2.5",
+      lg: "text-sm px-7 py-3.5 gap-2.5",
     }[size];
 
     const variantStyles = {
       primary:
-        "bg-brand-deep text-brand-offwhite hover:bg-brand-espresso shadow-xs border border-brand-deep",
+        "bg-brand-brown text-brand-cream hover:bg-brand-brown-dark shadow-sm border border-brand-brown-dark/20",
       secondary:
-        "bg-brand-cream text-brand-deep hover:bg-brand-beige border border-brand-sand/40",
+        "bg-brand-cream text-brand-black hover:bg-white border border-brand-brown/15",
       outline:
-        "bg-transparent text-brand-deep border border-brand-sand hover:border-brand-deep hover:bg-brand-cream/50",
+        "bg-transparent text-brand-black border border-brand-brown/25 hover:border-brand-brown hover:bg-brand-brown/5",
       dark:
-        "bg-brand-espresso text-brand-cream border border-brand-sand/30 hover:border-brand-sand hover:bg-brand-deep",
+        "bg-brand-black text-brand-cream border border-white/10 hover:border-white/20",
       ghost:
-        "bg-transparent text-brand-warm hover:text-brand-deep hover:bg-brand-cream/40",
+        "bg-transparent text-brand-brown hover:text-brand-brown-dark hover:bg-brand-brown/5",
       whatsapp:
-        "bg-[#25D366] text-white hover:bg-[#1EBE5D] shadow-xs border border-transparent",
+        "bg-[#25D366] text-white hover:bg-[#1EBE5D] shadow-sm border border-transparent",
     }[variant];
 
     const combinedClasses = cn(

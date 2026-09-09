@@ -19,7 +19,7 @@ export const TrekCard: React.FC<TrekCardProps> = ({ trek }) => {
   }[trek.difficulty];
 
   return (
-    <div className="group bg-brand-deep/90 border border-brand-sand/30 rounded-sm overflow-hidden flex flex-col justify-between transition-all duration-500 hover:border-brand-sand hover:shadow-2xl hover:-translate-y-1.5 text-brand-cream">
+    <div className="group bg-brand-black border border-white/10 rounded-card overflow-hidden flex flex-col justify-between transition-all duration-500 hover:border-brand-sand hover:shadow-2xl hover:-translate-y-1.5 text-brand-cream">
       <div>
         {/* Mountain Image Slot with Topographic Badge */}
         <div className="relative overflow-hidden">
@@ -48,32 +48,32 @@ export const TrekCard: React.FC<TrekCardProps> = ({ trek }) => {
               <Mountain className="w-3.5 h-3.5 text-brand-sand" />
               {trek.altitude}
             </span>
-            <span className="flex items-center gap-1 text-brand-beige">
+            <span className="flex items-center gap-1 text-brand-cream/60">
               <Calendar className="w-3.5 h-3.5" />
               {trek.duration}
             </span>
           </div>
 
-          <h3 className="font-editorial text-xl sm:text-2xl font-bold text-brand-offwhite tracking-tight group-hover:text-brand-sand transition-colors">
+          <h3 className="font-editorial text-xl sm:text-2xl font-bold text-brand-cream tracking-tight group-hover:text-brand-sand transition-colors">
             <Link href={`/treks/${trek.slug}`}>
               {trek.name}
             </Link>
           </h3>
 
-          <p className="text-xs sm:text-sm text-brand-cream/70 line-clamp-2 leading-relaxed">
+          <p className="text-xs sm:text-sm text-brand-cream/60 line-clamp-2 leading-relaxed">
             {trek.shortDescription}
           </p>
 
-          <div className="pt-2 border-t border-brand-sand/20 flex items-center justify-between text-[11px] text-brand-taupe">
-            <span>Region: <strong className="text-brand-beige">{trek.region}</strong></span>
+          <div className="pt-2 border-t border-white/10 flex items-center justify-between text-[11px] text-brand-cream/50">
+            <span>Region: <strong className="text-brand-cream/80">{trek.region}</strong></span>
             <span>Season: <strong className="text-brand-sand">{trek.bestSeason.split("&")[0]}</strong></span>
           </div>
         </div>
       </div>
 
       {/* Action Bar */}
-      <div className="p-5 sm:p-6 pt-0 border-t border-brand-sand/20 mt-2 flex items-center justify-between">
-        <span className="text-[10px] font-mono text-brand-taupe uppercase tracking-widest">
+      <div className="p-5 sm:p-6 pt-0 border-t border-white/10 mt-2 flex items-center justify-between">
+        <span className="text-[10px] font-mono text-brand-cream/40 uppercase tracking-widest">
           Certified Mountain Crew
         </span>
         <Link

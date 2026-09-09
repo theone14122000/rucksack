@@ -12,11 +12,11 @@ export const HeroSection: React.FC = () => {
 
   return (
     <>
-      <section className="relative min-h-[92vh] flex items-center justify-center pt-28 pb-16 overflow-hidden bg-gradient-to-b from-brand-cream/60 via-brand-offwhite to-brand-offwhite">
-        {/* Subtle Topographic Background Grid */}
-        <div className="absolute inset-0 bg-grain pointer-events-none opacity-60" />
-        <div className="absolute top-1/4 -left-48 w-96 h-96 rounded-full bg-brand-sand/15 blur-3xl pointer-events-none" />
-        <div className="absolute bottom-10 -right-48 w-96 h-96 rounded-full bg-brand-beige/25 blur-3xl pointer-events-none" />
+      <section className="relative min-h-[92vh] flex items-center justify-center pt-24 pb-16 overflow-hidden bg-brand-cream">
+        {/* Subtle Background Elements */}
+        <div className="absolute inset-0 bg-grain pointer-events-none opacity-40" />
+        <div className="absolute top-1/4 -left-48 w-96 h-96 rounded-full bg-brand-brown/5 blur-3xl pointer-events-none" />
+        <div className="absolute bottom-10 -right-48 w-96 h-96 rounded-full bg-brand-brown/5 blur-3xl pointer-events-none" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
@@ -28,21 +28,21 @@ export const HeroSection: React.FC = () => {
               className="lg:col-span-7 space-y-6 text-left"
             >
               {/* Overline Badge */}
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-sm bg-brand-cream border border-brand-sand/40 text-brand-deep text-xs font-semibold uppercase tracking-[0.18em]">
-                <Sparkles className="w-3.5 h-3.5 text-brand-sand" />
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-sm bg-brand-brown/5 border border-brand-brown/15 text-brand-brown text-xs font-semibold uppercase tracking-[0.18em]">
+                <Sparkles className="w-3.5 h-3.5" />
                 <span>Premier Himalayan Travel Operator</span>
-                <span className="text-brand-taupe">•</span>
+                <span className="text-brand-brown/40">&bull;</span>
                 <span className="text-brand-taupe font-normal">Kasumpti, Shimla</span>
               </div>
 
               {/* Editorial Display Heading */}
-              <h1 className="font-editorial text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-brand-deep leading-[1.08]">
+              <h1 className="font-editorial text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-brand-black leading-[1.06]">
                 Explore Beyond <br />
-                <span className="italic font-normal text-brand-warm">The Ordinary.</span>
+                <span className="italic font-normal text-brand-brown">The Ordinary.</span>
               </h1>
 
               {/* Subheading */}
-              <p className="text-base sm:text-xl text-brand-charcoal/85 max-w-xl font-normal leading-relaxed">
+              <p className="text-base sm:text-lg text-brand-charcoal/80 max-w-xl font-normal leading-relaxed">
                 Curated journeys across the Himalayas and beyond. Handcrafted expeditions, boutique mountain retreats, high passes, and trusted private transport rooted in Himachal.
               </p>
 
@@ -67,14 +67,14 @@ export const HeroSection: React.FC = () => {
               </div>
 
               {/* Trust Metadata Chips */}
-              <div className="pt-6 border-t border-brand-sand/25 flex flex-wrap items-center gap-6 text-xs text-brand-taupe">
+              <div className="pt-6 border-t border-brand-brown/10 flex flex-wrap items-center gap-6 text-xs text-brand-taupe">
                 <div className="flex items-center gap-2">
-                  <div className="flex text-amber-500">
+                  <div className="flex text-brand-brown">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
+                      <Star key={i} className="w-3.5 h-3.5 fill-brand-brown text-brand-brown" />
                     ))}
                   </div>
-                  <span className="font-semibold text-brand-deep font-mono">4.6 / 5</span>
+                  <span className="font-semibold text-brand-black">4.6 / 5</span>
                   <span>(242+ Verified Reviews)</span>
                 </div>
 
@@ -93,10 +93,10 @@ export const HeroSection: React.FC = () => {
               className="lg:col-span-5 relative flex flex-col items-center justify-center"
             >
               {/* Framed Editorial Visual Container */}
-              <div className="relative w-full max-w-md aspect-[4/5] rounded-sm overflow-hidden border border-brand-sand/40 bg-gradient-to-br from-brand-cream via-brand-beige/30 to-brand-cream shadow-2xl p-6 flex flex-col justify-between group">
+              <div className="relative w-full max-w-md aspect-[4/5] rounded-card overflow-hidden border border-brand-brown/15 bg-gradient-to-br from-brand-brown via-brand-brown-dark to-brand-brown shadow-2xl p-6 flex flex-col justify-between group">
                 {/* Background Vector Topographic Lines */}
                 <svg
-                  className="absolute inset-0 w-full h-full opacity-20 text-brand-deep pointer-events-none"
+                  className="absolute inset-0 w-full h-full opacity-10 text-brand-cream pointer-events-none"
                   viewBox="0 0 400 500"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -109,10 +109,10 @@ export const HeroSection: React.FC = () => {
 
                 {/* Card Top Label */}
                 <div className="relative z-10 flex items-center justify-between">
-                  <span className="text-[10px] font-mono tracking-widest text-brand-taupe uppercase bg-brand-offwhite/90 px-2.5 py-1 rounded-xs border border-brand-sand/30">
+                  <span className="text-[10px] font-mono tracking-widest text-brand-cream/70 uppercase bg-brand-cream/10 px-2.5 py-1 rounded-xs border border-brand-cream/15">
                     Trans-Himalayan Series
                   </span>
-                  <span className="text-[10px] font-mono text-brand-sand tracking-widest uppercase">
+                  <span className="text-[10px] font-mono text-brand-brown tracking-widest uppercase">
                     Expedition No. 08
                   </span>
                 </div>
@@ -123,14 +123,14 @@ export const HeroSection: React.FC = () => {
                 </div>
 
                 {/* Floating Destination Badge Pill */}
-                <div className="relative z-10 bg-brand-espresso/95 text-brand-cream p-4 rounded-sm border border-brand-sand/30 backdrop-blur-md space-y-1.5 shadow-xl">
-                  <div className="flex items-center justify-between text-[11px] font-mono text-brand-sand tracking-widest uppercase">
+                <div className="relative z-10 bg-brand-cream/95 text-brand-black p-4 rounded-sm border border-brand-brown/10 backdrop-blur-md space-y-1.5 shadow-xl">
+                  <div className="flex items-center justify-between text-[11px] font-mono text-brand-brown tracking-widest uppercase">
                     <span className="flex items-center gap-1">
-                      <MapPin className="w-3.5 h-3.5 text-brand-sand" /> Spiti & Kinnaur Circuit
+                      <MapPin className="w-3.5 h-3.5" /> Spiti & Kinnaur Circuit
                     </span>
                     <span>14,931 ft</span>
                   </div>
-                  <p className="text-xs text-brand-cream/80 font-editorial line-clamp-1 italic">
+                  <p className="text-xs text-brand-charcoal/70 font-editorial line-clamp-1 italic">
                     &ldquo;Ancient gompas, raw moonscapes, and high glacial passes.&rdquo;
                   </p>
                 </div>

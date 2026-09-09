@@ -35,7 +35,7 @@ export const ImagePlaceholder: React.FC<ImagePlaceholderProps> = ({
 
   if (src && src.startsWith("http")) {
     return (
-      <div className={cn("relative overflow-hidden group bg-brand-cream/80", ratioClasses, className)}>
+      <div className={cn("relative overflow-hidden group bg-brand-cream", ratioClasses, className)}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={src}
@@ -44,7 +44,7 @@ export const ImagePlaceholder: React.FC<ImagePlaceholderProps> = ({
           loading="lazy"
         />
         {overlayGradient && (
-          <div className="absolute inset-0 bg-gradient-to-t from-brand-espresso/80 via-brand-espresso/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
+          <div className="absolute inset-0 bg-gradient-to-t from-brand-black/70 via-brand-black/15 to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
         )}
       </div>
     );
@@ -53,14 +53,14 @@ export const ImagePlaceholder: React.FC<ImagePlaceholderProps> = ({
   return (
     <div
       className={cn(
-        "relative overflow-hidden group bg-gradient-to-br from-brand-cream via-brand-beige/40 to-brand-cream border border-brand-sand/30 flex flex-col justify-between p-5 select-none transition-all duration-500",
+        "relative overflow-hidden group bg-gradient-to-br from-brand-brown via-brand-brown-dark to-brand-brown border border-brand-brown/20 flex flex-col justify-between p-5 select-none transition-all duration-500",
         ratioClasses,
         className
       )}
     >
       {/* Topographic Vector Contour Overlay */}
       <svg
-        className="absolute inset-0 w-full h-full opacity-25 text-brand-warm/40 pointer-events-none transition-transform duration-700 group-hover:scale-105"
+        className="absolute inset-0 w-full h-full opacity-15 text-brand-cream/30 pointer-events-none transition-transform duration-700 group-hover:scale-105"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 400 300"
         preserveAspectRatio="none"
@@ -95,16 +95,16 @@ export const ImagePlaceholder: React.FC<ImagePlaceholderProps> = ({
       </svg>
 
       {/* Subtle Grain Overlay */}
-      <div className="absolute inset-0 bg-grain opacity-40 pointer-events-none" />
+      <div className="absolute inset-0 bg-grain opacity-30 pointer-events-none" />
 
       {/* Top Meta Bar */}
-      <div className="relative z-10 flex items-center justify-between text-xs tracking-widest uppercase font-medium text-brand-taupe">
-        <span className="flex items-center gap-1.5 bg-brand-offwhite/90 px-2.5 py-1 rounded-sm border border-brand-sand/30 shadow-xs backdrop-blur-xs">
+      <div className="relative z-10 flex items-center justify-between text-xs tracking-widest uppercase font-medium text-brand-cream/80">
+        <span className="flex items-center gap-1.5 bg-brand-cream/15 px-2.5 py-1 rounded-sm border border-brand-cream/15 backdrop-blur-xs">
           <Mountain className="w-3.5 h-3.5 text-brand-sand" />
           {category || "Himalayan Sanctuary"}
         </span>
         {elevation && (
-          <span className="text-[10px] bg-brand-deep/80 text-brand-cream px-2 py-0.5 rounded-sm font-mono tracking-wider">
+          <span className="text-[10px] bg-brand-cream/20 text-brand-cream px-2 py-0.5 rounded-sm font-mono tracking-wider">
             {elevation}
           </span>
         )}
@@ -112,21 +112,21 @@ export const ImagePlaceholder: React.FC<ImagePlaceholderProps> = ({
 
       {/* Center Watermark Crest */}
       <div className="relative z-10 flex flex-col items-center justify-center my-auto py-4 text-center">
-        <div className="w-12 h-12 rounded-full border border-brand-sand/50 bg-brand-offwhite/80 flex items-center justify-center text-brand-warm shadow-xs mb-2 group-hover:rotate-45 transition-transform duration-700">
+        <div className="w-12 h-12 rounded-full border border-brand-cream/30 bg-brand-cream/10 flex items-center justify-center text-brand-cream shadow-xs mb-2 group-hover:rotate-45 transition-transform duration-700">
           <Compass className="w-6 h-6 text-brand-sand" />
         </div>
-        <p className="font-editorial text-lg tracking-wide text-brand-deep font-semibold">
+        <p className="font-editorial text-lg tracking-wide text-brand-cream font-semibold">
           {label || "Rucksack Adventures"}
         </p>
-        <span className="text-[11px] text-brand-taupe tracking-wider uppercase mt-0.5 flex items-center gap-1">
+        <span className="text-[11px] text-brand-cream/60 tracking-wider uppercase mt-0.5 flex items-center gap-1">
           <MapPin className="w-3 h-3 text-brand-sand" /> Kasumpti, Shimla
         </span>
       </div>
 
       {/* Bottom Technical Coordinates */}
-      <div className="relative z-10 flex items-center justify-between text-[10px] font-mono text-brand-taupe/80 border-t border-brand-sand/20 pt-2">
-        <span>31°04&apos;41&quot;N 77°11&apos;08&quot;E</span>
-        <span className="tracking-widest uppercase text-[9px] bg-brand-beige/40 px-1.5 py-0.5 rounded-xs text-brand-warm">
+      <div className="relative z-10 flex items-center justify-between text-[10px] font-mono text-brand-cream/50 border-t border-brand-cream/15 pt-2">
+        <span>31&deg;04&apos;41&quot;N 77&deg;11&apos;08&quot;E</span>
+        <span className="tracking-widest uppercase text-[9px] bg-brand-cream/15 px-1.5 py-0.5 rounded-xs text-brand-sand">
           Verified Journey
         </span>
       </div>

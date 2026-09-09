@@ -47,15 +47,15 @@ const contactMethods = [
 
 export default function ContactPage() {
   return (
-    <div className="pt-24 pb-20 bg-brand-offwhite">
+    <div className="pt-24 pb-20 bg-brand-cream">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Breadcrumbs items={[{ label: "Contact" }]} />
 
-        <div className="py-12 border-b border-brand-sand/30 mb-12">
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-sand block mb-2">
+        <div className="py-12 border-b border-brand-brown/30 mb-12">
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-brown block mb-2">
             Get in Touch
           </span>
-          <h1 className="font-editorial text-4xl sm:text-6xl font-bold text-brand-deep tracking-tight mb-4">
+          <h1 className="font-editorial text-4xl sm:text-6xl font-bold text-brand-black tracking-tight mb-4">
             Let&apos;s Plan Your Journey
           </h1>
           <p className="text-sm sm:text-base text-brand-charcoal/80 max-w-2xl leading-relaxed">
@@ -69,8 +69,8 @@ export default function ContactPage() {
           <div className="lg:col-span-2 space-y-6">
             {contactMethods.map((method) => (
               <div key={method.label} className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-sm bg-brand-cream border border-brand-sand/30 flex items-center justify-center shrink-0">
-                  <method.icon className="w-4 h-4 text-brand-sand" />
+                <div className="w-10 h-10 rounded-sm bg-brand-cream border border-brand-brown/30 flex items-center justify-center shrink-0">
+                  <method.icon className="w-4 h-4 text-brand-brown" />
                 </div>
                 <div>
                   <p className="text-[10px] font-semibold uppercase tracking-widest text-brand-taupe mb-0.5">
@@ -81,12 +81,12 @@ export default function ContactPage() {
                       href={method.href}
                       target={method.href.startsWith("http") ? "_blank" : undefined}
                       rel={method.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                      className="text-sm text-brand-deep hover:text-brand-warm transition-colors"
+                      className="text-sm text-brand-black hover:text-brand-brown transition-colors"
                     >
                       {method.value}
                     </a>
                   ) : (
-                    <p className="text-sm text-brand-deep">{method.value}</p>
+                    <p className="text-sm text-brand-black">{method.value}</p>
                   )}
                 </div>
               </div>
@@ -95,9 +95,9 @@ export default function ContactPage() {
 
           {/* Enquiry Form */}
           <div className="lg:col-span-3">
-            <div className="bg-brand-cream/40 border border-brand-sand/40 p-6 sm:p-10 rounded-sm shadow-luxury">
+            <div className="bg-brand-cream/40 border border-brand-brown/40 p-6 sm:p-10 rounded-sm shadow-luxury">
               <div className="mb-6">
-                <h2 className="font-editorial text-2xl font-bold text-brand-deep">
+                <h2 className="font-editorial text-2xl font-bold text-brand-black">
                   Send Us an Enquiry
                 </h2>
                 <p className="text-xs text-brand-taupe mt-1">

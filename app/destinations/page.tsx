@@ -32,16 +32,16 @@ export default async function DestinationsPage({
   const internationalCount = allDestinations.filter((d) => !d.isDomestic).length;
 
   return (
-    <div className="pt-24 pb-20 bg-brand-offwhite">
+    <div className="pt-24 pb-20 bg-brand-cream">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Breadcrumbs items={[{ label: "Destinations" }]} />
 
         {/* Page Header */}
-        <div className="py-8 border-b border-brand-sand/30 mb-10">
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-sand block mb-2">
+        <div className="py-8 border-b border-brand-brown/30 mb-10">
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-brown block mb-2">
             Sanctuaries of Wonder
           </span>
-          <h1 className="font-editorial text-4xl sm:text-6xl font-bold text-brand-deep tracking-tight mb-4">
+          <h1 className="font-editorial text-4xl sm:text-6xl font-bold text-brand-black tracking-tight mb-4">
             Curated Destinations
           </h1>
           <p className="text-sm sm:text-base text-brand-charcoal/80 max-w-2xl leading-relaxed">
@@ -54,8 +54,8 @@ export default async function DestinationsPage({
               href="/destinations"
               className={`px-4 py-2 rounded-sm text-xs font-semibold tracking-wider uppercase border transition-colors ${
                 !regionFilter
-                  ? "bg-brand-deep text-brand-offwhite border-brand-deep"
-                  : "bg-brand-cream/60 text-brand-charcoal border-brand-sand/30 hover:border-brand-deep"
+                  ? "bg-brand-black text-brand-cream border-brand-black"
+                  : "bg-brand-cream/60 text-brand-charcoal border-brand-brown/30 hover:border-brand-black"
               }`}
             >
               All Destinations ({allDestinations.length})
@@ -64,22 +64,22 @@ export default async function DestinationsPage({
               href="/destinations?region=domestic"
               className={`px-4 py-2 rounded-sm text-xs font-semibold tracking-wider uppercase border flex items-center gap-1.5 transition-colors ${
                 regionFilter === "domestic"
-                  ? "bg-brand-deep text-brand-offwhite border-brand-deep"
-                  : "bg-brand-cream/60 text-brand-charcoal border-brand-sand/30 hover:border-brand-deep"
+                  ? "bg-brand-black text-brand-cream border-brand-black"
+                  : "bg-brand-cream/60 text-brand-charcoal border-brand-brown/30 hover:border-brand-black"
               }`}
             >
-              <Mountain className="w-3.5 h-3.5 text-brand-sand" />
+              <Mountain className="w-3.5 h-3.5 text-brand-brown" />
               Domestic Himalayas & India ({domesticCount})
             </a>
             <a
               href="/destinations?region=international"
               className={`px-4 py-2 rounded-sm text-xs font-semibold tracking-wider uppercase border flex items-center gap-1.5 transition-colors ${
                 regionFilter === "international"
-                  ? "bg-brand-deep text-brand-offwhite border-brand-deep"
-                  : "bg-brand-cream/60 text-brand-charcoal border-brand-sand/30 hover:border-brand-deep"
+                  ? "bg-brand-black text-brand-cream border-brand-black"
+                  : "bg-brand-cream/60 text-brand-charcoal border-brand-brown/30 hover:border-brand-black"
               }`}
             >
-              <Globe2 className="w-3.5 h-3.5 text-brand-sand" />
+              <Globe2 className="w-3.5 h-3.5 text-brand-brown" />
               International Escapes ({internationalCount})
             </a>
           </div>

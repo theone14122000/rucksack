@@ -56,7 +56,7 @@ const requirements = [
 
 export default function PilgrimageTourPage() {
   return (
-    <div className="pt-24 pb-20 bg-brand-offwhite">
+    <div className="pt-24 pb-20 bg-brand-cream">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Breadcrumbs
           items={[
@@ -65,11 +65,11 @@ export default function PilgrimageTourPage() {
           ]}
         />
 
-        <div className="py-12 border-b border-brand-sand/30 mb-16">
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-sand block mb-2">
+        <div className="py-12 border-b border-brand-brown/30 mb-16">
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-brown block mb-2">
             Sacred Journey
           </span>
-          <h1 className="font-editorial text-4xl sm:text-6xl font-bold text-brand-deep tracking-tight mb-4">
+          <h1 className="font-editorial text-4xl sm:text-6xl font-bold text-brand-black tracking-tight mb-4">
             Pilgrimage Tour Packages
           </h1>
           <p className="text-sm sm:text-base text-brand-charcoal/80 max-w-3xl leading-relaxed">
@@ -81,10 +81,10 @@ export default function PilgrimageTourPage() {
         </div>
 
         {/* Important Notice */}
-        <div className="bg-brand-cream/60 border border-brand-sand/40 rounded-sm p-6 mb-16 flex items-start gap-4">
-          <AlertTriangle className="w-5 h-5 text-brand-warm shrink-0 mt-0.5" />
+        <div className="bg-brand-cream/60 border border-brand-brown/40 rounded-sm p-6 mb-16 flex items-start gap-4">
+          <AlertTriangle className="w-5 h-5 text-brand-brown shrink-0 mt-0.5" />
           <div>
-            <p className="text-sm font-semibold text-brand-deep mb-1">
+            <p className="text-sm font-semibold text-brand-black mb-1">
               Important: Registration Required
             </p>
             <p className="text-xs text-brand-charcoal/80 leading-relaxed">
@@ -98,10 +98,10 @@ export default function PilgrimageTourPage() {
         {/* Circuits */}
         <div className="mb-20">
           <div className="text-center mb-10">
-            <span className="text-xs font-semibold uppercase tracking-widest text-brand-sand">
+            <span className="text-xs font-semibold uppercase tracking-widest text-brand-brown">
               Choose Your Path
             </span>
-            <h2 className="font-editorial text-3xl sm:text-4xl font-bold text-brand-deep mt-2">
+            <h2 className="font-editorial text-3xl sm:text-4xl font-bold text-brand-black mt-2">
               Sacred Circuits We Operate
             </h2>
           </div>
@@ -110,19 +110,19 @@ export default function PilgrimageTourPage() {
             {circuits.map((circuit) => (
               <div
                 key={circuit.name}
-                className="bg-brand-cream/30 border border-brand-sand/30 rounded-sm p-7 hover:border-brand-deep hover:shadow-luxury transition-all duration-300"
+                className="bg-brand-cream/30 border border-brand-brown/30 rounded-sm p-7 hover:border-brand-black hover:shadow-luxury transition-all duration-300"
               >
-                <h3 className="font-editorial text-xl font-bold text-brand-deep mb-3">
+                <h3 className="font-editorial text-xl font-bold text-brand-black mb-3">
                   {circuit.name}
                 </h3>
                 <div className="grid grid-cols-2 gap-3 mb-4">
                   <div>
                     <p className="text-[10px] uppercase tracking-widest text-brand-taupe">Duration</p>
-                    <p className="text-xs font-semibold text-brand-deep">{circuit.duration}</p>
+                    <p className="text-xs font-semibold text-brand-black">{circuit.duration}</p>
                   </div>
                   <div>
                     <p className="text-[10px] uppercase tracking-widest text-brand-taupe">Difficulty</p>
-                    <p className="text-xs font-semibold text-brand-deep">{circuit.difficulty}</p>
+                    <p className="text-xs font-semibold text-brand-black">{circuit.difficulty}</p>
                   </div>
                 </div>
                 <p className="text-xs text-brand-charcoal/80 leading-relaxed">
@@ -134,15 +134,15 @@ export default function PilgrimageTourPage() {
         </div>
 
         {/* Inclusions & Requirements */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20 py-12 border-t border-brand-sand/30">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20 py-12 border-t border-brand-brown/30">
           <div>
-            <h2 className="font-editorial text-2xl font-bold text-brand-deep mb-6">
+            <h2 className="font-editorial text-2xl font-bold text-brand-black mb-6">
               What&apos;s Included
             </h2>
             <div className="space-y-3">
               {inclusions.map((item) => (
                 <div key={item} className="flex items-start gap-3">
-                  <CheckCircle2 className="w-4 h-4 text-brand-sand shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-4 h-4 text-brand-brown shrink-0 mt-0.5" />
                   <span className="text-sm text-brand-charcoal">{item}</span>
                 </div>
               ))}
@@ -150,13 +150,13 @@ export default function PilgrimageTourPage() {
           </div>
 
           <div>
-            <h2 className="font-editorial text-2xl font-bold text-brand-deep mb-6">
+            <h2 className="font-editorial text-2xl font-bold text-brand-black mb-6">
               Requirements
             </h2>
             <div className="space-y-3">
               {requirements.map((item) => (
                 <div key={item} className="flex items-start gap-3">
-                  <AlertTriangle className="w-4 h-4 text-brand-warm shrink-0 mt-0.5" />
+                  <AlertTriangle className="w-4 h-4 text-brand-brown shrink-0 mt-0.5" />
                   <span className="text-sm text-brand-charcoal">{item}</span>
                 </div>
               ))}
@@ -165,16 +165,16 @@ export default function PilgrimageTourPage() {
         </div>
 
         {/* Enquiry */}
-        <div className="max-w-4xl mx-auto py-12 border-t border-brand-sand/30">
+        <div className="max-w-4xl mx-auto py-12 border-t border-brand-brown/30">
           <div className="text-center mb-8">
-            <span className="text-xs font-semibold uppercase tracking-widest text-brand-sand">
+            <span className="text-xs font-semibold uppercase tracking-widest text-brand-brown">
               Book Your Yatra
             </span>
-            <h2 className="font-editorial text-3xl font-bold text-brand-deep mt-2">
+            <h2 className="font-editorial text-3xl font-bold text-brand-black mt-2">
               Start Your Sacred Journey
             </h2>
           </div>
-          <div className="bg-brand-cream/40 border border-brand-sand/40 p-6 sm:p-10 rounded-sm shadow-luxury">
+          <div className="bg-brand-cream/40 border border-brand-brown/40 p-6 sm:p-10 rounded-sm shadow-luxury">
             <EnquiryForm defaultTravelType="Pilgrimage" />
           </div>
         </div>

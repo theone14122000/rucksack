@@ -56,16 +56,16 @@ const values = [
 
 export default function AboutPage() {
   return (
-    <div className="pt-24 pb-20 bg-brand-offwhite">
+    <div className="pt-24 pb-20 bg-brand-cream">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Breadcrumbs items={[{ label: "About" }]} />
 
         {/* Hero Section */}
-        <div className="py-12 border-b border-brand-sand/30 mb-16">
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-sand block mb-3">
+        <div className="py-12 border-b border-brand-brown/30 mb-16">
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-brown block mb-3">
             Our Story
           </span>
-          <h1 className="font-editorial text-4xl sm:text-6xl font-bold text-brand-deep tracking-tight mb-6 max-w-4xl">
+          <h1 className="font-editorial text-4xl sm:text-6xl font-bold text-brand-black tracking-tight mb-6 max-w-4xl">
             Born in the Himalayas. Built for the Curious.
           </h1>
           <p className="text-base sm:text-lg text-brand-charcoal/80 max-w-3xl leading-relaxed">
@@ -82,10 +82,10 @@ export default function AboutPage() {
           {stats.map((stat) => (
             <div
               key={stat.label}
-              className="bg-brand-cream/40 border border-brand-sand/30 rounded-sm p-6 text-center"
+              className="bg-brand-cream/40 border border-brand-brown/30 rounded-sm p-6 text-center"
             >
-              <stat.icon className="w-5 h-5 text-brand-sand mx-auto mb-3" />
-              <p className="font-editorial text-3xl font-bold text-brand-deep">
+              <stat.icon className="w-5 h-5 text-brand-brown mx-auto mb-3" />
+              <p className="font-editorial text-3xl font-bold text-brand-black">
                 {stat.value}
               </p>
               <p className="text-xs text-brand-taupe mt-1 uppercase tracking-wider">
@@ -98,10 +98,10 @@ export default function AboutPage() {
         {/* Philosophy */}
         <div className="mb-20">
           <div className="text-center mb-12">
-            <span className="text-xs font-semibold uppercase tracking-widest text-brand-sand">
+            <span className="text-xs font-semibold uppercase tracking-widest text-brand-brown">
               What We Believe
             </span>
-            <h2 className="font-editorial text-3xl sm:text-4xl font-bold text-brand-deep mt-2">
+            <h2 className="font-editorial text-3xl sm:text-4xl font-bold text-brand-black mt-2">
               Travel Should Be Deliberate
             </h2>
           </div>
@@ -110,10 +110,10 @@ export default function AboutPage() {
             {values.map((val) => (
               <div
                 key={val.title}
-                className="bg-brand-cream/30 border border-brand-sand/30 rounded-sm p-8 hover:border-brand-deep hover:shadow-luxury transition-all duration-300"
+                className="bg-brand-cream/30 border border-brand-brown/30 rounded-sm p-8 hover:border-brand-black hover:shadow-luxury transition-all duration-300"
               >
-                <val.icon className="w-8 h-8 text-brand-sand mb-4" />
-                <h3 className="font-editorial text-xl font-bold text-brand-deep mb-3">
+                <val.icon className="w-8 h-8 text-brand-brown mb-4" />
+                <h3 className="font-editorial text-xl font-bold text-brand-black mb-3">
                   {val.title}
                 </h3>
                 <p className="text-sm text-brand-charcoal/80 leading-relaxed">
@@ -125,13 +125,13 @@ export default function AboutPage() {
         </div>
 
         {/* What We Do */}
-        <div className="mb-20 py-12 border-t border-brand-sand/30">
+        <div className="mb-20 py-12 border-t border-brand-brown/30">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <span className="text-xs font-semibold uppercase tracking-widest text-brand-sand block mb-3">
+              <span className="text-xs font-semibold uppercase tracking-widest text-brand-brown block mb-3">
                 What We Do
               </span>
-              <h2 className="font-editorial text-3xl sm:text-4xl font-bold text-brand-deep mb-6">
+              <h2 className="font-editorial text-3xl sm:text-4xl font-bold text-brand-black mb-6">
                 End-to-End Travel, Perfected
               </h2>
               <div className="space-y-4 text-sm text-brand-charcoal/80 leading-relaxed">
@@ -155,7 +155,7 @@ export default function AboutPage() {
               </div>
             </div>
 
-            <div className="bg-brand-cream/40 border border-brand-sand/40 rounded-sm p-8 space-y-4">
+            <div className="bg-brand-cream/40 border border-brand-brown/40 rounded-sm p-8 space-y-4">
               {[
                 "Curated Himalayan Treks",
                 "Domestic & International Packages",
@@ -167,7 +167,7 @@ export default function AboutPage() {
                 "Honeymoon & Family Packages",
               ].map((item) => (
                 <div key={item} className="flex items-center gap-3">
-                  <div className="w-1.5 h-1.5 rounded-full bg-brand-sand shrink-0" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-brand-brown shrink-0" />
                   <span className="text-sm text-brand-charcoal">{item}</span>
                 </div>
               ))}
@@ -176,8 +176,8 @@ export default function AboutPage() {
         </div>
 
         {/* CTA */}
-        <div className="text-center py-12 border-t border-brand-sand/30">
-          <h2 className="font-editorial text-3xl font-bold text-brand-deep mb-4">
+        <div className="text-center py-12 border-t border-brand-brown/30">
+          <h2 className="font-editorial text-3xl font-bold text-brand-black mb-4">
             Ready to Begin?
           </h2>
           <p className="text-sm text-brand-taupe mb-8 max-w-lg mx-auto">
@@ -186,14 +186,14 @@ export default function AboutPage() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 px-8 py-3 bg-brand-deep text-brand-offwhite text-xs font-semibold uppercase tracking-wider rounded-sm hover:bg-brand-warm transition-colors"
+              className="inline-flex items-center gap-2 px-8 py-3 bg-brand-black text-brand-cream text-xs font-semibold uppercase tracking-wider rounded-sm hover:bg-brand-brown transition-colors"
             >
               Plan Your Journey
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
               href="/destinations"
-              className="inline-flex items-center gap-2 px-8 py-3 border border-brand-sand/40 text-brand-deep text-xs font-semibold uppercase tracking-wider rounded-sm hover:bg-brand-cream transition-colors"
+              className="inline-flex items-center gap-2 px-8 py-3 border border-brand-brown/40 text-brand-black text-xs font-semibold uppercase tracking-wider rounded-sm hover:bg-brand-cream transition-colors"
             >
               Explore Destinations
             </Link>

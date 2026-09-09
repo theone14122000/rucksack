@@ -10,14 +10,14 @@ export const DomesticInternationalSplit: React.FC = () => {
   const [activeSide, setActiveSide] = useState<"domestic" | "international">("domestic");
 
   return (
-    <section className="py-20 bg-brand-offwhite border-b border-brand-sand/30">
+    <section className="py-20 bg-brand-cream border-b border-brand-brown/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-sand">
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-brown">
             Two Spheres of Travel
           </span>
-          <h2 className="font-editorial text-3xl sm:text-5xl font-bold text-brand-deep tracking-tight">
+          <h2 className="font-editorial text-3xl sm:text-5xl font-bold text-brand-black tracking-tight">
             Himalayan Roots. Global Horizons.
           </h2>
           <p className="text-sm sm:text-base text-brand-charcoal/80 leading-relaxed">
@@ -30,19 +30,19 @@ export const DomesticInternationalSplit: React.FC = () => {
           {/* Left: Domestic Journeys */}
           <motion.div
             onMouseEnter={() => setActiveSide("domestic")}
-            className="group relative bg-brand-cream/50 border border-brand-sand/30 rounded-sm overflow-hidden p-6 sm:p-8 flex flex-col justify-between transition-all duration-500 hover:border-brand-deep hover:shadow-luxury"
+            className="group relative bg-brand-cream border border-brand-brown/10 rounded-card overflow-hidden p-6 sm:p-8 flex flex-col justify-between transition-all duration-500 hover:border-brand-brown hover:shadow-luxury"
           >
             <div>
               <div className="flex items-center justify-between mb-4">
-                <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-brand-deep bg-brand-offwhite px-3 py-1 rounded-xs border border-brand-sand/30 shadow-2xs">
-                  <Mountain className="w-4 h-4 text-brand-sand" /> Domestic Journeys
+                <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-brand-black bg-brand-brown/5 px-3 py-1 rounded-xs border border-brand-brown/10">
+                  <Mountain className="w-4 h-4 text-brand-brown" /> Domestic Journeys
                 </span>
                 <span className="text-[11px] font-mono text-brand-taupe uppercase">
                   5 Key Himalayan Regions
                 </span>
               </div>
 
-              <h3 className="font-editorial text-2xl sm:text-4xl font-bold text-brand-deep mb-3">
+              <h3 className="font-editorial text-2xl sm:text-4xl font-bold text-brand-black mb-3">
                 Across Mountain Valleys & Sacred High Passes
               </h3>
 
@@ -51,7 +51,7 @@ export const DomesticInternationalSplit: React.FC = () => {
               </p>
 
               {/* Visual Placeholder */}
-              <div className="mb-6 rounded-xs overflow-hidden border border-brand-sand/30">
+              <div className="mb-6 rounded-card overflow-hidden border border-brand-brown/10">
                 <ImagePlaceholder
                   aspectRatio="16:9"
                   category="Himalayan Sanctuary"
@@ -63,29 +63,29 @@ export const DomesticInternationalSplit: React.FC = () => {
               {/* Key Destinations List */}
               <div className="grid grid-cols-2 gap-2 text-xs text-brand-charcoal/90 mb-6">
                 <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-brand-sand" /> Kashmir & Gulmarg
+                  <CheckCircle2 className="w-3.5 h-3.5 text-brand-brown" /> Kashmir & Gulmarg
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-brand-sand" /> Leh Ladakh & Nubra
+                  <CheckCircle2 className="w-3.5 h-3.5 text-brand-brown" /> Leh Ladakh & Nubra
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-brand-sand" /> Himachal & Spiti
+                  <CheckCircle2 className="w-3.5 h-3.5 text-brand-brown" /> Himachal & Spiti
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-brand-sand" /> Uttarakhand Meadows
+                  <CheckCircle2 className="w-3.5 h-3.5 text-brand-brown" /> Uttarakhand Meadows
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-brand-sand" /> North East Valleys
+                  <CheckCircle2 className="w-3.5 h-3.5 text-brand-brown" /> North East Valleys
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-brand-sand" /> Andaman & Nicobar
+                  <CheckCircle2 className="w-3.5 h-3.5 text-brand-brown" /> Andaman & Nicobar
                 </span>
               </div>
             </div>
 
             <Link
               href="/destinations?region=domestic"
-              className="inline-flex items-center justify-between py-3 px-5 rounded-sm bg-brand-deep text-brand-offwhite text-xs font-semibold uppercase tracking-wider hover:bg-brand-espresso transition-colors group-hover:shadow-md"
+              className="inline-flex items-center justify-between py-3 px-5 rounded-sm bg-brand-brown text-brand-cream text-xs font-semibold uppercase tracking-wider hover:bg-brand-brown-dark transition-colors group-hover:shadow-md"
             >
               <span>Explore Domestic Journeys</span>
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -95,19 +95,19 @@ export const DomesticInternationalSplit: React.FC = () => {
           {/* Right: International Escapes */}
           <motion.div
             onMouseEnter={() => setActiveSide("international")}
-            className="group relative bg-brand-cream/50 border border-brand-sand/30 rounded-sm overflow-hidden p-6 sm:p-8 flex flex-col justify-between transition-all duration-500 hover:border-brand-deep hover:shadow-luxury"
+            className="group relative bg-brand-cream border border-brand-brown/10 rounded-card overflow-hidden p-6 sm:p-8 flex flex-col justify-between transition-all duration-500 hover:border-brand-brown hover:shadow-luxury"
           >
             <div>
               <div className="flex items-center justify-between mb-4">
-                <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-brand-deep bg-brand-offwhite px-3 py-1 rounded-xs border border-brand-sand/30 shadow-2xs">
-                  <Globe2 className="w-4 h-4 text-brand-sand" /> International Escapes
+                <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-brand-black bg-brand-brown/5 px-3 py-1 rounded-xs border border-brand-brown/10">
+                  <Globe2 className="w-4 h-4 text-brand-brown" /> International Escapes
                 </span>
                 <span className="text-[11px] font-mono text-brand-taupe uppercase">
                   Curated Global Sanctuaries
                 </span>
               </div>
 
-              <h3 className="font-editorial text-2xl sm:text-4xl font-bold text-brand-deep mb-3">
+              <h3 className="font-editorial text-2xl sm:text-4xl font-bold text-brand-black mb-3">
                 Island Sanctuaries & Metropolitan Luxury
               </h3>
 
@@ -116,7 +116,7 @@ export const DomesticInternationalSplit: React.FC = () => {
               </p>
 
               {/* Visual Placeholder */}
-              <div className="mb-6 rounded-xs overflow-hidden border border-brand-sand/30">
+              <div className="mb-6 rounded-card overflow-hidden border border-brand-brown/10">
                 <ImagePlaceholder
                   aspectRatio="16:9"
                   category="Global Escapes"
@@ -127,35 +127,35 @@ export const DomesticInternationalSplit: React.FC = () => {
               {/* Key Destinations List */}
               <div className="grid grid-cols-2 gap-2 text-xs text-brand-charcoal/90 mb-6">
                 <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-brand-sand" /> Bali Jungle Villas
+                  <CheckCircle2 className="w-3.5 h-3.5 text-brand-brown" /> Bali Jungle Villas
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-brand-sand" /> Dubai Luxury Safari
+                  <CheckCircle2 className="w-3.5 h-3.5 text-brand-brown" /> Dubai Luxury Safari
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-brand-sand" /> Thailand Island Charters
+                  <CheckCircle2 className="w-3.5 h-3.5 text-brand-brown" /> Thailand Island Charters
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-brand-sand" /> Singapore City Escapes
+                  <CheckCircle2 className="w-3.5 h-3.5 text-brand-brown" /> Singapore City Escapes
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-brand-sand" /> Malaysia Rainforests
+                  <CheckCircle2 className="w-3.5 h-3.5 text-brand-brown" /> Malaysia Rainforests
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-brand-sand" /> Nepal Himalayan Heritage
+                  <CheckCircle2 className="w-3.5 h-3.5 text-brand-brown" /> Nepal Himalayan Heritage
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-brand-sand" /> Bhutan Tiger&apos;s Nest Trails
+                  <CheckCircle2 className="w-3.5 h-3.5 text-brand-brown" /> Bhutan Tiger&apos;s Nest Trails
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-brand-sand" /> Guaranteed Visa Assistance
+                  <CheckCircle2 className="w-3.5 h-3.5 text-brand-brown" /> Guaranteed Visa Assistance
                 </span>
               </div>
             </div>
 
             <Link
               href="/destinations?region=international"
-              className="inline-flex items-center justify-between py-3 px-5 rounded-sm bg-brand-cream border border-brand-sand text-brand-deep text-xs font-semibold uppercase tracking-wider hover:bg-brand-sand/30 transition-colors"
+              className="inline-flex items-center justify-between py-3 px-5 rounded-sm bg-brand-cream border border-brand-brown text-brand-black text-xs font-semibold uppercase tracking-wider hover:bg-brand-brown/5 transition-colors"
             >
               <span>Explore International Escapes</span>
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />

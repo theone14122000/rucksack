@@ -70,7 +70,7 @@ const services = [
 
 export default function RailwayBookingPage() {
   return (
-    <div className="pt-24 pb-20 bg-brand-offwhite">
+    <div className="pt-24 pb-20 bg-brand-cream">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Breadcrumbs
           items={[
@@ -79,11 +79,11 @@ export default function RailwayBookingPage() {
           ]}
         />
 
-        <div className="py-12 border-b border-brand-sand/30 mb-16">
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-sand block mb-2">
+        <div className="py-12 border-b border-brand-brown/30 mb-16">
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-brown block mb-2">
             Rail Travel
           </span>
-          <h1 className="font-editorial text-4xl sm:text-6xl font-bold text-brand-deep tracking-tight mb-4">
+          <h1 className="font-editorial text-4xl sm:text-6xl font-bold text-brand-black tracking-tight mb-4">
             Railway & Toy Train Booking
           </h1>
           <p className="text-sm sm:text-base text-brand-charcoal/80 max-w-3xl leading-relaxed">
@@ -99,10 +99,10 @@ export default function RailwayBookingPage() {
           {services.map((feat) => (
             <div
               key={feat.title}
-              className="bg-brand-cream/30 border border-brand-sand/30 rounded-sm p-6 hover:border-brand-deep hover:shadow-luxury transition-all duration-300"
+              className="bg-brand-cream/30 border border-brand-brown/30 rounded-sm p-6 hover:border-brand-black hover:shadow-luxury transition-all duration-300"
             >
-              <feat.icon className="w-6 h-6 text-brand-sand mb-3" />
-              <h3 className="font-editorial text-lg font-bold text-brand-deep mb-2">
+              <feat.icon className="w-6 h-6 text-brand-brown mb-3" />
+              <h3 className="font-editorial text-lg font-bold text-brand-black mb-2">
                 {feat.title}
               </h3>
               <p className="text-xs text-brand-charcoal/80 leading-relaxed">
@@ -115,10 +115,10 @@ export default function RailwayBookingPage() {
         {/* Train Routes */}
         <div className="mb-20">
           <div className="text-center mb-10">
-            <span className="text-xs font-semibold uppercase tracking-widest text-brand-sand">
+            <span className="text-xs font-semibold uppercase tracking-widest text-brand-brown">
               Scenic Routes
             </span>
-            <h2 className="font-editorial text-3xl sm:text-4xl font-bold text-brand-deep mt-2">
+            <h2 className="font-editorial text-3xl sm:text-4xl font-bold text-brand-black mt-2">
               Rail Journeys to the Hills
             </h2>
           </div>
@@ -127,13 +127,13 @@ export default function RailwayBookingPage() {
             {trainRoutes.map((route) => (
               <div
                 key={route.name}
-                className="bg-brand-cream/30 border border-brand-sand/30 rounded-sm p-7 hover:border-brand-deep hover:shadow-luxury transition-all duration-300"
+                className="bg-brand-cream/30 border border-brand-brown/30 rounded-sm p-7 hover:border-brand-black hover:shadow-luxury transition-all duration-300"
               >
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="font-editorial text-lg font-bold text-brand-deep">
+                  <h3 className="font-editorial text-lg font-bold text-brand-black">
                     {route.name}
                   </h3>
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-brand-sand bg-brand-deep px-2 py-0.5 rounded-xs">
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-brand-brown bg-brand-black px-2 py-0.5 rounded-xs">
                     {route.type}
                   </span>
                 </div>
@@ -149,10 +149,10 @@ export default function RailwayBookingPage() {
         </div>
 
         {/* Toy Train Note */}
-        <div className="bg-brand-cream/60 border border-brand-sand/40 rounded-sm p-6 mb-16 flex items-start gap-4">
-          <AlertTriangle className="w-5 h-5 text-brand-warm shrink-0 mt-0.5" />
+        <div className="bg-brand-cream/60 border border-brand-brown/40 rounded-sm p-6 mb-16 flex items-start gap-4">
+          <AlertTriangle className="w-5 h-5 text-brand-brown shrink-0 mt-0.5" />
           <div>
-            <p className="text-sm font-semibold text-brand-deep mb-1">
+            <p className="text-sm font-semibold text-brand-black mb-1">
               Toy Train Advisory
             </p>
             <p className="text-xs text-brand-charcoal/80 leading-relaxed">
@@ -165,16 +165,16 @@ export default function RailwayBookingPage() {
         </div>
 
         {/* Enquiry */}
-        <div className="max-w-4xl mx-auto py-12 border-t border-brand-sand/30">
+        <div className="max-w-4xl mx-auto py-12 border-t border-brand-brown/30">
           <div className="text-center mb-8">
-            <span className="text-xs font-semibold uppercase tracking-widest text-brand-sand">
+            <span className="text-xs font-semibold uppercase tracking-widest text-brand-brown">
               Book Your Journey
             </span>
-            <h2 className="font-editorial text-3xl font-bold text-brand-deep mt-2">
+            <h2 className="font-editorial text-3xl font-bold text-brand-black mt-2">
               Request Railway Booking Assistance
             </h2>
           </div>
-          <div className="bg-brand-cream/40 border border-brand-sand/40 p-6 sm:p-10 rounded-sm shadow-luxury">
+          <div className="bg-brand-cream/40 border border-brand-brown/40 p-6 sm:p-10 rounded-sm shadow-luxury">
             <EnquiryForm defaultTravelType="Other" />
           </div>
         </div>

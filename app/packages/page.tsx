@@ -28,16 +28,16 @@ export default async function PackagesPage({
     : allPackages;
 
   return (
-    <div className="pt-24 pb-20 bg-brand-offwhite">
+    <div className="pt-24 pb-20 bg-brand-cream">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Breadcrumbs items={[{ label: "Tour Packages" }]} />
 
         {/* Page Header */}
-        <div className="py-8 border-b border-brand-sand/30 mb-10">
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-sand block mb-2">
+          <div className="py-8 border-b border-brand-brown/30 mb-10">
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-brown block mb-2">
             Curated Itineraries
           </span>
-          <h1 className="font-editorial text-4xl sm:text-6xl font-bold text-brand-deep tracking-tight mb-4">
+          <h1 className="font-editorial text-4xl sm:text-6xl font-bold text-brand-black tracking-tight mb-4">
             Tour Packages & Expeditions
           </h1>
           <p className="text-sm sm:text-base text-brand-charcoal/80 max-w-2xl leading-relaxed">
@@ -50,8 +50,8 @@ export default async function PackagesPage({
               href="/packages"
               className={`px-4 py-2 rounded-sm text-xs font-semibold tracking-wider uppercase border transition-colors ${
                 !typeFilter
-                  ? "bg-brand-deep text-brand-offwhite border-brand-deep"
-                  : "bg-brand-cream/60 text-brand-charcoal border-brand-sand/30 hover:border-brand-deep"
+                  ? "bg-brand-black text-brand-cream border-brand-black"
+                  : "bg-brand-cream/60 text-brand-charcoal border-brand-brown/30 hover:border-brand-black"
               }`}
             >
               All Packages ({allPackages.length})
@@ -60,8 +60,8 @@ export default async function PackagesPage({
               href="/packages?type=domestic"
               className={`px-4 py-2 rounded-sm text-xs font-semibold tracking-wider uppercase border transition-colors ${
                 typeFilter === "domestic"
-                  ? "bg-brand-deep text-brand-offwhite border-brand-deep"
-                  : "bg-brand-cream/60 text-brand-charcoal border-brand-sand/30 hover:border-brand-deep"
+                  ? "bg-brand-black text-brand-cream border-brand-black"
+                  : "bg-brand-cream/60 text-brand-charcoal border-brand-brown/30 hover:border-brand-black"
               }`}
             >
               Domestic Himalayan Packages
@@ -70,8 +70,8 @@ export default async function PackagesPage({
               href="/packages?type=international"
               className={`px-4 py-2 rounded-sm text-xs font-semibold tracking-wider uppercase border transition-colors ${
                 typeFilter === "international"
-                  ? "bg-brand-deep text-brand-offwhite border-brand-deep"
-                  : "bg-brand-cream/60 text-brand-charcoal border-brand-sand/30 hover:border-brand-deep"
+                  ? "bg-brand-black text-brand-cream border-brand-black"
+                  : "bg-brand-cream/60 text-brand-charcoal border-brand-brown/30 hover:border-brand-black"
               }`}
             >
               International Escapes

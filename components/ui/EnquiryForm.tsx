@@ -61,20 +61,20 @@ export const EnquiryForm: React.FC<EnquiryFormProps> = ({
   const handleWhatsAppDirect = () => {
     const text = encodeURIComponent(
       `Hello Rucksack Adventures! I want to enquire about:
-• Destination: ${formData.destination || "Himalayan Journey"}
-• Travel Type: ${formData.travelType}
-• Travellers: ${formData.travellersCount}
-• Dates: ${formData.travelDate || "Upcoming"}
-• Name: ${formData.name || "Traveler"}`
+\`Destination: ${formData.destination || "Himalayan Journey"}
+\`Travel Type: ${formData.travelType}
+\`Travellers: ${formData.travellersCount}
+\`Dates: ${formData.travelDate || "Upcoming"}
+\`Name: ${formData.name || "Traveler"}`
     );
     window.open(`https://wa.me/917018678064?text=${text}`, "_blank");
   };
 
   if (submitted) {
     return (
-      <div className="bg-brand-cream/60 border border-brand-sand/40 p-8 rounded-sm text-center">
+      <div className="bg-brand-cream border border-brand-brown/15 p-8 rounded-card text-center">
         <CheckCircle2 className="w-12 h-12 text-emerald-700 mx-auto mb-3" />
-        <h3 className="font-editorial text-2xl font-bold text-brand-deep mb-2">
+        <h3 className="font-editorial text-2xl font-bold text-brand-black mb-2">
           Enquiry Received with Gratitude
         </h3>
         <p className="text-sm text-brand-charcoal/80 mb-6 max-w-md mx-auto leading-relaxed">
@@ -115,7 +115,7 @@ export const EnquiryForm: React.FC<EnquiryFormProps> = ({
   return (
     <form onSubmit={handleSubmit} className={`space-y-4 ${className}`}>
       {error && (
-        <div className="p-3 bg-rose-50 border border-rose-200 text-rose-800 text-xs rounded-sm flex items-center gap-2">
+        <div className="p-3 bg-rose-50 border border-rose-200 text-rose-800 text-xs rounded-card flex items-center gap-2">
           <AlertCircle className="w-4 h-4 shrink-0" />
           <span>{error}</span>
         </div>
@@ -123,7 +123,7 @@ export const EnquiryForm: React.FC<EnquiryFormProps> = ({
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-brand-charcoal mb-1">
+          <label className="block text-xs font-semibold uppercase tracking-wider text-brand-black mb-1">
             Your Full Name *
           </label>
           <input
@@ -132,12 +132,12 @@ export const EnquiryForm: React.FC<EnquiryFormProps> = ({
             placeholder="e.g. Vikram Sharma"
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-            className="w-full bg-brand-offwhite border border-brand-sand/40 rounded-sm px-3.5 py-2.5 text-sm text-brand-charcoal focus:border-brand-deep focus:ring-1 focus:ring-brand-deep outline-hidden transition-all"
+            className="w-full bg-white border border-brand-brown/15 rounded-card px-3.5 py-2.5 text-sm text-brand-black focus:border-brand-brown focus:ring-1 focus:ring-brand-brown/30 outline-hidden transition-all"
           />
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-brand-charcoal mb-1">
+          <label className="block text-xs font-semibold uppercase tracking-wider text-brand-black mb-1">
             Phone / WhatsApp Number *
           </label>
           <input
@@ -146,14 +146,14 @@ export const EnquiryForm: React.FC<EnquiryFormProps> = ({
             placeholder="e.g. 7018678064"
             value={formData.phone}
             onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-            className="w-full bg-brand-offwhite border border-brand-sand/40 rounded-sm px-3.5 py-2.5 text-sm text-brand-charcoal focus:border-brand-deep focus:ring-1 focus:ring-brand-deep outline-hidden transition-all"
+            className="w-full bg-white border border-brand-brown/15 rounded-card px-3.5 py-2.5 text-sm text-brand-black focus:border-brand-brown focus:ring-1 focus:ring-brand-brown/30 outline-hidden transition-all"
           />
         </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-brand-charcoal mb-1">
+          <label className="block text-xs font-semibold uppercase tracking-wider text-brand-black mb-1">
             Email Address *
           </label>
           <input
@@ -162,18 +162,18 @@ export const EnquiryForm: React.FC<EnquiryFormProps> = ({
             placeholder="vikram@example.com"
             value={formData.email}
             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-            className="w-full bg-brand-offwhite border border-brand-sand/40 rounded-sm px-3.5 py-2.5 text-sm text-brand-charcoal focus:border-brand-deep focus:ring-1 focus:ring-brand-deep outline-hidden transition-all"
+            className="w-full bg-white border border-brand-brown/15 rounded-card px-3.5 py-2.5 text-sm text-brand-black focus:border-brand-brown focus:ring-1 focus:ring-brand-brown/30 outline-hidden transition-all"
           />
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-brand-charcoal mb-1">
+          <label className="block text-xs font-semibold uppercase tracking-wider text-brand-black mb-1">
             Travel Type *
           </label>
           <select
             value={formData.travelType}
             onChange={(e) => setFormData({ ...formData, travelType: e.target.value as any })}
-            className="w-full bg-brand-offwhite border border-brand-sand/40 rounded-sm px-3.5 py-2.5 text-sm text-brand-charcoal focus:border-brand-deep focus:ring-1 focus:ring-brand-deep outline-hidden transition-all"
+            className="w-full bg-white border border-brand-brown/15 rounded-card px-3.5 py-2.5 text-sm text-brand-black focus:border-brand-brown focus:ring-1 focus:ring-brand-brown/30 outline-hidden transition-all"
           >
             <option value="Domestic">Domestic Journey (Himalayas / India)</option>
             <option value="International">International Escape</option>
@@ -187,7 +187,7 @@ export const EnquiryForm: React.FC<EnquiryFormProps> = ({
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-brand-charcoal mb-1">
+          <label className="block text-xs font-semibold uppercase tracking-wider text-brand-black mb-1">
             Destination of Choice *
           </label>
           <input
@@ -196,24 +196,24 @@ export const EnquiryForm: React.FC<EnquiryFormProps> = ({
             placeholder="e.g. Spiti, Kashmir, Bali"
             value={formData.destination}
             onChange={(e) => setFormData({ ...formData, destination: e.target.value })}
-            className="w-full bg-brand-offwhite border border-brand-sand/40 rounded-sm px-3.5 py-2.5 text-sm text-brand-charcoal focus:border-brand-deep focus:ring-1 focus:ring-brand-deep outline-hidden transition-all"
+            className="w-full bg-white border border-brand-brown/15 rounded-card px-3.5 py-2.5 text-sm text-brand-black focus:border-brand-brown focus:ring-1 focus:ring-brand-brown/30 outline-hidden transition-all"
           />
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-brand-charcoal mb-1">
+          <label className="block text-xs font-semibold uppercase tracking-wider text-brand-black mb-1">
             Preferred Travel Date
           </label>
           <input
             type="date"
             value={formData.travelDate}
             onChange={(e) => setFormData({ ...formData, travelDate: e.target.value })}
-            className="w-full bg-brand-offwhite border border-brand-sand/40 rounded-sm px-3.5 py-2.5 text-sm text-brand-charcoal focus:border-brand-deep focus:ring-1 focus:ring-brand-deep outline-hidden transition-all"
+            className="w-full bg-white border border-brand-brown/15 rounded-card px-3.5 py-2.5 text-sm text-brand-black focus:border-brand-brown focus:ring-1 focus:ring-brand-brown/30 outline-hidden transition-all"
           />
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-brand-charcoal mb-1">
+          <label className="block text-xs font-semibold uppercase tracking-wider text-brand-black mb-1">
             Travellers Count
           </label>
           <input
@@ -221,13 +221,13 @@ export const EnquiryForm: React.FC<EnquiryFormProps> = ({
             placeholder="e.g. 2 Adults, 1 Child"
             value={formData.travellersCount}
             onChange={(e) => setFormData({ ...formData, travellersCount: e.target.value })}
-            className="w-full bg-brand-offwhite border border-brand-sand/40 rounded-sm px-3.5 py-2.5 text-sm text-brand-charcoal focus:border-brand-deep focus:ring-1 focus:ring-brand-deep outline-hidden transition-all"
+            className="w-full bg-white border border-brand-brown/15 rounded-card px-3.5 py-2.5 text-sm text-brand-black focus:border-brand-brown focus:ring-1 focus:ring-brand-brown/30 outline-hidden transition-all"
           />
         </div>
       </div>
 
       <div>
-        <label className="block text-xs font-semibold uppercase tracking-wider text-brand-charcoal mb-1">
+        <label className="block text-xs font-semibold uppercase tracking-wider text-brand-black mb-1">
           Special Requests / Preferences / Budget
         </label>
         <textarea
@@ -235,7 +235,7 @@ export const EnquiryForm: React.FC<EnquiryFormProps> = ({
           placeholder="Tell us about hotel categories, pace of travel, vehicle requirements, or dietary preferences..."
           value={formData.message}
           onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-          className="w-full bg-brand-offwhite border border-brand-sand/40 rounded-sm px-3.5 py-2.5 text-sm text-brand-charcoal focus:border-brand-deep focus:ring-1 focus:ring-brand-deep outline-hidden transition-all"
+          className="w-full bg-white border border-brand-brown/15 rounded-card px-3.5 py-2.5 text-sm text-brand-black focus:border-brand-brown focus:ring-1 focus:ring-brand-brown/30 outline-hidden transition-all"
         />
       </div>
 
@@ -262,7 +262,7 @@ export const EnquiryForm: React.FC<EnquiryFormProps> = ({
         </Button>
       </div>
       <p className="text-[11px] text-center text-brand-taupe">
-        🔒 Confidential & Direct. No spam. You will be connected directly with a certified Himalayan trip planner.
+        Confidential & Direct. No spam. You will be connected directly with a certified Himalayan trip planner.
       </p>
     </form>
   );

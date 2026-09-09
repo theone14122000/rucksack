@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { ArrowRight, Mountain, Car, Train, ShieldCheck, Sparkles, Compass } from "lucide-react";
+import { ArrowRight, Mountain, Car, Train, Compass } from "lucide-react";
 import { HeroSection } from "@/components/hero/HeroSection";
 import { TrustStrip } from "@/components/sections/TrustStrip";
 import { DomesticInternationalSplit } from "@/components/sections/DomesticInternationalSplit";
@@ -11,7 +11,6 @@ import { PackageCard } from "@/components/cards/PackageCard";
 import { TrekCard } from "@/components/cards/TrekCard";
 import { TestimonialCard } from "@/components/cards/TestimonialCard";
 import { EnquiryForm } from "@/components/ui/EnquiryForm";
-import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
 import { Button } from "@/components/ui/Button";
 import {
   getDestinations,
@@ -22,7 +21,7 @@ import {
   getFAQs,
 } from "@/lib/cms/store";
 
-export const revalidate = 0; // Fresh CMS data on every request
+export const revalidate = 0;
 
 export default async function HomePage() {
   const [destinations, featuredPackages, featuredTreks, experiences, testimonials, faqs] =
@@ -47,14 +46,14 @@ export default async function HomePage() {
       <TrustStrip />
 
       {/* SECTION 03 — DISCOVER INDIA: DOMESTIC DESTINATIONS */}
-      <section className="py-20 bg-brand-offwhite">
+      <section className="py-20 bg-brand-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
             <div className="space-y-2 max-w-2xl">
-              <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-sand flex items-center gap-1.5">
-                <Mountain className="w-3.5 h-3.5 text-brand-sand" /> Domestic Exploration
+              <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-brown flex items-center gap-1.5">
+                <Mountain className="w-3.5 h-3.5" /> Domestic Exploration
               </span>
-              <h2 className="font-editorial text-3xl sm:text-5xl font-bold text-brand-deep tracking-tight">
+              <h2 className="font-editorial text-3xl sm:text-5xl font-bold text-brand-black tracking-tight">
                 Journeys Across India
               </h2>
               <p className="text-sm sm:text-base text-brand-charcoal/80 leading-relaxed">
@@ -64,7 +63,7 @@ export default async function HomePage() {
 
             <Link
               href="/destinations?region=domestic"
-              className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-brand-deep hover:text-brand-warm transition-colors py-2 px-4 rounded-sm border border-brand-sand/40 hover:bg-brand-cream/60 shrink-0 self-start md:self-auto"
+              className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-brand-brown hover:text-brand-brown-dark transition-colors py-2 px-4 rounded-sm border border-brand-brown/20 hover:bg-brand-brown/5 shrink-0 self-start md:self-auto"
             >
               <span>View All Domestic ({domesticDestinations.length})</span>
               <ArrowRight className="w-4 h-4" />
@@ -83,14 +82,14 @@ export default async function HomePage() {
       <DomesticInternationalSplit />
 
       {/* SECTION 05 — INTERNATIONAL DESTINATIONS */}
-      <section className="py-20 bg-brand-cream/30 border-b border-brand-sand/30">
+      <section className="py-20 bg-brand-cream/50 border-b border-brand-brown/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
             <div className="space-y-2 max-w-2xl">
-              <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-sand">
+              <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-brown">
                 Global Sanctuaries
               </span>
-              <h2 className="font-editorial text-3xl sm:text-5xl font-bold text-brand-deep tracking-tight">
+              <h2 className="font-editorial text-3xl sm:text-5xl font-bold text-brand-black tracking-tight">
                 International Escapes
               </h2>
               <p className="text-sm sm:text-base text-brand-charcoal/80 leading-relaxed">
@@ -100,7 +99,7 @@ export default async function HomePage() {
 
             <Link
               href="/destinations?region=international"
-              className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-brand-deep hover:text-brand-warm transition-colors py-2 px-4 rounded-sm border border-brand-sand/40 hover:bg-brand-cream/60 shrink-0 self-start md:self-auto"
+              className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-brand-brown hover:text-brand-brown-dark transition-colors py-2 px-4 rounded-sm border border-brand-brown/20 hover:bg-brand-brown/5 shrink-0 self-start md:self-auto"
             >
               <span>Explore All Global ({internationalDestinations.length})</span>
               <ArrowRight className="w-4 h-4" />
@@ -116,14 +115,14 @@ export default async function HomePage() {
       </section>
 
       {/* SECTION 06 — FEATURED JOURNEYS */}
-      <section className="py-20 bg-brand-offwhite border-b border-brand-sand/30">
+      <section className="py-20 bg-brand-cream border-b border-brand-brown/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
             <div className="space-y-2 max-w-2xl">
-              <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-sand">
+              <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-brown">
                 Handcrafted Itineraries
               </span>
-              <h2 className="font-editorial text-3xl sm:text-5xl font-bold text-brand-deep tracking-tight">
+              <h2 className="font-editorial text-3xl sm:text-5xl font-bold text-brand-black tracking-tight">
                 Featured Journeys
               </h2>
               <p className="text-sm sm:text-base text-brand-charcoal/80 leading-relaxed">
@@ -133,7 +132,7 @@ export default async function HomePage() {
 
             <Link
               href="/packages"
-              className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-brand-deep hover:text-brand-warm transition-colors py-2 px-4 rounded-sm border border-brand-sand/40 hover:bg-brand-cream/60 shrink-0 self-start md:self-auto"
+              className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-brand-brown hover:text-brand-brown-dark transition-colors py-2 px-4 rounded-sm border border-brand-brown/20 hover:bg-brand-brown/5 shrink-0 self-start md:self-auto"
             >
               <span>Browse All Packages ({featuredPackages.length})</span>
               <ArrowRight className="w-4 h-4" />
@@ -149,7 +148,7 @@ export default async function HomePage() {
       </section>
 
       {/* SECTION 07 — TREKKING SECTION: INTO THE MOUNTAINS */}
-      <section className="py-24 bg-brand-espresso text-brand-cream relative overflow-hidden border-b border-brand-sand/30">
+      <section className="py-24 bg-brand-black text-brand-cream relative overflow-hidden border-b border-brand-brown/10">
         <div className="absolute inset-0 bg-grain-dark opacity-30 pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -157,16 +156,16 @@ export default async function HomePage() {
             <span className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold uppercase tracking-[0.25em] text-brand-sand">
               <Mountain className="w-4 h-4 text-brand-sand" /> High Himalayan Ascents
             </span>
-            <h2 className="font-editorial text-4xl sm:text-6xl font-bold text-brand-offwhite tracking-tight">
+            <h2 className="font-editorial text-4xl sm:text-6xl font-bold text-brand-cream tracking-tight">
               Into the Mountains
             </h2>
-            <p className="text-sm sm:text-base text-brand-cream/80 leading-relaxed">
+            <p className="text-sm sm:text-base text-brand-cream/70 leading-relaxed">
               Curated Himalayan trekking experiences for explorers seeking something beyond conventional travel. Certified wilderness leaders, medical oxygen support, and 4-season alpine gear.
             </p>
           </div>
 
           {/* Interactive 3D Topographic Contour */}
-          <div className="mb-14 rounded-sm border border-brand-sand/30 bg-brand-deep/80 overflow-hidden shadow-2xl">
+          <div className="mb-14 rounded-card border border-white/10 bg-brand-charcoal/50 overflow-hidden shadow-2xl">
             <TopographicContour3D />
           </div>
 
@@ -178,25 +177,25 @@ export default async function HomePage() {
           </div>
 
           <div className="text-center mt-12">
-            <Button variant="outline" size="lg" href="/treks" className="border-brand-sand/40 text-brand-cream hover:bg-brand-sand/15">
-              Explore All Himalayan Trek Routes →
+            <Button variant="outline" size="lg" href="/treks" className="border-brand-sand/30 text-brand-cream hover:bg-brand-sand/10">
+              Explore All Himalayan Trek Routes &rarr;
             </Button>
           </div>
         </div>
       </section>
 
       {/* SECTION 08 — EXPERIENCES BEYOND PACKAGES */}
-      <section className="py-20 bg-brand-cream/40 border-b border-brand-sand/30">
+      <section className="py-20 bg-brand-cream/50 border-b border-brand-brown/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
-            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-sand">
+            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-brown">
               Curated Travel Styles
             </span>
-            <h2 className="font-editorial text-3xl sm:text-5xl font-bold text-brand-deep tracking-tight">
+            <h2 className="font-editorial text-3xl sm:text-5xl font-bold text-brand-black tracking-tight">
               Signature Travel Experiences
             </h2>
             <p className="text-sm sm:text-base text-brand-charcoal/80 leading-relaxed">
-              Tailored journeys designed around your personal travel rhythm — from romantic alpine sanctuaries to family expeditions and sacred pilgrimages.
+              Tailored journeys designed around your personal travel rhythm &mdash; from romantic alpine sanctuaries to family expeditions and sacred pilgrimages.
             </p>
           </div>
 
@@ -204,24 +203,24 @@ export default async function HomePage() {
             {experiences.map((exp) => (
               <div
                 key={exp.id}
-                className="bg-brand-offwhite border border-brand-sand/30 rounded-sm p-6 space-y-4 hover:border-brand-deep transition-all duration-300 hover:shadow-luxury"
+                className="bg-brand-cream border border-brand-brown/10 rounded-card p-6 space-y-4 hover:border-brand-brown transition-all duration-300 hover:shadow-luxury"
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] uppercase font-mono tracking-widest text-brand-taupe bg-brand-cream px-2 py-0.5 rounded-xs border border-brand-sand/30">
+                  <span className="text-[10px] uppercase font-mono tracking-widest text-brand-taupe bg-brand-brown/5 px-2 py-0.5 rounded-xs border border-brand-brown/10">
                     {exp.category}
                   </span>
-                  <Sparkles className="w-4 h-4 text-brand-sand" />
+                  <Compass className="w-4 h-4 text-brand-brown" />
                 </div>
-                <h3 className="font-editorial text-2xl font-bold text-brand-deep">
+                <h3 className="font-editorial text-2xl font-bold text-brand-black">
                   {exp.name}
                 </h3>
                 <p className="text-xs sm:text-sm text-brand-charcoal/80 leading-relaxed">
                   {exp.shortDescription}
                 </p>
-                <div className="pt-2 border-t border-brand-sand/15 space-y-1">
+                <div className="pt-2 border-t border-brand-brown/10 space-y-1">
                   {exp.highlights.slice(0, 2).map((h, idx) => (
                     <p key={idx} className="text-xs text-brand-taupe flex items-center gap-1.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-brand-sand" /> {h}
+                      <span className="w-1.5 h-1.5 rounded-full bg-brand-brown" /> {h}
                     </p>
                   ))}
                 </div>
@@ -231,14 +230,14 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* SECTION 09 — SPECIALIZED SERVICES SUMMARY (Taxi, Pilgrimage, Bus, Railway) */}
-      <section className="py-20 bg-brand-offwhite border-b border-brand-sand/30">
+      {/* SECTION 09 — SPECIALIZED SERVICES SUMMARY */}
+      <section className="py-20 bg-brand-cream border-b border-brand-brown/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
-            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-sand">
+            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-brown">
               Reliable Ground Logistics
             </span>
-            <h2 className="font-editorial text-3xl sm:text-5xl font-bold text-brand-deep tracking-tight">
+            <h2 className="font-editorial text-3xl sm:text-5xl font-bold text-brand-black tracking-tight">
               Specialized Transport & Pilgrimage Desk
             </h2>
             <p className="text-sm sm:text-base text-brand-charcoal/80 leading-relaxed">
@@ -248,76 +247,76 @@ export default async function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Service 1: Taxi Services */}
-            <div className="bg-brand-cream/30 border border-brand-sand/30 rounded-sm p-7 flex flex-col justify-between hover:border-brand-deep transition-all duration-300">
+            <div className="bg-brand-cream border border-brand-brown/10 rounded-card p-7 flex flex-col justify-between hover:border-brand-brown transition-all duration-300">
               <div className="space-y-4">
-                <div className="w-12 h-12 rounded-sm bg-brand-deep text-brand-sand flex items-center justify-center">
-                  <Car className="w-6 h-6 text-brand-sand" />
+                <div className="w-12 h-12 rounded-card bg-brand-brown text-brand-cream flex items-center justify-center">
+                  <Car className="w-6 h-6" />
                 </div>
-                <h3 className="font-editorial text-2xl font-bold text-brand-deep">
+                <h3 className="font-editorial text-2xl font-bold text-brand-black">
                   Shimla Taxi & Outstation Fleet
                 </h3>
                 <p className="text-xs sm:text-sm text-brand-charcoal/80 leading-relaxed">
                   Dedicated airport transfers (Chandigarh, Delhi, Shimla Jubbarhatti), local Shimla heritage sightseeing, and rugged mountain 4x4 transfers to Kinnaur and Spiti.
                 </p>
                 <ul className="text-xs text-brand-taupe space-y-1.5 pt-2">
-                  <li>✓ Toyota Innova Crysta & 4x4 Scorpio</li>
-                  <li>✓ Professional local Pahari mountain chauffeurs</li>
-                  <li>✓ Transparent pricing with zero hidden toll surprises</li>
+                  <li>&#10003; Toyota Innova Crysta &amp; 4x4 Scorpio</li>
+                  <li>&#10003; Professional local Pahari mountain chauffeurs</li>
+                  <li>&#10003; Transparent pricing with zero hidden toll surprises</li>
                 </ul>
               </div>
-              <div className="pt-6 mt-4 border-t border-brand-sand/20">
+              <div className="pt-6 mt-4 border-t border-brand-brown/10">
                 <Button variant="outline" size="sm" href="/taxi-services" fullWidth>
-                  Explore Taxi Services & Rates →
+                  Explore Taxi Services &amp; Rates &rarr;
                 </Button>
               </div>
             </div>
 
             {/* Service 2: Pilgrimage Tour */}
-            <div className="bg-brand-cream/30 border border-brand-sand/30 rounded-sm p-7 flex flex-col justify-between hover:border-brand-deep transition-all duration-300">
+            <div className="bg-brand-cream border border-brand-brown/10 rounded-card p-7 flex flex-col justify-between hover:border-brand-brown transition-all duration-300">
               <div className="space-y-4">
-                <div className="w-12 h-12 rounded-sm bg-brand-deep text-brand-sand flex items-center justify-center">
-                  <Mountain className="w-6 h-6 text-brand-sand" />
+                <div className="w-12 h-12 rounded-card bg-brand-brown text-brand-cream flex items-center justify-center">
+                  <Mountain className="w-6 h-6" />
                 </div>
-                <h3 className="font-editorial text-2xl font-bold text-brand-deep">
+                <h3 className="font-editorial text-2xl font-bold text-brand-black">
                   Pilgrimage Tour Packages
                 </h3>
                 <p className="text-xs sm:text-sm text-brand-charcoal/80 leading-relaxed">
                   Comprehensive pilgrimage coordination including helicopter slots, compulsory health certificate guidance, and verified comfortable lodgings across Char Dham and temple circuits.
                 </p>
                 <ul className="text-xs text-brand-taupe space-y-1.5 pt-2">
-                  <li>✓ Helicopter ticket pre-registration support</li>
-                  <li>✓ Private vehicle transfers from railhead / airport</li>
-                  <li>✓ Dedicated medical guidelines & packing advisory</li>
+                  <li>&#10003; Helicopter ticket pre-registration support</li>
+                  <li>&#10003; Private vehicle transfers from railhead / airport</li>
+                  <li>&#10003; Dedicated medical guidelines &amp; packing advisory</li>
                 </ul>
               </div>
-              <div className="pt-6 mt-4 border-t border-brand-sand/20">
+              <div className="pt-6 mt-4 border-t border-brand-brown/10">
                 <Button variant="outline" size="sm" href="/pilgrimage-tour" fullWidth>
-                  View Pilgrimage Tour Details →
+                  View Pilgrimage Tour Details &rarr;
                 </Button>
               </div>
             </div>
 
             {/* Service 3: Bus & Railway Booking */}
-            <div className="bg-brand-cream/30 border border-brand-sand/30 rounded-sm p-7 flex flex-col justify-between hover:border-brand-deep transition-all duration-300">
+            <div className="bg-brand-cream border border-brand-brown/10 rounded-card p-7 flex flex-col justify-between hover:border-brand-brown transition-all duration-300">
               <div className="space-y-4">
-                <div className="w-12 h-12 rounded-sm bg-brand-deep text-brand-sand flex items-center justify-center">
-                  <Train className="w-6 h-6 text-brand-sand" />
+                <div className="w-12 h-12 rounded-card bg-brand-brown text-brand-cream flex items-center justify-center">
+                  <Train className="w-6 h-6" />
                 </div>
-                <h3 className="font-editorial text-2xl font-bold text-brand-deep">
-                  Bus & Toy Train Reservation
+                <h3 className="font-editorial text-2xl font-bold text-brand-black">
+                  Bus &amp; Toy Train Reservation
                 </h3>
                 <p className="text-xs sm:text-sm text-brand-charcoal/80 leading-relaxed">
                   Ticketing assistance for UNESCO Kalka-Shimla heritage toy train rides and luxury Volvo/Scania multi-axle buses connecting Delhi, Chandigarh, Shimla, and Manali.
                 </p>
                 <ul className="text-xs text-brand-taupe space-y-1.5 pt-2">
-                  <li>✓ Kalka-Shimla Toy Train confirmed bookings</li>
-                  <li>✓ HPTDC & premium private Volvo buses</li>
-                  <li>✓ Express enquiry response desk</li>
+                  <li>&#10003; Kalka-Shimla Toy Train confirmed bookings</li>
+                  <li>&#10003; HPTDC &amp; premium private Volvo buses</li>
+                  <li>&#10003; Express enquiry response desk</li>
                 </ul>
               </div>
-              <div className="pt-6 mt-4 border-t border-brand-sand/20">
+              <div className="pt-6 mt-4 border-t border-brand-brown/10">
                 <Button variant="outline" size="sm" href="/bus-booking" fullWidth>
-                  Enquire for Bus & Trains →
+                  Enquire for Bus &amp; Trains &rarr;
                 </Button>
               </div>
             </div>
@@ -326,13 +325,13 @@ export default async function HomePage() {
       </section>
 
       {/* SECTION 10 — TESTIMONIALS */}
-      <section className="py-20 bg-brand-cream/40 border-b border-brand-sand/30">
+      <section className="py-20 bg-brand-cream/50 border-b border-brand-brown/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
-            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-sand">
+            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-brown">
               Guest Reflections
             </span>
-            <h2 className="font-editorial text-3xl sm:text-5xl font-bold text-brand-deep tracking-tight">
+            <h2 className="font-editorial text-3xl sm:text-5xl font-bold text-brand-black tracking-tight">
               Words From Our Travelers
             </h2>
             <p className="text-sm sm:text-base text-brand-charcoal/80 leading-relaxed">
@@ -349,13 +348,13 @@ export default async function HomePage() {
       </section>
 
       {/* SECTION 11 — QUICK ENQUIRY SECTION */}
-      <section className="py-20 bg-brand-offwhite border-b border-brand-sand/30">
+      <section className="py-20 bg-brand-cream border-b border-brand-brown/10">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10 space-y-2">
-            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-sand">
+            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-brown">
               Direct Himalayan Concierge
             </span>
-            <h2 className="font-editorial text-3xl sm:text-5xl font-bold text-brand-deep">
+            <h2 className="font-editorial text-3xl sm:text-5xl font-bold text-brand-black">
               Begin Your Travel Story
             </h2>
             <p className="text-xs sm:text-sm text-brand-taupe max-w-md mx-auto">
@@ -363,14 +362,14 @@ export default async function HomePage() {
             </p>
           </div>
 
-          <div className="bg-brand-cream/30 border border-brand-sand/40 p-6 sm:p-10 rounded-sm shadow-luxury">
+          <div className="bg-brand-cream border border-brand-brown/15 p-6 sm:p-10 rounded-card shadow-luxury">
             <EnquiryForm />
           </div>
         </div>
       </section>
 
       {/* SECTION 12 — FAQ ACCORDION */}
-      <section className="py-20 bg-brand-offwhite">
+      <section className="py-20 bg-brand-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FAQAccordion faqs={faqs} />
         </div>
