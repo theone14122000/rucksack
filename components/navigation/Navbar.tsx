@@ -50,7 +50,7 @@ export const Navbar: React.FC = () => {
           "fixed top-0 left-0 right-0 z-40 transition-all duration-500",
           scrolled
             ? "bg-brand-brown/95 backdrop-blur-md shadow-lg py-3"
-            : "bg-brand-brown/90 backdrop-blur-sm py-4"
+            : "bg-brand-brown/80 backdrop-blur-sm py-4"
         )}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
@@ -118,12 +118,12 @@ export const Navbar: React.FC = () => {
 
               {servicesDropdown && (
                 <div className="absolute top-full left-0 w-64 pt-2 shadow-2xl z-50 animate-in fade-in slide-in-from-top-2 duration-200">
-                  <div className="bg-brand-brown border border-white/10 rounded-sm p-2 shadow-xl">
+                  <div className="bg-brand-brown border border-white/10 rounded-card p-2 shadow-xl">
                     {services.map((svc) => (
                       <Link
                         key={svc.href}
                         href={svc.href}
-                        className="block p-2.5 rounded-sm hover:bg-white/10 transition-colors group"
+                        className="block p-2.5 rounded-card hover:bg-white/10 transition-colors group"
                       >
                         <p className="text-xs font-semibold text-brand-cream group-hover:text-white">
                           {svc.title}

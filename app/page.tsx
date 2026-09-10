@@ -50,11 +50,12 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
             <div className="space-y-2 max-w-2xl">
-              <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-brown flex items-center gap-1.5">
+              <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-sage flex items-center gap-1.5">
                 <Mountain className="w-3.5 h-3.5" /> Domestic Exploration
               </span>
               <h2 className="font-editorial text-3xl sm:text-5xl font-bold text-brand-black tracking-tight">
-                Journeys Across India
+                Journeys Across{" "}
+                <span className="font-cursive italic text-brand-brown">India</span>
               </h2>
               <p className="text-sm sm:text-base text-brand-charcoal/80 leading-relaxed">
                 Curated journeys across towering mountains, emerald valleys, living heritage, and spiritual frontiers. Handcrafted from our local Shimla headquarters.
@@ -86,11 +87,12 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
             <div className="space-y-2 max-w-2xl">
-              <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-brown">
+              <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-terracotta">
                 Global Sanctuaries
               </span>
               <h2 className="font-editorial text-3xl sm:text-5xl font-bold text-brand-black tracking-tight">
-                International Escapes
+                International{" "}
+                <span className="font-cursive italic text-brand-terracotta">Escapes</span>
               </h2>
               <p className="text-sm sm:text-base text-brand-charcoal/80 leading-relaxed">
                 Boutique international getaways featuring private villas, secluded island shores, and desert luxury with complete visa and concierge support.
@@ -119,11 +121,12 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
             <div className="space-y-2 max-w-2xl">
-              <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-brown">
+              <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-gold">
                 Handcrafted Itineraries
               </span>
               <h2 className="font-editorial text-3xl sm:text-5xl font-bold text-brand-black tracking-tight">
-                Featured Journeys
+                Featured{" "}
+                <span className="font-cursive italic text-brand-gold">Journeys</span>
               </h2>
               <p className="text-sm sm:text-base text-brand-charcoal/80 leading-relaxed">
                 Thoughtfully paced, deeply immersive itineraries with verified mountain chauffeurs and handpicked boutique accommodations.
@@ -148,16 +151,18 @@ export default async function HomePage() {
       </section>
 
       {/* SECTION 07 — TREKKING SECTION: INTO THE MOUNTAINS */}
-      <section className="py-24 bg-brand-black text-brand-cream relative overflow-hidden border-b border-brand-brown/10">
+      <section className="py-24 bg-brand-deep-forest text-brand-cream relative overflow-hidden border-b border-brand-brown/10">
+        <div className="absolute inset-0 bg-gradient-to-br from-brand-deep-forest via-brand-brown-dark to-brand-black opacity-80" />
         <div className="absolute inset-0 bg-grain-dark opacity-30 pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
-            <span className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold uppercase tracking-[0.25em] text-brand-sand">
-              <Mountain className="w-4 h-4 text-brand-sand" /> High Himalayan Ascents
+            <span className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold uppercase tracking-[0.25em] text-brand-sage">
+              <Mountain className="w-4 h-4 text-brand-sage" /> High Himalayan Ascents
             </span>
             <h2 className="font-editorial text-4xl sm:text-6xl font-bold text-brand-cream tracking-tight">
-              Into the Mountains
+              Into the{" "}
+              <span className="font-cursive italic text-brand-gold">Mountains</span>
             </h2>
             <p className="text-sm sm:text-base text-brand-cream/70 leading-relaxed">
               Curated Himalayan trekking experiences for explorers seeking something beyond conventional travel. Certified wilderness leaders, medical oxygen support, and 4-season alpine gear.
@@ -188,11 +193,12 @@ export default async function HomePage() {
       <section className="py-20 bg-brand-cream/50 border-b border-brand-brown/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
-            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-brown">
+            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-sage">
               Curated Travel Styles
             </span>
             <h2 className="font-editorial text-3xl sm:text-5xl font-bold text-brand-black tracking-tight">
-              Signature Travel Experiences
+              Signature Travel{" "}
+              <span className="font-cursive italic text-brand-sage">Experiences</span>
             </h2>
             <p className="text-sm sm:text-base text-brand-charcoal/80 leading-relaxed">
               Tailored journeys designed around your personal travel rhythm &mdash; from romantic alpine sanctuaries to family expeditions and sacred pilgrimages.
@@ -203,13 +209,13 @@ export default async function HomePage() {
             {experiences.map((exp) => (
               <div
                 key={exp.id}
-                className="bg-brand-cream border border-brand-brown/10 rounded-card p-6 space-y-4 hover:border-brand-brown transition-all duration-300 hover:shadow-luxury"
+                className="bg-brand-cream border border-brand-brown/10 rounded-card p-6 space-y-4 hover:border-brand-brown transition-all duration-300 hover:shadow-luxury card-3d"
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] uppercase font-mono tracking-widest text-brand-taupe bg-brand-brown/5 px-2 py-0.5 rounded-xs border border-brand-brown/10">
+                  <span className="text-[10px] uppercase font-mono tracking-widest text-brand-taupe bg-brand-sage/8 px-2 py-0.5 rounded-xs border border-brand-sage/15">
                     {exp.category}
                   </span>
-                  <Compass className="w-4 h-4 text-brand-brown" />
+                  <Compass className="w-4 h-4 text-brand-sage" />
                 </div>
                 <h3 className="font-editorial text-2xl font-bold text-brand-black">
                   {exp.name}
@@ -220,7 +226,7 @@ export default async function HomePage() {
                 <div className="pt-2 border-t border-brand-brown/10 space-y-1">
                   {exp.highlights.slice(0, 2).map((h, idx) => (
                     <p key={idx} className="text-xs text-brand-taupe flex items-center gap-1.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-brand-brown" /> {h}
+                      <span className="w-1.5 h-1.5 rounded-full bg-brand-sage" /> {h}
                     </p>
                   ))}
                 </div>
@@ -234,11 +240,12 @@ export default async function HomePage() {
       <section className="py-20 bg-brand-cream border-b border-brand-brown/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
-            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-brown">
+            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-terracotta">
               Reliable Ground Logistics
             </span>
             <h2 className="font-editorial text-3xl sm:text-5xl font-bold text-brand-black tracking-tight">
-              Specialized Transport & Pilgrimage Desk
+              Specialized Transport &{" "}
+              <span className="font-cursive italic text-brand-terracotta">Pilgrimage</span> Desk
             </h2>
             <p className="text-sm sm:text-base text-brand-charcoal/80 leading-relaxed">
               Operating our own private fleet and reservation desks from Kasumpti, Shimla to ensure uninterrupted mountain travel.
@@ -247,7 +254,7 @@ export default async function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Service 1: Taxi Services */}
-            <div className="bg-brand-cream border border-brand-brown/10 rounded-card p-7 flex flex-col justify-between hover:border-brand-brown transition-all duration-300">
+            <div className="bg-brand-cream border border-brand-brown/10 rounded-card p-7 flex flex-col justify-between hover:border-brand-brown transition-all duration-300 card-3d">
               <div className="space-y-4">
                 <div className="w-12 h-12 rounded-card bg-brand-brown text-brand-cream flex items-center justify-center">
                   <Car className="w-6 h-6" />
@@ -272,9 +279,9 @@ export default async function HomePage() {
             </div>
 
             {/* Service 2: Pilgrimage Tour */}
-            <div className="bg-brand-cream border border-brand-brown/10 rounded-card p-7 flex flex-col justify-between hover:border-brand-brown transition-all duration-300">
+            <div className="bg-brand-cream border border-brand-brown/10 rounded-card p-7 flex flex-col justify-between hover:border-brand-brown transition-all duration-300 card-3d">
               <div className="space-y-4">
-                <div className="w-12 h-12 rounded-card bg-brand-brown text-brand-cream flex items-center justify-center">
+                <div className="w-12 h-12 rounded-card bg-brand-terracotta text-brand-cream flex items-center justify-center">
                   <Mountain className="w-6 h-6" />
                 </div>
                 <h3 className="font-editorial text-2xl font-bold text-brand-black">
@@ -297,9 +304,9 @@ export default async function HomePage() {
             </div>
 
             {/* Service 3: Bus & Railway Booking */}
-            <div className="bg-brand-cream border border-brand-brown/10 rounded-card p-7 flex flex-col justify-between hover:border-brand-brown transition-all duration-300">
+            <div className="bg-brand-cream border border-brand-brown/10 rounded-card p-7 flex flex-col justify-between hover:border-brand-brown transition-all duration-300 card-3d">
               <div className="space-y-4">
-                <div className="w-12 h-12 rounded-card bg-brand-brown text-brand-cream flex items-center justify-center">
+                <div className="w-12 h-12 rounded-card bg-brand-deep-forest text-brand-cream flex items-center justify-center">
                   <Train className="w-6 h-6" />
                 </div>
                 <h3 className="font-editorial text-2xl font-bold text-brand-black">
@@ -328,11 +335,12 @@ export default async function HomePage() {
       <section className="py-20 bg-brand-cream/50 border-b border-brand-brown/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
-            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-brown">
+            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-gold">
               Guest Reflections
             </span>
             <h2 className="font-editorial text-3xl sm:text-5xl font-bold text-brand-black tracking-tight">
-              Words From Our Travelers
+              Words From Our{" "}
+              <span className="font-cursive italic text-brand-gold">Travelers</span>
             </h2>
             <p className="text-sm sm:text-base text-brand-charcoal/80 leading-relaxed">
               Real stories from families, couples, and trekkers who have trusted Rucksack Adventures for over eight years.
@@ -355,7 +363,8 @@ export default async function HomePage() {
               Direct Himalayan Concierge
             </span>
             <h2 className="font-editorial text-3xl sm:text-5xl font-bold text-brand-black">
-              Begin Your Travel Story
+              Begin Your Travel{" "}
+              <span className="font-cursive italic text-brand-brown">Story</span>
             </h2>
             <p className="text-xs sm:text-sm text-brand-taupe max-w-md mx-auto">
               Share your travel aspirations. Our planners in Kasumpti, Shimla craft each journey individually.

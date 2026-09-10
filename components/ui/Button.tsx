@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { motion, HTMLMotionProps } from "framer-motion";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -30,7 +30,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const baseStyles =
-      "inline-flex items-center justify-center font-medium tracking-wide transition-all duration-300 rounded-sm select-none focus:outline-hidden focus:ring-2 focus:ring-brand-brown/30 disabled:opacity-50 disabled:pointer-events-none";
+      "inline-flex items-center justify-center font-medium tracking-wide transition-all duration-300 rounded-sm select-none focus:outline-hidden focus:ring-2 focus:ring-brand-brown/30 btn-premium disabled:opacity-50 disabled:pointer-events-none";
 
     const sizeStyles = {
       sm: "text-xs px-4 py-2 gap-1.5",
@@ -77,7 +77,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         whileTap={{ scale: 0.98 }}
         className={combinedClasses}
         disabled={disabled}
-        {...(props as HTMLMotionProps<"button">)}
+        {...(props as React.ComponentProps<typeof motion.button>)}
       >
         {children}
         {icon && <span className="transition-transform duration-300">{icon}</span>}

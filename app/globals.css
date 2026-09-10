@@ -2,17 +2,22 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 
 :root {
   --font-serif: 'DM Serif Display', Georgia, serif;
   --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-cursive: 'Playfair Display', Georgia, serif;
 
-  /* Brand Palette — Premium Warm */
+  /* Himalayan Travel Palette */
   --brand-cream: #FFFDF2;
   --brand-brown: #9D6638;
   --brand-brown-dark: #7A4F2B;
   --brand-brown-light: #B8844F;
+  --brand-terracotta: #C8754A;
+  --brand-sage: #71816B;
+  --brand-gold: #D9A441;
+  --brand-deep-forest: #294238;
   --brand-black: #000000;
   --brand-charcoal: #1A1A1A;
   --brand-taupe: #6B5B4D;
@@ -63,7 +68,37 @@ html {
 /* Typography Helpers */
 .font-editorial {
   font-family: var(--font-serif);
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
+}
+
+.font-cursive {
+  font-family: var(--font-cursive);
+  font-style: italic;
+}
+
+/* Gradient Utilities */
+.gradient-sunrise {
+  background: linear-gradient(135deg, #FFFDF2 0%, #D9A441 100%);
+}
+
+.gradient-earth {
+  background: linear-gradient(135deg, #9D6638 0%, #C8754A 100%);
+}
+
+.gradient-mountain {
+  background: linear-gradient(135deg, #294238 0%, #71816B 100%);
+}
+
+.gradient-warm {
+  background: linear-gradient(135deg, #FFFDF2 0%, #F5DEB3 50%, #C8754A 100%);
+}
+
+.gradient-forest-cream {
+  background: linear-gradient(135deg, #71816B 0%, #FFFDF2 100%);
+}
+
+.gradient-premium-brown {
+  background: linear-gradient(135deg, #9D6638 0%, #294238 100%);
 }
 
 /* Card & Button Transitions */
@@ -87,6 +122,15 @@ html {
   transform: scale(1.06);
 }
 
+/* 3D Card Tilt */
+.card-3d {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-style: preserve-3d;
+}
+.card-3d:hover {
+  transform: perspective(1000px) rotateY(-2deg) rotateX(2deg) translateY(-4px);
+}
+
 /* Premium button transitions */
 .btn-premium {
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -97,4 +141,21 @@ html {
 }
 .btn-premium:active {
   transform: translateY(0);
+}
+
+/* Text gradient */
+.text-gradient-gold {
+  background: linear-gradient(135deg, #D9A441, #C8754A);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

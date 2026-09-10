@@ -32,7 +32,7 @@ export const StickyCTA: React.FC = () => {
         </button>
       </div>
 
-      {/* Floating Desktop Quick Trigger */}
+      {/* Floating Desktop WhatsApp Trigger */}
       <div className="hidden sm:flex fixed bottom-6 right-6 z-40 flex-col items-end gap-2.5">
         <a
           href="https://wa.me/917018678064?text=Hello%20Rucksack%20Adventures%2C%20I%20would%20like%20to%20plan%20a%20journey"

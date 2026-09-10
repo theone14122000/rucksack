@@ -8,17 +8,17 @@ interface TestimonialCardProps {
 
 export const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial }) => {
   return (
-    <div className="bg-brand-cream border border-brand-brown/10 p-6 sm:p-7 rounded-card flex flex-col justify-between hover:border-brand-brown/30 transition-all duration-300">
+    <div className="bg-brand-cream border border-brand-brown/10 p-6 sm:p-7 rounded-card flex flex-col justify-between hover:border-brand-brown/30 transition-all duration-300 card-3d">
       <div>
         <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-1 text-brand-brown">
+          <div className="flex items-center gap-1 text-brand-gold">
             {[...Array(5)].map((_, i) => (
               <Star
                 key={i}
                 className={`w-4 h-4 ${
                   i < Math.floor(testimonial.rating)
-                    ? "fill-brand-brown text-brand-brown"
-                    : "text-brand-brown/20"
+                    ? "fill-brand-gold text-brand-gold"
+                    : "text-brand-gold/20"
                 }`}
               />
             ))}

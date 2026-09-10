@@ -127,9 +127,9 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
                 <MapPin className="w-3.5 h-3.5 shrink-0" />
                 Chotta Shimla to Kusumpti Rd, SDA Complex, Kasumpti, Shimla 171009
               </p>
-              <p className="flex items-center gap-1.5">
+                <p className="flex items-center gap-1.5">
                 <Mail className="w-3.5 h-3.5 shrink-0" />
-                curate@rucksackadventures.com
+                info@rucksackadventures.com
               </p>
             </div>
           </div>

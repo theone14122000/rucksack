@@ -2,19 +2,20 @@ import React from "react";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import Link from "next/link";
-import { Clock, MapPin, CheckCircle2, XCircle, ShieldCheck, ArrowRight, Calendar } from "lucide-react";
+import { Clock, MapPin, CheckCircle2, XCircle, ShieldCheck, ArrowRight, Calendar, MessageCircle } from "lucide-react";
 import { Breadcrumbs } from "@/components/navigation/Breadcrumbs";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
 import { PackageCard } from "@/components/cards/PackageCard";
 import { EnquiryForm } from "@/components/ui/EnquiryForm";
 import { getPackageBySlug, getPackages } from "@/lib/cms/store";
-import { formatPrice } from "@/lib/utils";
 
 export const revalidate = 0;
 
 interface PackagePageProps {
   params: Promise<{ slug: string }>;
 }
+
+const WHATSAPP_NUMBER = "917018678064";
 
 export async function generateMetadata({ params }: PackagePageProps): Promise<Metadata> {
   const { slug } = await params;
@@ -44,6 +45,10 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
     .filter((p) => p.id !== pkg.id)
     .slice(0, 3);
 
+  const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+    `Hello Rucksack Adventures! I'm interested in the "${pkg.title}" package. Please share the pricing and itinerary details.`
+  )}`;
+
   return (
     <div className="pt-24 pb-20 bg-brand-cream">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -62,12 +67,12 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
               <MapPin className="w-3.5 h-3.5 text-brand-brown" />
               {pkg.destination}
             </span>
-            <span>•</span>
+            <span>&bull;</span>
             <span className="flex items-center gap-1">
               <Clock className="w-3.5 h-3.5 text-brand-brown" />
               {pkg.duration}
             </span>
-            <span>•</span>
+            <span>&bull;</span>
             <span className="text-brand-taupe">{pkg.travelStyle}</span>
           </div>
 
@@ -81,7 +86,7 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
         </div>
 
         {/* Visual Hero */}
-        <div className="mb-14 rounded-sm overflow-hidden border border-brand-brown/30 shadow-luxury">
+        <div className="mb-14 rounded-card overflow-hidden border border-brand-brown/30 shadow-luxury">
           <ImagePlaceholder
             src={pkg.heroImage}
             alt={pkg.title}
@@ -124,7 +129,7 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
                       {item.day}
                     </div>
 
-                    <div className="bg-brand-cream/30 border border-brand-brown/25 p-5 rounded-sm space-y-2 group-hover:border-brand-brown transition-colors">
+                    <div className="bg-brand-cream/30 border border-brand-brown/25 p-5 rounded-card space-y-2 group-hover:border-brand-brown transition-colors">
                       <div className="flex flex-wrap items-center justify-between gap-2">
                         <h3 className="font-editorial text-xl font-bold text-brand-black">
                           Day {item.day}: {item.title}
@@ -153,7 +158,7 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
 
             {/* Inclusions & Exclusions */}
             <section className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-brand-brown/20">
-              <div className="bg-brand-cream/40 border border-brand-brown/30 p-6 rounded-sm space-y-3">
+              <div className="bg-brand-cream/40 border border-brand-brown/30 p-6 rounded-card space-y-3">
                 <h3 className="font-editorial text-xl font-bold text-brand-black flex items-center gap-2">
                   <CheckCircle2 className="w-5 h-5 text-emerald-700" />
                   What Is Included
@@ -168,7 +173,7 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
                 </ul>
               </div>
 
-              <div className="bg-brand-cream/20 border border-brand-brown/25 p-6 rounded-sm space-y-3">
+              <div className="bg-brand-cream/20 border border-brand-brown/25 p-6 rounded-card space-y-3">
                 <h3 className="font-editorial text-xl font-bold text-brand-black flex items-center gap-2">
                   <XCircle className="w-5 h-5 text-rose-700" />
                   What Is Excluded
@@ -194,7 +199,7 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
                   {pkg.faqs.map((f, i) => (
                     <div
                       key={i}
-                      className="p-4 bg-brand-cream/30 border border-brand-brown/25 rounded-xs space-y-1.5"
+                      className="p-4 bg-brand-cream/30 border border-brand-brown/25 rounded-card space-y-1.5"
                     >
                       <h4 className="text-sm font-bold text-brand-black">{f.question}</h4>
                       <p className="text-xs text-brand-charcoal/80 leading-relaxed">{f.answer}</p>
@@ -205,21 +210,18 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
             )}
           </div>
 
-          {/* Right Column: Sticky Booking / Pricing Box */}
+          {/* Right Column: Sticky Booking Box — No Prices */}
           <div className="lg:col-span-4">
-            <div className="bg-brand-cream/60 border border-brand-brown/40 rounded-sm p-6 sm:p-7 space-y-6 sticky top-28 shadow-lg">
+            <div className="bg-brand-cream/60 border border-brand-brown/40 rounded-card p-6 sm:p-7 space-y-6 sticky top-28 shadow-lg">
               <div>
                 <span className="text-[10px] uppercase tracking-widest text-brand-taupe block mb-1">
-                  Starting Price
+                  Custom Pricing
                 </span>
-                <div className="flex items-baseline gap-1">
-                  <span className="font-editorial text-3xl sm:text-4xl font-bold text-brand-black">
-                    {formatPrice(pkg.price)}
-                  </span>
-                  <span className="text-xs text-brand-taupe">/ person</span>
-                </div>
+                <p className="font-editorial text-xl font-bold text-brand-black">
+                  Ask for Details
+                </p>
                 <p className="text-[11px] text-brand-taupe mt-1">
-                  * Based on twin-sharing accommodation. Customized options available.
+                  Pricing varies by group size, season, and customization. Contact us for a personalized quote.
                 </p>
               </div>
 
@@ -240,20 +242,19 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
 
               <div className="pt-2 space-y-2.5">
                 <a
-                  href="#enquire-form-box"
-                  className="w-full py-3.5 px-4 rounded-sm bg-brand-black text-brand-cream text-xs font-semibold uppercase tracking-wider text-center block hover:bg-brand-brown-dark transition-colors shadow-xs"
-                >
-                  Reserve This Journey
-                </a>
-                <a
-                  href={`https://wa.me/917018678064?text=Hello%20Rucksack%20Adventures%2C%20I%20am%20interested%20in%20the%20${encodeURIComponent(
-                    pkg.title
-                  )}%20package`}
+                  href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full py-3 px-4 rounded-sm bg-[#25D366] text-white text-xs font-semibold uppercase tracking-wider text-center block hover:bg-[#1EBE5D] transition-colors shadow-xs"
+                  className="w-full py-3.5 px-4 rounded-card bg-[#25D366] text-white text-xs font-semibold uppercase tracking-wider text-center flex items-center justify-center gap-2 hover:bg-[#1EBE5D] transition-colors shadow-xs"
                 >
-                  Chat on WhatsApp
+                  <MessageCircle className="w-4 h-4" />
+                  Ask for Details on WhatsApp
+                </a>
+                <a
+                  href="#enquire-form-box"
+                  className="w-full py-3 px-4 rounded-card bg-brand-black text-brand-cream text-xs font-semibold uppercase tracking-wider text-center block hover:bg-brand-brown-dark transition-colors shadow-xs"
+                >
+                  Send Enquiry
                 </a>
               </div>
             </div>
@@ -274,7 +275,7 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
             </p>
           </div>
 
-          <div className="bg-brand-cream/30 border border-brand-brown/40 p-6 sm:p-10 rounded-sm shadow-luxury">
+          <div className="bg-brand-cream/30 border border-brand-brown/40 p-6 sm:p-10 rounded-card shadow-luxury">
             <EnquiryForm
               defaultDestination={`${pkg.destination} (${pkg.title})`}
               defaultTravelType={pkg.isInternational ? "International" : "Domestic"}
@@ -291,7 +292,7 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
                   More Expeditions
                 </span>
                 <h2 className="font-editorial text-3xl font-bold text-brand-black mt-1">
-                  You Might Also Revere
+                  You Might Also Love
                 </h2>
               </div>
               <Link
@@ -302,7 +303,7 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
               </Link>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-3 gap-8">
               {relatedPackages.map((p) => (
                 <PackageCard key={p.id} pkg={p} />
               ))}
