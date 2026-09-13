@@ -44,8 +44,7 @@ export const TopographicContour3D: React.FC<TopographicContour3DProps> = ({ clas
 
     const render = () => {
       ctx.clearRect(0, 0, width, height);
-
-      ctx.fillStyle = "#1A1A1A";
+      ctx.fillStyle = "#18201C";
       ctx.fillRect(0, 0, width, height);
 
       const targetX = (mouseX / width - 0.5) * 40;
@@ -59,37 +58,25 @@ export const TopographicContour3D: React.FC<TopographicContour3DProps> = ({ clas
         for (let x = 0; x < cols; x++) {
           const worldX = (x - cols / 2) * (spacingX * 1.4);
           const worldY = y * (spacingY * 1.1);
-
           const dist1 = Math.hypot(x - cols * 0.35, y - rows * 0.4);
           const dist2 = Math.hypot(x - cols * 0.7, y - rows * 0.55);
           const peak1 = Math.exp(-dist1 * 0.18) * 90;
           const peak2 = Math.exp(-dist2 * 0.22) * 75;
           const ripple = Math.sin(x * 0.4 + time * 0.8) * 4;
-
           const elevation = -(peak1 + peak2 + ripple);
-
           const projX = worldX + targetX;
           const projY = worldY * 0.6 + elevation + targetY;
-
-          if (x === 0) {
-            ctx.moveTo(projX, projY);
-          } else {
-            ctx.lineTo(projX, projY);
-          }
+          if (x === 0) { ctx.moveTo(projX, projY); } else { ctx.lineTo(projX, projY); }
         }
-
         const alpha = Math.max(0.12, 0.7 - (y / rows) * 0.5);
-        ctx.strokeStyle = `rgba(157, 102, 56, ${alpha})`;
+        ctx.strokeStyle = `rgba(214, 168, 95, ${alpha})`;
         ctx.lineWidth = y % 3 === 0 ? 1.4 : 0.7;
         ctx.stroke();
       }
-
       ctx.restore();
-
       time += 0.015;
       animationFrameId = requestAnimationFrame(render);
     };
-
     render();
 
     return () => {
@@ -102,8 +89,8 @@ export const TopographicContour3D: React.FC<TopographicContour3DProps> = ({ clas
   return (
     <div className={`relative w-full h-[360px] overflow-hidden select-none pointer-events-auto ${className}`}>
       <canvas ref={canvasRef} className="w-full h-full block" />
-      <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-brand-black via-transparent to-brand-black/80" />
-      <div className="absolute bottom-4 left-6 right-6 flex items-center justify-between text-[11px] font-mono text-brand-sand tracking-widest uppercase pointer-events-none">
+      <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-brand-dark via-transparent to-brand-dark/80" />
+      <div className="absolute bottom-4 left-6 right-6 flex items-center justify-between text-[11px] font-mono text-brand-gold/60 tracking-widest uppercase pointer-events-none">
         <span>Kinnaur - Spiti Crossover Elevation Profile</span>
         <span>Peak: 16,105 ft (Bhaba Pass)</span>
       </div>

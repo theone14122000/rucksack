@@ -43,14 +43,14 @@ export const FloatingCompass: React.FC<{ className?: string }> = ({ className = 
           {/* North Tip */}
           <div className="w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-b-[40px] border-b-brand-cream drop-shadow-xs" />
           {/* Center Pivot */}
-          <div className="w-4 h-4 rounded-full bg-brand-sand border-2 border-brand-brown-dark shadow-xs z-10" />
+          <div className="w-4 h-4 rounded-full bg-brand-gold/60 border-2 border-brand-turquoise-light shadow-xs z-10" />
           {/* South Tip */}
           <div className="w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[40px] border-t-brand-cream/40 drop-shadow-xs" />
         </div>
       </motion.div>
 
       {/* Subtle Elevation Label */}
-      <div className="absolute bottom-8 text-[9px] font-mono tracking-widest text-brand-cream/50 uppercase bg-brand-black/40 px-2 py-0.5 rounded-xs border border-brand-cream/15 shadow-2xs">
+      <div className="absolute bottom-8 text-[9px] font-mono tracking-widest text-brand-cream/50 uppercase bg-brand-dark/40 px-2 py-0.5 rounded-card border border-brand-cream/15 shadow-2xs">
         Himalayan Sector
       </div>
     </motion.div>

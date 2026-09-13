@@ -1,89 +1,56 @@
-"use client";
-
 import React from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "outline" | "dark" | "ghost" | "whatsapp";
+  variant?: "primary" | "secondary" | "outline" | "ghost";
   size?: "sm" | "md" | "lg";
+  fullWidth?: boolean;
   href?: string;
   icon?: React.ReactNode;
   children: React.ReactNode;
-  fullWidth?: boolean;
 }
 
-export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  (
+export const Button: React.FC<ButtonProps> = ({
+  variant = "primary",
+  size = "md",
+  fullWidth = false,
+  href,
+  icon,
+  children,
+  className,
+  ...props
+}) => {
+  const baseClasses = cn(
+    "inline-flex items-center justify-center gap-2 font-bold text-xs uppercase tracking-wider rounded-full transition-all duration-300 btn-premium",
+    fullWidth && "w-full",
     {
-      variant = "primary",
-      size = "md",
-      href,
-      icon,
-      children,
-      className,
-      fullWidth = false,
-      disabled,
-      ...props
+      "bg-gradient-to-r from-brand-turquoise to-brand-turquoise-bright text-white hover:from-brand-turquoise-light hover:to-brand-turquoise-bright shadow-sm": variant === "primary",
+      "bg-brand-dark text-white hover:bg-brand-dark-light shadow-sm": variant === "secondary",
+      "bg-white text-brand-dark border border-brand-turquoise/15 hover:border-brand-turquoise/30 hover:bg-brand-turquoise-50 shadow-soft": variant === "outline",
+      "bg-transparent text-brand-turquoise hover:bg-brand-turquoise-50": variant === "ghost",
     },
-    ref
-  ) => {
-    const baseStyles =
-      "inline-flex items-center justify-center font-medium tracking-wide transition-all duration-300 rounded-sm select-none focus:outline-hidden focus:ring-2 focus:ring-brand-brown/30 btn-premium disabled:opacity-50 disabled:pointer-events-none";
+    {
+      "py-2 px-4 text-[11px]": size === "sm",
+      "py-3 px-6 text-[12px]": size === "md",
+      "py-4 px-8 text-[12px]": size === "lg",
+    },
+    className
+  );
 
-    const sizeStyles = {
-      sm: "text-xs px-4 py-2 gap-1.5",
-      md: "text-sm px-5 py-2.5 gap-2",
-      lg: "text-sm px-7 py-3.5 gap-2.5",
-    }[size];
-
-    const variantStyles = {
-      primary:
-        "bg-brand-brown text-brand-cream hover:bg-brand-brown-dark shadow-sm border border-brand-brown-dark/20",
-      secondary:
-        "bg-brand-cream text-brand-black hover:bg-white border border-brand-brown/15",
-      outline:
-        "bg-transparent text-brand-black border border-brand-brown/25 hover:border-brand-brown hover:bg-brand-brown/5",
-      dark:
-        "bg-brand-black text-brand-cream border border-white/10 hover:border-white/20",
-      ghost:
-        "bg-transparent text-brand-brown hover:text-brand-brown-dark hover:bg-brand-brown/5",
-      whatsapp:
-        "bg-[#25D366] text-white hover:bg-[#1EBE5D] shadow-sm border border-transparent",
-    }[variant];
-
-    const combinedClasses = cn(
-      baseStyles,
-      sizeStyles,
-      variantStyles,
-      fullWidth && "w-full",
-      className
-    );
-
-    if (href) {
-      return (
-        <Link href={href} className={combinedClasses}>
-          {children}
-          {icon && <span className="transition-transform duration-300 group-hover:translate-x-0.5">{icon}</span>}
-        </Link>
-      );
-    }
-
+  if (href) {
     return (
-      <motion.button
-        ref={ref}
-        whileHover={{ y: -1 }}
-        whileTap={{ scale: 0.98 }}
-        className={combinedClasses}
-        disabled={disabled}
-        {...(props as React.ComponentProps<typeof motion.button>)}
-      >
+      <Link href={href} className={baseClasses}>
+        {icon && <span className="shrink-0">{icon}</span>}
         {children}
-        {icon && <span className="transition-transform duration-300">{icon}</span>}
-      </motion.button>
+      </Link>
     );
   }
-);
 
-Button.displayName = "Button";
+  return (
+    <button className={baseClasses} {...props}>
+      {icon && <span className="shrink-0">{icon}</span>}
+      {children}
+    </button>
+  );
+};

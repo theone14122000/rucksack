@@ -9,42 +9,24 @@ export const StickyCTA: React.FC = () => {
 
   return (
     <>
-      <div className="fixed bottom-0 left-0 right-0 z-40 sm:hidden bg-brand-brown/95 backdrop-blur-md border-t border-white/15 px-4 py-2.5 flex items-center justify-between gap-3 shadow-2xl">
-        <a
-          href="tel:+917018678064"
-          className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-sm border border-white/20 text-brand-cream text-xs font-semibold tracking-wider uppercase"
-        >
+      {/* Mobile bottom bar */}
+      <div className="fixed bottom-0 left-0 right-0 z-40 sm:hidden bg-white/90 backdrop-blur-xl border-t border-brand-turquoise/10 px-4 py-2.5 flex items-center justify-between gap-3 shadow-[0_-4px_20px_rgba(7,20,18,0.06)]">
+        <a href="tel:+917018678064" className="flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-full border border-brand-turquoise/15 text-brand-dark text-xs font-bold tracking-wider uppercase hover:bg-brand-turquoise-50 transition-colors">
           <Phone className="w-3.5 h-3.5" /> Call Us
         </a>
-        <a
-          href="https://wa.me/917018678064?text=Hello%20Rucksack%20Adventures%2C%20I%20would%20like%20to%20plan%20a%20journey"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-sm bg-[#25D366] text-white text-xs font-semibold tracking-wider uppercase shadow-xs"
-        >
-          <MessageSquare className="w-3.5 h-3.5" /> WhatsApp
+        <a href="https://wa.me/917018678064" target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-full bg-[#25D366] text-white text-xs font-bold tracking-wider uppercase shadow-sm">
+          <MessageSquare className="w-3.5 h-3.5" /> Ask for Details
         </a>
-        <button
-          onClick={() => setModalOpen(true)}
-          className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-sm bg-brand-cream text-brand-brown text-xs font-bold tracking-wider uppercase shadow-xs"
-        >
+        <button onClick={() => setModalOpen(true)} className="flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-full bg-gradient-to-r from-brand-turquoise to-brand-turquoise-bright text-white text-xs font-bold tracking-wider uppercase shadow-sm">
           <Compass className="w-3.5 h-3.5" /> Plan
         </button>
       </div>
 
-      {/* Floating Desktop WhatsApp Trigger */}
+      {/* Desktop floating WhatsApp */}
       <div className="hidden sm:flex fixed bottom-6 right-6 z-40 flex-col items-end gap-2.5">
-        <a
-          href="https://wa.me/917018678064?text=Hello%20Rucksack%20Adventures%2C%20I%20would%20like%20to%20plan%20a%20journey"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group flex items-center gap-2.5 bg-[#25D366] text-white px-4 py-2.5 rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all text-xs font-semibold tracking-wide"
-          aria-label="Direct WhatsApp Chat"
-        >
+        <a href="https://wa.me/917018678064" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2.5 bg-[#25D366] text-white px-4 py-2.5 rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all text-xs font-bold tracking-wide">
           <MessageSquare className="w-4 h-4" />
-          <span className="hidden group-hover:inline transition-all duration-300">
-            WhatsApp Travel Desk
-          </span>
+          <span className="hidden group-hover:inline transition-all duration-300">Ask for Details</span>
         </a>
       </div>
 

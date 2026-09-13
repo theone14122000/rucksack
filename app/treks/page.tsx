@@ -28,15 +28,15 @@ export default async function TreksPage({
     : allTreks;
 
   return (
-    <div className="pt-24 pb-20 bg-brand-brown-dark text-brand-cream min-h-screen">
+    <div className="pt-24 pb-20 bg-brand-turquoise-light text-brand-cream min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="opacity-90">
           <Breadcrumbs items={[{ label: "Himalayan Treks" }]} />
         </div>
 
         {/* Page Header */}
-        <div className="py-8 border-b border-brand-brown/30 mb-10">
-          <span className="text-xs font-mono font-semibold uppercase tracking-[0.25em] text-brand-brown block mb-2">
+        <div className="py-8 border-b border-brand-turquoise/30 mb-10">
+          <span className="text-xs font-mono font-semibold uppercase tracking-[0.25em] text-brand-turquoise block mb-2">
             Alpine Wilderness Expeditions
           </span>
           <h1 className="font-editorial text-4xl sm:text-6xl font-bold text-brand-cream tracking-tight mb-4">
@@ -50,40 +50,40 @@ export default async function TreksPage({
           <div className="flex flex-wrap items-center gap-2 pt-6">
             <a
               href="/treks"
-              className={`px-4 py-2 rounded-xs text-xs font-mono font-semibold tracking-wider uppercase border transition-colors ${
+              className={`px-4 py-2 rounded-card text-xs font-mono font-semibold tracking-wider uppercase border transition-colors ${
                 !diffFilter
-                  ? "bg-brand-brown text-brand-brown-dark border-brand-brown"
-                  : "bg-brand-black/80 text-brand-cream border-brand-brown/30 hover:border-brand-brown"
+                  ? "bg-brand-turquoise text-brand-turquoise-light border-brand-turquoise"
+                  : "bg-brand-dark/80 text-brand-cream border-brand-turquoise/30 hover:border-brand-turquoise"
               }`}
             >
               All Treks ({allTreks.length})
             </a>
             <a
               href="/treks?difficulty=easy"
-              className={`px-4 py-2 rounded-xs text-xs font-mono font-semibold tracking-wider uppercase border transition-colors ${
+              className={`px-4 py-2 rounded-card text-xs font-mono font-semibold tracking-wider uppercase border transition-colors ${
                 diffFilter === "easy"
-                  ? "bg-brand-brown text-brand-brown-dark border-brand-brown"
-                  : "bg-brand-black/80 text-brand-cream border-brand-brown/30 hover:border-brand-brown"
+                  ? "bg-brand-turquoise text-brand-turquoise-light border-brand-turquoise"
+                  : "bg-brand-dark/80 text-brand-cream border-brand-turquoise/30 hover:border-brand-turquoise"
               }`}
             >
               Easy (Triund)
             </a>
             <a
               href="/treks?difficulty=moderate"
-              className={`px-4 py-2 rounded-xs text-xs font-mono font-semibold tracking-wider uppercase border transition-colors ${
+              className={`px-4 py-2 rounded-card text-xs font-mono font-semibold tracking-wider uppercase border transition-colors ${
                 diffFilter === "moderate"
-                  ? "bg-brand-brown text-brand-brown-dark border-brand-brown"
-                  : "bg-brand-black/80 text-brand-cream border-brand-brown/30 hover:border-brand-brown"
+                  ? "bg-brand-turquoise text-brand-turquoise-light border-brand-turquoise"
+                  : "bg-brand-dark/80 text-brand-cream border-brand-turquoise/30 hover:border-brand-turquoise"
               }`}
             >
               Moderate (Chopta Chandrashila)
             </a>
             <a
               href="/treks?difficulty=challenging"
-              className={`px-4 py-2 rounded-xs text-xs font-mono font-semibold tracking-wider uppercase border transition-colors ${
+              className={`px-4 py-2 rounded-card text-xs font-mono font-semibold tracking-wider uppercase border transition-colors ${
                 diffFilter === "challenging"
-                  ? "bg-brand-brown text-brand-brown-dark border-brand-brown"
-                  : "bg-brand-black/80 text-brand-cream border-brand-brown/30 hover:border-brand-brown"
+                  ? "bg-brand-turquoise text-brand-turquoise-light border-brand-turquoise"
+                  : "bg-brand-dark/80 text-brand-cream border-brand-turquoise/30 hover:border-brand-turquoise"
               }`}
             >
               Challenging (Bhaba Pass & Indrahar)
@@ -92,7 +92,7 @@ export default async function TreksPage({
         </div>
 
         {/* 3D Topographic Contour Feature */}
-        <div className="mb-14 rounded-sm border border-brand-brown/30 bg-brand-black/70 overflow-hidden shadow-2xl">
+        <div className="mb-14 rounded-card border border-brand-turquoise/30 bg-brand-dark/70 overflow-hidden shadow-2xl">
           <TopographicContour3D />
         </div>
 

@@ -33,14 +33,14 @@ export default async function PackagesPage({
         <Breadcrumbs items={[{ label: "Tour Packages" }]} />
 
         {/* Page Header */}
-          <div className="py-8 border-b border-brand-brown/30 mb-10">
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-brown block mb-2">
+          <div className="py-8 border-b border-brand-turquoise/30 mb-10">
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-turquoise block mb-2">
             Curated Itineraries
           </span>
-          <h1 className="font-editorial text-4xl sm:text-6xl font-bold text-brand-black tracking-tight mb-4">
+          <h1 className="font-editorial text-4xl sm:text-6xl font-bold text-brand-dark tracking-tight mb-4">
             Tour Packages & Expeditions
           </h1>
-          <p className="text-sm sm:text-base text-brand-charcoal/80 max-w-2xl leading-relaxed">
+          <p className="text-sm sm:text-base text-brand-dark/80 max-w-2xl leading-relaxed">
             Every itinerary has been vetted over eight years of mountain operations. Private transfers, verified boutique retreats, and dedicated 24/7 concierge support.
           </p>
 
@@ -48,30 +48,30 @@ export default async function PackagesPage({
           <div className="flex flex-wrap items-center gap-2 pt-6">
             <a
               href="/packages"
-              className={`px-4 py-2 rounded-sm text-xs font-semibold tracking-wider uppercase border transition-colors ${
+              className={`px-4 py-2 rounded-card text-xs font-semibold tracking-wider uppercase border transition-colors ${
                 !typeFilter
-                  ? "bg-brand-black text-brand-cream border-brand-black"
-                  : "bg-brand-cream/60 text-brand-charcoal border-brand-brown/30 hover:border-brand-black"
+                  ? "bg-brand-dark text-brand-cream border-brand-dark"
+                  : "bg-brand-cream/60 text-brand-dark border-brand-turquoise/30 hover:border-brand-dark"
               }`}
             >
               All Packages ({allPackages.length})
             </a>
             <a
               href="/packages?type=domestic"
-              className={`px-4 py-2 rounded-sm text-xs font-semibold tracking-wider uppercase border transition-colors ${
+              className={`px-4 py-2 rounded-card text-xs font-semibold tracking-wider uppercase border transition-colors ${
                 typeFilter === "domestic"
-                  ? "bg-brand-black text-brand-cream border-brand-black"
-                  : "bg-brand-cream/60 text-brand-charcoal border-brand-brown/30 hover:border-brand-black"
+                  ? "bg-brand-dark text-brand-cream border-brand-dark"
+                  : "bg-brand-cream/60 text-brand-dark border-brand-turquoise/30 hover:border-brand-dark"
               }`}
             >
               Domestic Himalayan Packages
             </a>
             <a
               href="/packages?type=international"
-              className={`px-4 py-2 rounded-sm text-xs font-semibold tracking-wider uppercase border transition-colors ${
+              className={`px-4 py-2 rounded-card text-xs font-semibold tracking-wider uppercase border transition-colors ${
                 typeFilter === "international"
-                  ? "bg-brand-black text-brand-cream border-brand-black"
-                  : "bg-brand-cream/60 text-brand-charcoal border-brand-brown/30 hover:border-brand-black"
+                  ? "bg-brand-dark text-brand-cream border-brand-dark"
+                  : "bg-brand-cream/60 text-brand-dark border-brand-turquoise/30 hover:border-brand-dark"
               }`}
             >
               International Escapes

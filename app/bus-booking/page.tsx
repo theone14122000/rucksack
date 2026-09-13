@@ -62,14 +62,14 @@ export default function BusBookingPage() {
           ]}
         />
 
-        <div className="py-12 border-b border-brand-brown/30 mb-16">
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-brown block mb-2">
+        <div className="py-12 border-b border-brand-turquoise/30 mb-16">
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-turquoise block mb-2">
             Ground Transport
           </span>
-          <h1 className="font-editorial text-4xl sm:text-6xl font-bold text-brand-black tracking-tight mb-4">
+          <h1 className="font-editorial text-4xl sm:text-6xl font-bold text-brand-dark tracking-tight mb-4">
             Volvo & Bus Booking
           </h1>
-          <p className="text-sm sm:text-base text-brand-charcoal/80 max-w-3xl leading-relaxed">
+          <p className="text-sm sm:text-base text-brand-dark/80 max-w-3xl leading-relaxed">
             Travel to the Himalayas in comfort. We handle seat selection, boarding-point
             coordination, and last-minute rescheduling — so your journey starts smooth,
             even before you reach the mountains.
@@ -81,13 +81,13 @@ export default function BusBookingPage() {
           {features.map((feat) => (
             <div
               key={feat.title}
-              className="bg-brand-cream/30 border border-brand-brown/30 rounded-sm p-6 hover:border-brand-black hover:shadow-luxury transition-all duration-300"
+              className="bg-brand-cream/30 border border-brand-turquoise/30 rounded-card p-6 hover:border-brand-dark hover:shadow-luxury transition-all duration-300"
             >
-              <feat.icon className="w-6 h-6 text-brand-brown mb-3" />
-              <h3 className="font-editorial text-lg font-bold text-brand-black mb-2">
+              <feat.icon className="w-6 h-6 text-brand-turquoise mb-3" />
+              <h3 className="font-editorial text-lg font-bold text-brand-dark mb-2">
                 {feat.title}
               </h3>
-              <p className="text-xs text-brand-charcoal/80 leading-relaxed">
+              <p className="text-xs text-brand-dark/80 leading-relaxed">
                 {feat.description}
               </p>
             </div>
@@ -97,16 +97,16 @@ export default function BusBookingPage() {
         {/* Routes */}
         <div className="mb-20">
           <div className="text-center mb-10">
-            <span className="text-xs font-semibold uppercase tracking-widest text-brand-brown">
+            <span className="text-xs font-semibold uppercase tracking-widest text-brand-turquoise">
               Popular Routes
             </span>
-            <h2 className="font-editorial text-3xl sm:text-4xl font-bold text-brand-black mt-2">
+            <h2 className="font-editorial text-3xl sm:text-4xl font-bold text-brand-dark mt-2">
               Highway Connections
             </h2>
           </div>
 
-          <div className="bg-brand-cream/30 border border-brand-brown/30 rounded-sm overflow-hidden">
-            <div className="grid grid-cols-4 gap-4 px-6 py-3 bg-brand-black text-brand-cream text-[10px] font-semibold uppercase tracking-widest">
+          <div className="bg-brand-cream/30 border border-brand-turquoise/30 rounded-card overflow-hidden">
+            <div className="grid grid-cols-4 gap-4 px-6 py-3 bg-brand-dark text-brand-cream text-[10px] font-semibold uppercase tracking-widest">
               <span>From</span>
               <span>To</span>
               <span className="hidden sm:block">Operators</span>
@@ -117,8 +117,8 @@ export default function BusBookingPage() {
                 key={`${route.from}-${route.to}`}
                 className={`grid grid-cols-4 gap-4 px-6 py-4 text-sm ${i % 2 === 0 ? "bg-brand-cream" : "bg-brand-cream/20"} hover:bg-brand-cream/50 transition-colors`}
               >
-                <span className="font-semibold text-brand-black">{route.from}</span>
-                <span className="text-brand-charcoal">{route.to}</span>
+                <span className="font-semibold text-brand-dark">{route.from}</span>
+                <span className="text-brand-dark">{route.to}</span>
                 <span className="hidden sm:block text-xs text-brand-taupe">{route.operators}</span>
                 <span className="text-xs text-brand-taupe">{route.duration}</span>
               </div>
@@ -127,16 +127,16 @@ export default function BusBookingPage() {
         </div>
 
         {/* Enquiry */}
-        <div className="max-w-4xl mx-auto py-12 border-t border-brand-brown/30">
+        <div className="max-w-4xl mx-auto py-12 border-t border-brand-turquoise/30">
           <div className="text-center mb-8">
-            <span className="text-xs font-semibold uppercase tracking-widest text-brand-brown">
+            <span className="text-xs font-semibold uppercase tracking-widest text-brand-turquoise">
               Book Your Seat
             </span>
-            <h2 className="font-editorial text-3xl font-bold text-brand-black mt-2">
+            <h2 className="font-editorial text-3xl font-bold text-brand-dark mt-2">
               Request Bus Booking Assistance
             </h2>
           </div>
-          <div className="bg-brand-cream/40 border border-brand-brown/40 p-6 sm:p-10 rounded-sm shadow-luxury">
+          <div className="bg-brand-cream/40 border border-brand-turquoise/40 p-6 sm:p-10 rounded-card shadow-luxury">
             <EnquiryForm defaultTravelType="Other" />
           </div>
         </div>

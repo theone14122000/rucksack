@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: PackagePageProps): Promise<Me
   if (!pkg) return { title: "Package Not Found" };
 
   return {
-    title: pkg.seoTitle || `${pkg.title} | ${pkg.duration} Tour Package`,
+    title: pkg.seoTitle || `${pkg.title} | ${pkg.duration} Adventure`,
     description: pkg.seoDescription || pkg.shortDescription,
     openGraph: {
       title: `${pkg.title} | Rucksack Adventures`,
@@ -46,7 +46,7 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
     .slice(0, 3);
 
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-    `Hello Rucksack Adventures! I'm interested in the "${pkg.title}" package. Please share the pricing and itinerary details.`
+    `Hello Rucksack Adventures! I'm interested in the "${pkg.title}" adventure. Please share the details and itinerary.`
   )}`;
 
   return (
@@ -54,39 +54,37 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Breadcrumbs
           items={[
-            { label: "Packages", href: "/packages" },
+            { label: "Adventures", href: "/packages" },
             { label: pkg.destination, href: `/destinations/${pkg.destinationSlug}` },
             { label: pkg.title },
           ]}
         />
 
         {/* Hero Header */}
-        <div className="py-8 border-b border-brand-brown/30 mb-10">
-          <div className="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-widest text-brand-brown mb-3">
+        <div className="py-8 border-b border-brand-turquoise/15 mb-10">
+          <div className="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-widest text-brand-yellow mb-3">
             <span className="flex items-center gap-1">
-              <MapPin className="w-3.5 h-3.5 text-brand-brown" />
+              <MapPin className="w-3.5 h-3.5" />
               {pkg.destination}
             </span>
             <span>&bull;</span>
             <span className="flex items-center gap-1">
-              <Clock className="w-3.5 h-3.5 text-brand-brown" />
+              <Clock className="w-3.5 h-3.5" />
               {pkg.duration}
             </span>
             <span>&bull;</span>
             <span className="text-brand-taupe">{pkg.travelStyle}</span>
           </div>
-
-          <h1 className="font-editorial text-3xl sm:text-5xl lg:text-6xl font-bold text-brand-black tracking-tight mb-4">
+          <h1 className="font-editorial text-3xl sm:text-5xl lg:text-6xl font-bold text-brand-dark tracking-tight mb-4">
             {pkg.title}
           </h1>
-
-          <p className="text-base sm:text-xl text-brand-charcoal/80 max-w-3xl leading-relaxed">
+          <p className="text-base sm:text-xl text-brand-dark/75 max-w-3xl leading-relaxed">
             {pkg.shortDescription}
           </p>
         </div>
 
         {/* Visual Hero */}
-        <div className="mb-14 rounded-card overflow-hidden border border-brand-brown/30 shadow-luxury">
+        <div className="mb-14 rounded-card-lg overflow-hidden border border-brand-turquoise/12 shadow-luxury">
           <ImagePlaceholder
             src={pkg.heroImage}
             alt={pkg.title}
@@ -96,58 +94,51 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
           />
         </div>
 
-        {/* Main Content Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 pb-16 border-b border-brand-brown/20">
-          {/* Left Column: Overview, Itinerary, Inclusions/Exclusions, FAQs */}
+        {/* Main Content */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 pb-16 border-b border-brand-turquoise/12">
+          {/* Left Column */}
           <div className="lg:col-span-8 space-y-12">
-            {/* Overview */}
             <section className="space-y-4">
-              <h2 className="font-editorial text-2xl sm:text-3xl font-bold text-brand-black">
+              <h2 className="font-editorial text-2xl sm:text-3xl font-bold text-brand-dark">
                 Journey Overview
               </h2>
-              <p className="text-sm sm:text-base text-brand-charcoal/85 leading-relaxed whitespace-pre-line">
+              <p className="text-sm sm:text-base text-brand-dark/80 leading-relaxed whitespace-pre-line">
                 {pkg.overview}
               </p>
             </section>
 
-            {/* Day by Day Itinerary */}
             <section className="space-y-6">
               <div>
-                <span className="text-xs font-semibold uppercase tracking-widest text-brand-brown">
+                <span className="text-xs font-semibold uppercase tracking-widest text-brand-yellow">
                   Day-Wise Route
                 </span>
-                <h2 className="font-editorial text-2xl sm:text-3xl font-bold text-brand-black mt-1">
+                <h2 className="font-editorial text-2xl sm:text-3xl font-bold text-brand-dark mt-1">
                   Detailed Itinerary
                 </h2>
               </div>
-
-              <div className="relative border-l border-brand-brown/40 pl-6 sm:pl-8 space-y-8 ml-3">
+              <div className="relative border-l border-brand-turquoise/20 pl-6 sm:pl-8 space-y-8 ml-3">
                 {pkg.itinerary.map((item) => (
                   <div key={item.day} className="relative group">
-                    {/* Day Marker Dot */}
-                    <div className="absolute -left-[31px] sm:-left-[39px] top-1 w-6 h-6 rounded-full bg-brand-black text-brand-cream text-[11px] font-mono font-bold flex items-center justify-center border-2 border-brand-cream shadow-xs">
+                    <div className="absolute -left-[31px] sm:-left-[39px] top-1 w-6 h-6 rounded-full bg-brand-turquoise text-brand-cream text-[11px] font-mono font-bold flex items-center justify-center border-2 border-brand-cream shadow-xs">
                       {item.day}
                     </div>
-
-                    <div className="bg-brand-cream/30 border border-brand-brown/25 p-5 rounded-card space-y-2 group-hover:border-brand-brown transition-colors">
+                    <div className="bg-brand-cream/30 border border-brand-turquoise/12 p-5 rounded-card space-y-2 group-hover:border-brand-turquoise/25 transition-colors">
                       <div className="flex flex-wrap items-center justify-between gap-2">
-                        <h3 className="font-editorial text-xl font-bold text-brand-black">
+                        <h3 className="font-editorial text-xl font-bold text-brand-dark">
                           Day {item.day}: {item.title}
                         </h3>
                         {item.meals && (
-                          <span className="text-[10px] font-mono text-brand-brown uppercase bg-brand-cream px-2 py-0.5 rounded-xs border border-brand-brown/30">
+                          <span className="text-[10px] font-mono text-brand-turquoise uppercase bg-brand-cream/60 px-2 py-0.5 rounded-card border border-brand-turquoise/15">
                             Meals: {item.meals}
                           </span>
                         )}
                       </div>
-
-                      <p className="text-xs sm:text-sm text-brand-charcoal/80 leading-relaxed">
+                      <p className="text-xs sm:text-sm text-brand-dark/75 leading-relaxed">
                         {item.description}
                       </p>
-
                       {item.stay && (
                         <p className="text-xs text-brand-taupe pt-1 font-medium">
-                          Stay: <span className="text-brand-charcoal">{item.stay}</span>
+                          Stay: <span className="text-brand-dark">{item.stay}</span>
                         </p>
                       )}
                     </div>
@@ -156,32 +147,30 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
               </div>
             </section>
 
-            {/* Inclusions & Exclusions */}
-            <section className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-brand-brown/20">
-              <div className="bg-brand-cream/40 border border-brand-brown/30 p-6 rounded-card space-y-3">
-                <h3 className="font-editorial text-xl font-bold text-brand-black flex items-center gap-2">
-                  <CheckCircle2 className="w-5 h-5 text-emerald-700" />
+            <section className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-brand-turquoise/12">
+              <div className="bg-brand-cream/30 border border-brand-turquoise/15 p-6 rounded-card space-y-3">
+                <h3 className="font-editorial text-xl font-bold text-brand-dark flex items-center gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-brand-turquoise" />
                   What Is Included
                 </h3>
-                <ul className="space-y-2 text-xs sm:text-sm text-brand-charcoal/85">
+                <ul className="space-y-2 text-xs sm:text-sm text-brand-dark/80">
                   {pkg.inclusions.map((inc, i) => (
                     <li key={i} className="flex items-start gap-2">
-                      <span className="text-emerald-700 font-bold">✓</span>
+                      <span className="text-brand-turquoise font-bold">✓</span>
                       <span>{inc}</span>
                     </li>
                   ))}
                 </ul>
               </div>
-
-              <div className="bg-brand-cream/20 border border-brand-brown/25 p-6 rounded-card space-y-3">
-                <h3 className="font-editorial text-xl font-bold text-brand-black flex items-center gap-2">
-                  <XCircle className="w-5 h-5 text-rose-700" />
+              <div className="bg-brand-cream border border-brand-turquoise/10 p-6 rounded-card space-y-3">
+                <h3 className="font-editorial text-xl font-bold text-brand-dark flex items-center gap-2">
+                  <XCircle className="w-5 h-5 text-brand-yellow" />
                   What Is Excluded
                 </h3>
-                <ul className="space-y-2 text-xs sm:text-sm text-brand-charcoal/75">
+                <ul className="space-y-2 text-xs sm:text-sm text-brand-dark/70">
                   {pkg.exclusions.map((exc, i) => (
                     <li key={i} className="flex items-start gap-2">
-                      <span className="text-rose-700 font-bold">✗</span>
+                      <span className="text-brand-yellow font-bold">✗</span>
                       <span>{exc}</span>
                     </li>
                   ))}
@@ -189,20 +178,16 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
               </div>
             </section>
 
-            {/* FAQs */}
             {pkg.faqs && pkg.faqs.length > 0 && (
-              <section className="space-y-4 pt-4 border-t border-brand-brown/20">
-                <h3 className="font-editorial text-2xl font-bold text-brand-black">
+              <section className="space-y-4 pt-4 border-t border-brand-turquoise/12">
+                <h3 className="font-editorial text-2xl font-bold text-brand-dark">
                   Frequently Asked Questions
                 </h3>
                 <div className="space-y-3">
                   {pkg.faqs.map((f, i) => (
-                    <div
-                      key={i}
-                      className="p-4 bg-brand-cream/30 border border-brand-brown/25 rounded-card space-y-1.5"
-                    >
-                      <h4 className="text-sm font-bold text-brand-black">{f.question}</h4>
-                      <p className="text-xs text-brand-charcoal/80 leading-relaxed">{f.answer}</p>
+                    <div key={i} className="p-4 bg-brand-cream/30 border border-brand-turquoise/12 rounded-card space-y-1.5">
+                      <h4 className="text-sm font-bold text-brand-dark">{f.question}</h4>
+                      <p className="text-xs text-brand-dark/70 leading-relaxed">{f.answer}</p>
                     </div>
                   ))}
                 </div>
@@ -210,36 +195,34 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
             )}
           </div>
 
-          {/* Right Column: Sticky Booking Box — No Prices */}
+          {/* Right Column — No Prices */}
           <div className="lg:col-span-4">
-            <div className="bg-brand-cream/60 border border-brand-brown/40 rounded-card p-6 sm:p-7 space-y-6 sticky top-28 shadow-lg">
+            <div className="bg-brand-cream/30 border border-brand-turquoise/15 rounded-card-lg p-6 sm:p-7 space-y-6 sticky top-28 shadow-luxury">
               <div>
-                <span className="text-[10px] uppercase tracking-widest text-brand-taupe block mb-1">
+                <span className="text-[10px] uppercase tracking-widest text-brand-yellow block mb-1">
                   Custom Pricing
                 </span>
-                <p className="font-editorial text-xl font-bold text-brand-black">
+                <p className="font-hand text-2xl text-brand-turquoise">
                   Ask for Details
                 </p>
                 <p className="text-[11px] text-brand-taupe mt-1">
                   Pricing varies by group size, season, and customization. Contact us for a personalized quote.
                 </p>
               </div>
-
-              <div className="space-y-2.5 pt-4 border-t border-brand-brown/20 text-xs text-brand-charcoal/85">
+              <div className="space-y-2.5 pt-4 border-t border-brand-turquoise/15 text-xs text-brand-dark/80">
                 <p className="flex items-center gap-2">
-                  <ShieldCheck className="w-4 h-4 text-emerald-700 shrink-0" />
+                  <ShieldCheck className="w-4 h-4 text-brand-turquoise shrink-0" />
                   No Hidden Booking Charges
                 </p>
                 <p className="flex items-center gap-2">
-                  <MapPin className="w-4 h-4 text-brand-brown shrink-0" />
+                  <MapPin className="w-4 h-4 text-brand-yellow shrink-0" />
                   Operated from Kasumpti, Shimla
                 </p>
                 <p className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4 text-brand-brown shrink-0" />
+                  <Calendar className="w-4 h-4 text-brand-gold shrink-0" />
                   Flexible Departure Dates
                 </p>
               </div>
-
               <div className="pt-2 space-y-2.5">
                 <a
                   href={whatsappUrl}
@@ -252,7 +235,7 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
                 </a>
                 <a
                   href="#enquire-form-box"
-                  className="w-full py-3 px-4 rounded-card bg-brand-black text-brand-cream text-xs font-semibold uppercase tracking-wider text-center block hover:bg-brand-brown-dark transition-colors shadow-xs"
+                  className="w-full py-3 px-4 rounded-card bg-brand-turquoise text-brand-cream text-xs font-semibold uppercase tracking-wider text-center block hover:bg-brand-turquoise-light transition-colors shadow-xs"
                 >
                   Send Enquiry
                 </a>
@@ -264,18 +247,17 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
         {/* Enquiry Section */}
         <div id="enquire-form-box" className="py-16 max-w-4xl mx-auto">
           <div className="text-center mb-8 space-y-2">
-            <span className="text-xs font-semibold uppercase tracking-widest text-brand-brown">
+            <span className="text-xs font-semibold uppercase tracking-widest text-brand-yellow">
               Direct Reservation Desk
             </span>
-            <h2 className="font-editorial text-3xl sm:text-4xl font-bold text-brand-black">
+            <h2 className="font-editorial text-3xl sm:text-4xl font-bold text-brand-dark">
               Customize Your {pkg.destination} Expedition
             </h2>
             <p className="text-xs sm:text-sm text-brand-taupe">
               Tell us your group size, travel dates, and preferences.
             </p>
           </div>
-
-          <div className="bg-brand-cream/30 border border-brand-brown/40 p-6 sm:p-10 rounded-card shadow-luxury">
+          <div className="bg-brand-cream/30 border border-brand-turquoise/12 p-6 sm:p-10 rounded-card-lg shadow-luxury">
             <EnquiryForm
               defaultDestination={`${pkg.destination} (${pkg.title})`}
               defaultTravelType={pkg.isInternational ? "International" : "Domestic"}
@@ -285,25 +267,24 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
 
         {/* Related Packages */}
         {relatedPackages.length > 0 && (
-          <div className="py-16 border-t border-brand-brown/20">
+          <div className="py-16 border-t border-brand-turquoise/12">
             <div className="mb-8 flex items-center justify-between">
               <div>
-                <span className="text-xs font-semibold uppercase tracking-widest text-brand-brown">
+                <span className="text-xs font-semibold uppercase tracking-widest text-brand-yellow">
                   More Expeditions
                 </span>
-                <h2 className="font-editorial text-3xl font-bold text-brand-black mt-1">
-                  You Might Also Love
+                <h2 className="font-editorial text-3xl font-bold text-brand-dark mt-1">
+                  You Might Also <span className="font-hand text-brand-turquoise">Love</span>
                 </h2>
               </div>
               <Link
                 href="/packages"
-                className="text-xs font-semibold text-brand-black hover:text-brand-brown flex items-center gap-1 uppercase tracking-wider"
+                className="text-xs font-semibold text-brand-dark hover:text-brand-turquoise flex items-center gap-1 uppercase tracking-wider"
               >
                 View All <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
-
-            <div className="grid grid-cols-1 md:grid-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {relatedPackages.map((p) => (
                 <PackageCard key={p.id} pkg={p} />
               ))}

@@ -14,10 +14,9 @@ export const DestinationCard: React.FC<DestinationCardProps> = ({ destination })
   return (
     <Link
       href={`/destinations/${destination.slug}`}
-      className="group block bg-brand-cream border border-brand-brown/10 rounded-card overflow-hidden transition-all duration-500 hover:border-brand-brown hover:shadow-luxury hover:-translate-y-1 card-3d"
+      className="group block bg-white rounded-card-2xl overflow-hidden transition-all duration-500 hover:shadow-luxury-hover hover:-translate-y-1 border border-brand-turquoise/5 hover:border-brand-turquoise/12"
     >
-      {/* Visual Placeholder / Image */}
-      <div className="relative overflow-hidden">
+      <div className="relative overflow-hidden aspect-[4/3]">
         <ImagePlaceholder
           src={destination.heroImage}
           alt={destination.name}
@@ -25,44 +24,27 @@ export const DestinationCard: React.FC<DestinationCardProps> = ({ destination })
           category={destination.isDomestic ? "Himalayan India" : "Global Escapes"}
           label={destination.name}
         />
-        {/* Gradient overlay on hover */}
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
         <div className="absolute top-3 right-3 z-20">
-          <span className="text-[10px] uppercase tracking-widest font-semibold px-2.5 py-1 bg-brand-brown/90 text-brand-cream rounded-xs backdrop-blur-xs">
-            {destination.packagesCount} Curated Tours
+          <span className="text-[10px] uppercase tracking-widest font-semibold px-2.5 py-1 bg-white/95 text-brand-dark rounded-full shadow-soft backdrop-blur-sm">
+            {destination.packagesCount} Tours
           </span>
         </div>
       </div>
-
-      {/* Content */}
-      <div className="p-5 sm:p-6 space-y-3">
-        <div className="flex items-center justify-between">
-          <span className="text-[11px] font-semibold uppercase tracking-widest text-brand-sage flex items-center gap-1">
-            <MapPin className="w-3.5 h-3.5" />
-            {destination.region}
+      <div className="p-5 sm:p-6">
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-[11px] font-semibold uppercase tracking-widest text-brand-turquoise flex items-center gap-1">
+            <MapPin className="w-3.5 h-3.5" />{destination.region}
           </span>
-          <span className="w-7 h-7 rounded-full bg-brand-brown/5 border border-brand-brown/15 flex items-center justify-center text-brand-brown group-hover:bg-brand-brown group-hover:text-brand-cream transition-colors duration-300">
+          <div className="w-8 h-8 rounded-full bg-brand-turquoise/5 border border-brand-turquoise/10 flex items-center justify-center text-brand-turquoise group-hover:bg-brand-turquoise group-hover:text-white transition-all duration-300">
             <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </span>
+          </div>
         </div>
-
-        <h3 className="font-editorial text-2xl font-bold text-brand-black tracking-tight group-hover:text-brand-brown transition-colors">
-          {destination.name}
-        </h3>
-
-        <p className="text-xs sm:text-sm text-brand-charcoal/80 line-clamp-2 leading-relaxed">
-          {destination.shortDescription}
-        </p>
-
-        {/* Highlights Pills */}
-        <div className="pt-2 flex flex-wrap gap-1.5 border-t border-brand-brown/10">
+        <h3 className="font-editorial text-2xl font-bold text-brand-dark tracking-tight group-hover:text-brand-turquoise transition-colors">{destination.name}</h3>
+        <p className="text-xs sm:text-sm text-brand-dark/55 line-clamp-2 leading-relaxed mt-2">{destination.shortDescription}</p>
+        <div className="pt-3 mt-3 border-t border-brand-turquoise/5 flex flex-wrap gap-1.5">
           {destination.highlights.slice(0, 3).map((hl, i) => (
-            <span
-              key={i}
-              className="text-[10px] text-brand-taupe bg-brand-sage/8 px-2 py-0.5 rounded-xs tracking-wider"
-            >
-              {hl}
-            </span>
+            <span key={i} className="text-[10px] text-brand-taupe bg-brand-cream px-2.5 py-1 rounded-full">{hl}</span>
           ))}
         </div>
       </div>

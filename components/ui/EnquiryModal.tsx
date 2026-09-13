@@ -9,7 +9,7 @@ interface EnquiryModalProps {
   isOpen: boolean;
   onClose: () => void;
   defaultDestination?: string;
-  defaultTravelType?: "Domestic" | "International" | "Trek" | "Taxi" | "Pilgrimage" | "Other";
+  defaultTravelType?: "Domestic" | "International" | "Trek" | "Cab" | "Pilgrimage" | "Other";
   title?: string;
   subtitle?: string;
 }
@@ -32,7 +32,7 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-brand-black/60 backdrop-blur-xs transition-opacity"
+            className="fixed inset-0 bg-brand-dark/60 backdrop-blur-xs transition-opacity"
           />
 
           {/* Modal Container */}
@@ -41,12 +41,12 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 15 }}
             transition={{ type: "spring", duration: 0.5, bounce: 0.1 }}
-            className="relative w-full max-w-2xl bg-brand-cream border border-brand-brown/15 rounded-card shadow-2xl p-6 sm:p-8 z-10 my-8 overflow-hidden"
+            className="relative w-full max-w-2xl bg-brand-cream border border-brand-turquoise/15 rounded-card shadow-2xl p-6 sm:p-8 z-10 my-8 overflow-hidden"
           >
             {/* Close Button */}
             <button
               onClick={onClose}
-              className="absolute top-5 right-5 p-2 text-brand-taupe hover:text-brand-black rounded-full hover:bg-brand-brown/5 transition-colors"
+              className="absolute top-5 right-5 p-2 text-brand-taupe hover:text-brand-dark rounded-full hover:bg-brand-turquoise/5 transition-colors"
               aria-label="Close modal"
             >
               <X className="w-5 h-5" />
@@ -54,10 +54,10 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({
 
             {/* Header */}
             <div className="mb-6 pr-8">
-              <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-brand-brown mb-1.5">
+              <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-brand-turquoise mb-1.5">
                 <Sparkles className="w-3.5 h-3.5" /> Rucksack Adventures
               </span>
-              <h2 className="font-editorial text-2xl sm:text-3xl font-bold text-brand-black">
+              <h2 className="font-editorial text-2xl sm:text-3xl font-bold text-brand-dark">
                 {title}
               </h2>
               <p className="text-xs sm:text-sm text-brand-taupe mt-1">

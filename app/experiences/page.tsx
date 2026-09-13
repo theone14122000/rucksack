@@ -22,14 +22,14 @@ export default async function ExperiencesPage() {
         <Breadcrumbs items={[{ label: "Experiences" }]} />
 
         {/* Page Header */}
-        <div className="py-8 border-b border-brand-brown/30 mb-12">
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-brown block mb-2">
+        <div className="py-8 border-b border-brand-turquoise/30 mb-12">
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-turquoise block mb-2">
             Tailored Perspectives
           </span>
-          <h1 className="font-editorial text-4xl sm:text-6xl font-bold text-brand-black tracking-tight mb-4">
+          <h1 className="font-editorial text-4xl sm:text-6xl font-bold text-brand-dark tracking-tight mb-4">
             Curated Travel Experiences
           </h1>
-          <p className="text-sm sm:text-base text-brand-charcoal/80 max-w-2xl leading-relaxed">
+          <p className="text-sm sm:text-base text-brand-dark/80 max-w-2xl leading-relaxed">
             Travel designed around personal intention. Whether you seek contemplative alpine silence, high-adrenaline 4x4 trails, or luxurious family reunions, our Shimla atelier crafts each experience individually.
           </p>
         </div>
@@ -39,41 +39,41 @@ export default async function ExperiencesPage() {
           {experiences.map((exp) => (
             <div
               key={exp.id}
-              className="bg-brand-cream/30 border border-brand-brown/30 rounded-sm p-7 flex flex-col justify-between hover:border-brand-black hover:shadow-luxury transition-all duration-300"
+              className="bg-brand-cream/30 border border-brand-turquoise/30 rounded-card p-7 flex flex-col justify-between hover:border-brand-dark hover:shadow-luxury transition-all duration-300"
             >
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-brand-brown bg-brand-black px-2.5 py-0.5 rounded-xs">
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-brand-turquoise bg-brand-dark px-2.5 py-0.5 rounded-card">
                     {exp.category}
                   </span>
-                  <Sparkles className="w-4 h-4 text-brand-brown" />
+                  <Sparkles className="w-4 h-4 text-brand-turquoise" />
                 </div>
 
-                <h2 className="font-editorial text-2xl sm:text-3xl font-bold text-brand-black">
+                <h2 className="font-editorial text-2xl sm:text-3xl font-bold text-brand-dark">
                   {exp.name}
                 </h2>
 
-                <p className="text-xs sm:text-sm text-brand-charcoal/80 leading-relaxed">
+                <p className="text-xs sm:text-sm text-brand-dark/80 leading-relaxed">
                   {exp.fullDescription}
                 </p>
 
-                <div className="pt-4 border-t border-brand-brown/20 space-y-2">
-                  <span className="text-[11px] font-semibold uppercase tracking-wider text-brand-black block">
+                <div className="pt-4 border-t border-brand-turquoise/20 space-y-2">
+                  <span className="text-[11px] font-semibold uppercase tracking-wider text-brand-dark block">
                     Signature Elements:
                   </span>
                   {exp.highlights.map((h, i) => (
                     <p key={i} className="text-xs text-brand-taupe flex items-center gap-2">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-brand-brown shrink-0" />
+                      <CheckCircle2 className="w-3.5 h-3.5 text-brand-turquoise shrink-0" />
                       <span>{h}</span>
                     </p>
                   ))}
                 </div>
               </div>
 
-              <div className="pt-6 mt-4 border-t border-brand-brown/20">
+              <div className="pt-6 mt-4 border-t border-brand-turquoise/20">
                 <a
                   href="#custom-experience-form"
-                  className="w-full py-2.5 px-4 rounded-sm bg-brand-cream border border-brand-brown/40 hover:bg-brand-black hover:text-brand-cream text-brand-black text-xs font-semibold uppercase tracking-wider text-center block transition-colors"
+                  className="w-full py-2.5 px-4 rounded-card bg-brand-cream border border-brand-turquoise/40 hover:bg-brand-dark hover:text-brand-cream text-brand-dark text-xs font-semibold uppercase tracking-wider text-center block transition-colors"
                 >
                   Design This Style →
                 </a>
@@ -83,12 +83,12 @@ export default async function ExperiencesPage() {
         </div>
 
         {/* Custom Experience Builder Form */}
-        <div id="custom-experience-form" className="max-w-4xl mx-auto py-12 border-t border-brand-brown/30">
+        <div id="custom-experience-form" className="max-w-4xl mx-auto py-12 border-t border-brand-turquoise/30">
           <div className="text-center mb-8 space-y-2">
-            <span className="text-xs font-semibold uppercase tracking-widest text-brand-brown">
+            <span className="text-xs font-semibold uppercase tracking-widest text-brand-turquoise">
               Custom Travel Atelier
             </span>
-            <h2 className="font-editorial text-3xl sm:text-4xl font-bold text-brand-black">
+            <h2 className="font-editorial text-3xl sm:text-4xl font-bold text-brand-dark">
               Design a Bespoke Journey
             </h2>
             <p className="text-xs sm:text-sm text-brand-taupe">
@@ -96,7 +96,7 @@ export default async function ExperiencesPage() {
             </p>
           </div>
 
-          <div className="bg-brand-cream/40 border border-brand-brown/40 p-6 sm:p-10 rounded-sm shadow-luxury">
+          <div className="bg-brand-cream/40 border border-brand-turquoise/40 p-6 sm:p-10 rounded-card shadow-luxury">
             <EnquiryForm defaultTravelType="Other" />
           </div>
         </div>
