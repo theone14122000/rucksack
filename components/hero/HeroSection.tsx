@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, MapPin, Mountain, Star } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { FloatingCompass } from "./FloatingCompass";
 
 const heroSlides = [
@@ -152,30 +152,6 @@ export const HeroSection: React.FC = () => {
             >
               View Adventures
             </Link>
-          </motion.div>
-
-          {/* Floating Stats */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.8 }}
-            className="mt-16 flex flex-wrap items-center gap-6 sm:gap-10"
-          >
-            {[
-              { icon: Mountain, value: "50+", label: "Destinations" },
-              { icon: Star, value: "4.6", label: "Google Rating" },
-              { icon: MapPin, value: "8+", label: "Years in Shimla" },
-            ].map((stat) => (
-              <div key={stat.label} className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center backdrop-blur-sm">
-                  <stat.icon className="w-4 h-4 text-brand-turquoise-bright" />
-                </div>
-                <div>
-                  <p className="text-xl font-bold text-white">{stat.value}</p>
-                  <p className="text-[10px] uppercase tracking-wider text-white/40">{stat.label}</p>
-                </div>
-              </div>
-            ))}
           </motion.div>
         </div>
       </div>

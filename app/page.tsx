@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { ArrowRight, Mountain, Train, Compass, Star, MapPin } from "lucide-react";
 import { HeroSection } from "@/components/hero/HeroSection";
+import { StatsBar } from "@/components/ui/StatsBar";
 import { Carousel } from "@/components/ui/Carousel";
 import { DestinationCard } from "@/components/cards/DestinationCard";
 import { PackageCard } from "@/components/cards/PackageCard";
@@ -9,7 +10,7 @@ import { TrekCard } from "@/components/cards/TrekCard";
 import { TestimonialCard } from "@/components/cards/TestimonialCard";
 import { EnquiryForm } from "@/components/ui/EnquiryForm";
 import { Button } from "@/components/ui/Button";
-import { FAQAccordion } from "@/components/sections/FAQAccordion";
+import { FAQSection } from "@/components/sections/FAQSection";
 import { InternationalCarousel } from "@/components/sections/InternationalCarousel";
 import { getDestinations, getPackages, getTreks, getExperiences, getTestimonials, getFAQs } from "@/lib/cms/store";
 
@@ -48,7 +49,10 @@ export default async function HomePage() {
       {/* 1. HERO - Auto-Toggle Image Carousel */}
       <HeroSection />
 
-      {/* 2. EDITORIAL INTRO - Light, Spacious */}
+      {/* 2. STATS BAR - Single Strip */}
+      <StatsBar />
+
+      {/* 3. EDITORIAL INTRO - Light, Spacious */}
       <section className="py-24 lg:py-32 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
@@ -63,22 +67,6 @@ export default async function HomePage() {
               <p className="text-base sm:text-lg text-brand-dark/60 leading-relaxed max-w-lg">
                 From the first conversation to the last mile of your journey, we handle every detail. Curated itineraries, verified accommodations, experienced guides, and round-the-hour support — all from our mountain headquarters in Shimla.
               </p>
-              <div className="flex items-center gap-6 pt-2">
-                <div className="text-center">
-                  <p className="font-editorial text-3xl font-bold text-brand-dark">50+</p>
-                  <p className="text-[10px] uppercase tracking-wider text-brand-taupe mt-1">Destinations</p>
-                </div>
-                <div className="w-px h-12 bg-brand-turquoise/10" />
-                <div className="text-center">
-                  <p className="font-editorial text-3xl font-bold text-brand-dark">4.6</p>
-                  <p className="text-[10px] uppercase tracking-wider text-brand-taupe mt-1">Google Rating</p>
-                </div>
-                <div className="w-px h-12 bg-brand-turquoise/10" />
-                <div className="text-center">
-                  <p className="font-editorial text-3xl font-bold text-brand-dark">8+</p>
-                  <p className="text-[10px] uppercase tracking-wider text-brand-taupe mt-1">Years in Shimla</p>
-                </div>
-              </div>
             </div>
             <div className="relative">
               <div className="aspect-[4/5] rounded-card-2xl overflow-hidden shadow-luxury">
@@ -266,10 +254,10 @@ export default async function HomePage() {
         </Carousel>
       </section>
 
-      {/* 9. FAQ - Preserved */}
+      {/* 9. FAQ - Dynamic Section */}
       {faqs.length > 0 && (
         <section className="py-20 lg:py-28 bg-brand-cream">
-          <FAQAccordion faqs={faqs} />
+          <FAQSection faqs={faqs} />
         </section>
       )}
 
