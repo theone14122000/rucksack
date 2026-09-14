@@ -28,20 +28,22 @@ export const HeroSection: React.FC = () => {
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Background Image Carousel */}
+      {/* Background Image Carousel - Crossfade */}
       <div className="absolute inset-0">
-        <AnimatePresence mode="wait">
+        {heroSlides.map((slide, idx) => (
           <motion.img
-            key={current}
-            src={heroSlides[current].src}
-            alt={heroSlides[current].alt}
-            initial={{ opacity: 0, scale: 1.05 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.98 }}
-            transition={{ duration: 1.2, ease: "easeInOut" }}
+            key={idx}
+            src={slide.src}
+            alt={slide.alt}
+            initial={false}
+            animate={{
+              opacity: idx === current ? 1 : 0,
+              scale: idx === current ? 1 : 1.08,
+            }}
+            transition={{ duration: 1.8, ease: [0.45, 0, 0.15, 1] }}
             className="absolute inset-0 w-full h-full object-cover"
           />
-        </AnimatePresence>
+        ))}
         {/* Cinematic Overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-brand-dark/85 via-brand-dark/40 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/60 via-transparent to-brand-dark/20" />
@@ -53,13 +55,20 @@ export const HeroSection: React.FC = () => {
           <button
             key={idx}
             onClick={() => setCurrent(idx)}
-            className={`transition-all duration-500 rounded-full ${
-              idx === current
-                ? "w-8 h-2 bg-gradient-to-r from-brand-turquoise to-brand-yellow"
-                : "w-2 h-2 bg-white/30 hover:bg-white/50"
-            }`}
+            className="relative h-2 rounded-full overflow-hidden transition-all duration-300"
+            style={{ width: idx === current ? 32 : 8, background: idx === current ? "transparent" : "rgba(255,255,255,0.3)" }}
             aria-label={`Go to slide: ${slide.label}`}
-          />
+          >
+            {idx === current && (
+              <motion.div
+                key={`progress-${current}`}
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: 5, ease: "linear" }}
+                className="absolute inset-0 bg-gradient-to-r from-brand-turquoise to-brand-yellow origin-left rounded-full"
+              />
+            )}
+          </button>
         ))}
       </div>
 
