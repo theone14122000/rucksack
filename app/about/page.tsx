@@ -31,7 +31,7 @@ export default function AboutPage() {
         <div className="py-12 border-b border-brand-turquoise/15 mb-16">
           <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-yellow block mb-3">Our Story</span>
           <h1 className="font-editorial text-4xl sm:text-6xl font-bold text-brand-dark tracking-tight mb-6 max-w-4xl">
-            Born in the <span className="font-hand text-brand-turquoise">Himalayas</span>. Built for the Curious.
+            Born in the <span className="font-hand text-shimmer">Himalayas</span>. Built for the Curious.
           </h1>
           <p className="text-base sm:text-lg text-brand-dark/75 max-w-3xl leading-relaxed">
             Rucksack Adventures began in 2018 with a simple conviction: that the most meaningful travel happens when you slow down, go deeper, and let the landscape lead. Founded in Kasumpti, Shimla, we have grown from a local trekking outfit into a full-service travel atelier covering India and select international destinations.
@@ -50,7 +50,7 @@ export default function AboutPage() {
           <div className="text-center mb-12">
             <span className="text-xs font-semibold uppercase tracking-widest text-brand-yellow">What We Believe</span>
             <h2 className="font-editorial text-3xl sm:text-4xl font-bold text-brand-dark mt-2">
-              Travel Should Be <span className="font-hand text-brand-turquoise">Deliberate</span>
+              Travel Should Be <span className="font-hand text-shimmer">Deliberate</span>
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -68,7 +68,7 @@ export default function AboutPage() {
             <div>
               <span className="text-xs font-semibold uppercase tracking-widest text-brand-yellow block mb-3">What We Do</span>
               <h2 className="font-editorial text-3xl sm:text-4xl font-bold text-brand-dark mb-6">
-                End-to-End Travel, <span className="font-hand text-brand-turquoise">Perfected</span>
+                End-to-End Travel, <span className="font-hand text-shimmer">Perfected</span>
               </h2>
               <div className="space-y-4 text-sm text-brand-dark/75 leading-relaxed">
                 <p>From the first conversation to the last mile of your journey, we handle every detail. Curated itineraries, verified accommodations, experienced guides, seamless transport, and round-the-hour support — all under one roof.</p>
@@ -88,7 +88,7 @@ export default function AboutPage() {
         </div>
         <div className="text-center py-12 border-t border-brand-turquoise/12">
           <h2 className="font-editorial text-3xl font-bold text-brand-dark mb-4">
-            Ready to <span className="font-hand text-brand-turquoise">Begin</span>?
+            Ready to <span className="font-hand text-shimmer">Begin</span>?
           </h2>
           <p className="text-sm text-brand-taupe mb-8 max-w-lg mx-auto">Tell us where you want to go. We will handle everything else.</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

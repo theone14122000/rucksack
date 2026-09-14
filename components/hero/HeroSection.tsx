@@ -117,9 +117,9 @@ export const HeroSection: React.FC = () => {
           >
             Discover the
             <br />
-            <span className="text-gradient-brand">Himalayas</span>
+            <span className="text-shimmer">Himalayas</span>
             <br />
-            <span className="font-hand text-brand-yellow text-[0.85em]">Like Never Before</span>
+            <span className="font-hand text-shimmer text-[0.85em]">Like Never Before</span>
           </motion.h1>
 
           {/* Supporting Content */}

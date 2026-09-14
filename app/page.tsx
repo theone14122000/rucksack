@@ -62,7 +62,7 @@ export default async function HomePage() {
               </span>
               <h2 className="font-editorial text-4xl sm:text-5xl lg:text-6xl font-bold text-brand-dark tracking-tight leading-[1.05]">
                 Travel Should Be{" "}
-                <span className="font-hand text-brand-turquoise text-[1.1em]">Deliberate</span>
+                <span className="font-hand text-shimmer text-[1.1em]">Deliberate</span>
               </h2>
               <p className="text-base sm:text-lg text-brand-dark/60 leading-relaxed max-w-lg">
                 From the first conversation to the last mile of your journey, we handle every detail. Curated itineraries, verified accommodations, experienced guides, and round-the-hour support — all from our mountain headquarters in Shimla.
@@ -90,7 +90,7 @@ export default async function HomePage() {
                 <MapPin className="w-3.5 h-3.5" /> Explore India
               </span>
               <h2 className="font-editorial text-3xl sm:text-5xl font-bold text-brand-dark tracking-tight">
-                Domestic <span className="font-hand text-brand-turquoise text-[1.1em]">Destinations</span>
+                Domestic <span className="font-hand text-shimmer text-[1.1em]">Destinations</span>
               </h2>
             </div>
             <Link href="/destinations?region=domestic" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-brand-turquoise hover:text-brand-turquoise-light transition-colors">
@@ -121,7 +121,7 @@ export default async function HomePage() {
               </span>
               <h2 className="font-editorial text-3xl sm:text-5xl font-bold text-brand-dark tracking-tight leading-[1.05]">
                 Beyond the{" "}
-                <span className="font-hand text-brand-gold text-[1.1em]">Borders</span>
+                <span className="font-hand text-shimmer text-[1.1em]">Borders</span>
               </h2>
               <p className="text-base text-brand-dark/60 leading-relaxed">
                 Boutique international getaways featuring private villas, secluded island shores, and desert luxury with complete visa and concierge support.
@@ -154,7 +154,7 @@ export default async function HomePage() {
                 <Compass className="w-3.5 h-3.5" /> Handcrafted Itineraries
               </span>
               <h2 className="font-editorial text-3xl sm:text-5xl font-bold text-brand-dark tracking-tight">
-                Featured <span className="font-hand text-brand-gold text-[1.1em]">Adventures</span>
+                Featured <span className="font-hand text-shimmer text-[1.1em]">Adventures</span>
               </h2>
             </div>
             <Link href="/packages" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-brand-turquoise hover:text-brand-turquoise-light transition-colors">
@@ -177,7 +177,7 @@ export default async function HomePage() {
               <Mountain className="w-3.5 h-3.5" /> High Himalayan Ascents
             </span>
             <h2 className="font-editorial text-3xl sm:text-5xl font-bold text-brand-dark tracking-tight">
-              Into the <span className="font-hand text-brand-turquoise text-[1.1em]">Mountains</span>
+              Into the <span className="font-hand text-shimmer text-[1.1em]">Mountains</span>
             </h2>
             <p className="text-sm sm:text-base text-brand-dark/60 leading-relaxed">
               Curated Himalayan trekking experiences for explorers seeking something beyond conventional travel.
@@ -205,7 +205,7 @@ export default async function HomePage() {
             </span>
             <h2 className="font-editorial text-3xl sm:text-5xl font-bold text-brand-dark tracking-tight">
               Specialized Transport &{" "}
-              <span className="font-hand text-brand-turquoise text-[1.1em]">Pilgrimage</span> Desk
+              <span className="font-hand text-shimmer text-[1.1em]">Pilgrimage</span> Desk
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -243,7 +243,7 @@ export default async function HomePage() {
               <Star className="w-3.5 h-3.5" /> Guest Reflections
             </span>
             <h2 className="font-editorial text-3xl sm:text-5xl font-bold text-brand-dark tracking-tight">
-              Words From Our <span className="font-hand text-brand-gold text-[1.1em]">Travelers</span>
+              Words From Our <span className="font-hand text-shimmer text-[1.1em]">Travelers</span>
             </h2>
           </div>
         </div>
@@ -267,7 +267,7 @@ export default async function HomePage() {
           <div className="text-center mb-10 space-y-2">
             <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-turquoise">Direct Himalayan Concierge</span>
             <h2 className="font-editorial text-3xl sm:text-5xl font-bold text-brand-dark">
-              Begin Your Travel <span className="font-hand text-brand-turquoise text-[1.1em]">Story</span>
+              Begin Your Travel <span className="font-hand text-shimmer text-[1.1em]">Story</span>
             </h2>
             <p className="text-xs sm:text-sm text-brand-taupe max-w-md mx-auto">Share your travel aspirations. Our planners in Kasumpti, Shimla craft each journey individually.</p>
           </div>

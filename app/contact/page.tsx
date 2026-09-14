@@ -27,7 +27,7 @@ export default function ContactPage() {
         <div className="py-12 border-b border-brand-turquoise/15 mb-12">
           <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-yellow block mb-2">Get in Touch</span>
           <h1 className="font-editorial text-4xl sm:text-6xl font-bold text-brand-dark tracking-tight mb-4">
-            Let&apos;s Plan Your <span className="font-hand text-brand-turquoise">Journey</span>
+            Let&apos;s Plan Your <span className="font-hand text-shimmer">Journey</span>
           </h1>
           <p className="text-sm sm:text-base text-brand-dark/75 max-w-2xl leading-relaxed">
             Whether it&apos;s a weekend trek in the Himalayas, a family holiday across India, or a custom international escape — we&apos;re here to make it effortless.

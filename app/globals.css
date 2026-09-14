@@ -78,7 +78,7 @@ html {
 
 .font-hand {
   font-family: var(--font-hand);
-  font-weight: 500;
+  font-weight: 600;
 }
 
 /* Gradients */
@@ -104,6 +104,21 @@ html {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+/* Shimmer text — brand colors cycling */
+@keyframes text-shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.text-shimmer {
+  background: linear-gradient(110deg, #0B8F83 0%, #20C4B5 25%, #F6D743 50%, #D9A441 75%, #0B8F83 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: text-shimmer 4s ease infinite;
 }
 
 /* Cards */

@@ -25,7 +25,7 @@ export const FAQSection: React.FC<FAQSectionProps> = ({ faqs }) => {
           <MessageCircleQuestion className="w-4 h-4" /> Clarity & Guidance
         </span>
         <h2 className="font-editorial text-3xl sm:text-5xl font-bold text-brand-dark tracking-tight">
-          Frequently Asked <span className="font-hand text-brand-turquoise text-[1.1em]">Questions</span>
+          Frequently Asked <span className="font-hand text-shimmer text-[1.1em]">Questions</span>
         </h2>
         <p className="text-xs sm:text-sm text-brand-taupe max-w-md mx-auto">
           Clear answers from our mountain desk to prepare you for the road.

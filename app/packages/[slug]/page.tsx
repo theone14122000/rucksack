@@ -274,7 +274,7 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
                   More Expeditions
                 </span>
                 <h2 className="font-editorial text-3xl font-bold text-brand-dark mt-1">
-                  You Might Also <span className="font-hand text-brand-turquoise">Love</span>
+                   You Might Also <span className="font-hand text-shimmer">Love</span>
                 </h2>
               </div>
               <Link

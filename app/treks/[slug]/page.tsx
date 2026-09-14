@@ -290,7 +290,7 @@ export default async function TrekDetailPage({ params }: TrekPageProps) {
                   Alternate Trails
                 </span>
                 <h2 className="font-editorial text-3xl font-bold text-brand-cream mt-1">
-                  More Himalayan <span className="font-hand text-brand-gold">Ascents</span>
+                   More Himalayan <span className="font-hand text-shimmer">Ascents</span>
                 </h2>
               </div>
               <Link
