@@ -6,7 +6,7 @@ export const Footer: React.FC = () => {
   return (
     <footer className="bg-brand-dark text-white relative overflow-hidden">
       {/* CTA Banner — animated brand gradient */}
-      <div className="relative cta-animated-gradient py-16 overflow-hidden">
+      <div className="relative py-16 overflow-hidden animate-gradient-pan" style={{ background: "linear-gradient(110deg, #0B8F83, #20C4B5, #F6D743, #20C4B5, #0B8F83)", backgroundSize: "200% 200%" }}>
         <div className="absolute inset-0 bg-grid opacity-10" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
           <span className="text-[10px] font-mono font-bold uppercase tracking-[0.3em] text-brand-dark/50 block mb-3">Ready to Explore?</span>

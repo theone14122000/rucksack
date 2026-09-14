@@ -4,6 +4,15 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 
+@theme {
+  --animate-gradient-pan: gradient-pan 6s ease infinite;
+
+  @keyframes gradient-pan {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+}
+
 :root {
   --font-serif: 'DM Serif Display', Georgia, serif;
   --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
@@ -60,18 +69,7 @@ html {
   background: linear-gradient(135deg, #0B8F83 0%, #12A89D 40%, #F6D743 100%);
 }
 
-/* Animated CTA gradient — same brand combo, continuously panning */
-.cta-animated-gradient {
-  background: linear-gradient(110deg, #0B8F83, #20C4B5, #F6D743, #20C4B5, #0B8F83);
-  background-size: 200% 200%;
-  animation: ctaGradientPan 8s ease infinite;
-  will-change: background-position;
-}
-
-@keyframes ctaGradientPan {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
+/* Animated CTA gradient — handled via @theme above */
 
 .text-gradient-brand {
   background: linear-gradient(135deg, #0B8F83, #20C4B5, #F6D743);
