@@ -89,7 +89,7 @@ export const HeroSection: React.FC = () => {
 
       {/* Floating Compass - Desktop Only */}
       <div className="hidden lg:block absolute top-28 right-8 xl:right-16 z-10">
-        <FloatingCompass />
+        <FloatingCompass activeIndex={current} />
       </div>
 
       {/* Content */}
