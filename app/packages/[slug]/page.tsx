@@ -84,20 +84,20 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
         </div>
 
         {/* Visual Hero */}
-        <div className="mb-14 rounded-card-lg overflow-hidden border border-brand-turquoise/12 shadow-luxury">
+        <div className="mb-10 sm:mb-14 rounded-card-lg overflow-hidden border border-brand-turquoise/12 shadow-luxury">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={getPackageImage(pkg.slug)}
             alt={pkg.title}
-            className="w-full h-auto object-cover aspect-[21/9]"
+            className="w-full h-auto object-cover aspect-[16/9] sm:aspect-[21/9]"
             loading="lazy"
           />
         </div>
 
         {/* Main Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 pb-16 border-b border-brand-turquoise/12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 pb-12 sm:pb-16 border-b border-brand-turquoise/12">
           {/* Left Column */}
-          <div className="lg:col-span-8 space-y-12">
+          <div className="lg:col-span-8 space-y-8 sm:space-y-12">
             <section className="space-y-4">
               <h2 className="font-editorial text-2xl sm:text-3xl font-bold text-brand-dark">
                 Journey Overview

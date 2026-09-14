@@ -18,7 +18,7 @@ export const Footer: React.FC = () => {
 
       {/* CTA Banner */}
       <div
-        className="relative py-16 overflow-hidden"
+        className="relative py-12 sm:py-16 overflow-hidden"
         style={{
           background: "linear-gradient(110deg, #0B8F83 0%, #20C4B5 25%, #F6D743 50%, #20C4B5 75%, #0B8F83 100%)",
           backgroundSize: "300% 300%",

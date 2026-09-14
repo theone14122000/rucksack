@@ -53,9 +53,9 @@ export default async function HomePage() {
       <StatsBar />
 
       {/* 3. EDITORIAL INTRO - Light, Spacious */}
-      <section className="py-24 lg:py-32 bg-white">
+      <section className="py-16 sm:py-24 lg:py-32 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-16 lg:gap-24 items-center">
             <div className="space-y-6">
               <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-turquoise flex items-center gap-2">
                 <div className="w-8 h-px bg-brand-turquoise" /> Our Philosophy
@@ -82,9 +82,9 @@ export default async function HomePage() {
       </section>
 
       {/* 3. FEATURED DESTINATIONS - Domestic Carousel */}
-      <section className="py-20 lg:py-28 bg-brand-cream">
+      <section className="py-16 lg:py-28 bg-brand-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 gap-4">
             <div className="space-y-2 max-w-2xl">
               <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-turquoise flex items-center gap-2">
                 <MapPin className="w-3.5 h-3.5" /> Explore India
@@ -106,9 +106,9 @@ export default async function HomePage() {
       </section>
 
       {/* 4. INTERNATIONAL ESCAPES - Auto-Toggle Carousel + Links */}
-      <section className="py-20 lg:py-28 bg-white overflow-hidden">
+      <section className="py-16 lg:py-28 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-16 items-center">
             {/* Auto-Toggle Image Carousel */}
             <div className="relative order-2 lg:order-1">
               <InternationalCarousel destinations={internationalDestinations} />
@@ -146,7 +146,7 @@ export default async function HomePage() {
       </section>
 
       {/* 5. FEATURED ADVENTURES - Carousel */}
-      <section className="py-20 lg:py-28 bg-brand-cream">
+      <section className="py-16 lg:py-28 bg-brand-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
             <div className="space-y-2 max-w-2xl">
@@ -170,9 +170,9 @@ export default async function HomePage() {
       </section>
 
       {/* 6. TREKS - Light Section with Timeline Feel */}
-      <section className="py-20 lg:py-28 bg-white">
+      <section className="py-16 lg:py-28 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
+          <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-14 space-y-3">
             <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-turquoise flex items-center justify-center gap-2">
               <Mountain className="w-3.5 h-3.5" /> High Himalayan Ascents
             </span>
@@ -197,9 +197,9 @@ export default async function HomePage() {
       </section>
 
       {/* 7. SERVICES - Interactive List */}
-      <section className="py-20 lg:py-28 bg-brand-cream">
+      <section className="py-16 lg:py-28 bg-brand-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
+          <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14 space-y-3">
             <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-turquoise">
               Reliable Ground Logistics
             </span>
@@ -208,13 +208,13 @@ export default async function HomePage() {
               <span className="font-hand text-shimmer text-[1.1em]">Pilgrimage</span> Desk
             </h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-8">
             {[
               { icon: "🚗", title: "Premium Cab Services", desc: "Airport transfers, local sightseeing, and mountain 4x4 transfers to Kinnaur and Spiti.", href: "/taxi-services", items: ["Toyota Innova Crysta & 4x4 Scorpio", "Professional mountain chauffeurs", "Transparent pricing"] },
               { icon: "🛕", title: "Pilgrimage Tour Packages", desc: "Comprehensive pilgrimage coordination across Char Dham and temple circuits.", href: "/pilgrimage-tour", items: ["Helicopter ticket support", "Private vehicle transfers", "Medical guidelines & packing"] },
               { icon: "🚂", title: "Bus & Toy Train", desc: "Heritage toy train rides and luxury Volvo buses connecting Delhi, Shimla, and Manali.", href: "/bus-booking", items: ["Kalka-Shimla Toy Train", "HPTDC & premium Volvo buses", "Express enquiry response"] },
             ].map((service, idx) => (
-              <Link key={service.href} href={service.href} className="group bg-white rounded-card-xl p-7 hover:shadow-luxury transition-all duration-500 hover:-translate-y-1 border border-brand-turquoise/5 hover:border-brand-turquoise/15 relative overflow-hidden">
+              <Link key={service.href} href={service.href} className="group bg-white rounded-card-xl p-5 sm:p-7 hover:shadow-luxury transition-all duration-500 hover:-translate-y-1 border border-brand-turquoise/5 hover:border-brand-turquoise/15 relative overflow-hidden">
                 <div className="absolute top-5 right-5 text-[80px] font-editorial font-bold text-brand-turquoise/[0.03] leading-none select-none pointer-events-none">0{idx + 1}</div>
                 <span className="text-3xl mb-4 block">{service.icon}</span>
                 <h3 className="font-editorial text-xl font-bold text-brand-dark group-hover:text-brand-turquoise transition-colors mb-2">{service.title}</h3>
@@ -236,9 +236,9 @@ export default async function HomePage() {
       </section>
 
       {/* 8. TESTIMONIALS - Carousel */}
-      <section className="py-20 lg:py-28 bg-white">
+      <section className="py-16 lg:py-28 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
+          <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-14 space-y-3">
             <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-gold flex items-center justify-center gap-2">
               <Star className="w-3.5 h-3.5" /> Guest Reflections
             </span>
@@ -256,13 +256,13 @@ export default async function HomePage() {
 
       {/* 9. FAQ - Dynamic Section */}
       {faqs.length > 0 && (
-        <section className="py-20 lg:py-28 bg-brand-cream">
+        <section className="py-16 lg:py-28 bg-brand-cream">
           <FAQSection faqs={faqs} />
         </section>
       )}
 
       {/* 10. ENQUIRY - Clean, Light */}
-      <section className="py-20 lg:py-28 bg-white">
+      <section className="py-16 lg:py-28 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10 space-y-2">
             <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-turquoise">Direct Himalayan Concierge</span>

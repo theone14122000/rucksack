@@ -65,17 +65,17 @@ export const Carousel: React.FC<CarouselProps> = ({
   return (
     <div className={cn("relative", className)}>
       {showArrows && canScrollLeft && (
-        <button onClick={() => scroll("left")} className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-20 w-10 h-10 rounded-full bg-white shadow-elevated border border-brand-turquoise/10 flex items-center justify-center text-brand-dark hover:bg-brand-turquoise hover:text-white hover:border-brand-turquoise transition-all duration-300" aria-label="Scroll left">
-          <ChevronLeft className="w-5 h-5" />
+        <button onClick={() => scroll("left")} className="absolute left-2 sm:left-0 top-1/2 -translate-y-1/2 sm:-translate-x-4 z-20 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white shadow-elevated border border-brand-turquoise/10 flex items-center justify-center text-brand-dark hover:bg-brand-turquoise hover:text-white hover:border-brand-turquoise transition-all duration-300" aria-label="Scroll left">
+          <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
         </button>
       )}
       {showArrows && canScrollRight && (
-        <button onClick={() => scroll("right")} className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-20 w-10 h-10 rounded-full bg-white shadow-elevated border border-brand-turquoise/10 flex items-center justify-center text-brand-dark hover:bg-brand-turquoise hover:text-white hover:border-brand-turquoise transition-all duration-300" aria-label="Scroll right">
-          <ChevronRight className="w-5 h-5" />
+        <button onClick={() => scroll("right")} className="absolute right-2 sm:right-0 top-1/2 -translate-y-1/2 sm:translate-x-4 z-20 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white shadow-elevated border border-brand-turquoise/10 flex items-center justify-center text-brand-dark hover:bg-brand-turquoise hover:text-white hover:border-brand-turquoise transition-all duration-300" aria-label="Scroll right">
+          <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
         </button>
       )}
 
-      <div ref={scrollRef} className="flex overflow-x-auto snap-scroll scrollbar-hide" style={{ gap: `${gap}px`, scrollbarWidth: "none", msOverflowStyle: "none" }}>
+      <div ref={scrollRef} className="flex overflow-x-auto snap-scroll scrollbar-hide px-4 sm:px-0" style={{ gap: `${gap}px`, scrollbarWidth: "none", msOverflowStyle: "none" }}>
         {children.map((child, idx) => (
           <div key={idx} className={cn("flex-shrink-0 snap-start", itemClassName)}>
             {child}
