@@ -44,7 +44,7 @@ export const FAQSection: React.FC<FAQSectionProps> = ({ faqs }) => {
                 : "bg-white text-brand-dark/60 border border-brand-turquoise/10 hover:border-brand-turquoise/25 hover:text-brand-dark"
             }`}
           >
-            {cat}
+            {cat.charAt(0).toUpperCase() + cat.slice(1)}
           </button>
         ))}
       </div>

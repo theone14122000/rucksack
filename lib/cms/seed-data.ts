@@ -713,37 +713,73 @@ export const initialFAQs: FAQ[] = [
   {
     id: "faq-1",
     question: "Where is Rucksack Adventures located?",
-    answer: "Our physical operations center and office is based at Chotta Shimla to Kusumpti Rd, SDA Complex, Kasumpti, Shimla, Himachal Pradesh 171009. We welcome travelers to visit us or reach out via WhatsApp and phone.",
+    answer: "Our office is at Chotta Shimla to Kusumpti Rd, SDA Complex, Kasumpti, Shimla, Himachal Pradesh 171009. You can visit us in person, or reach out via WhatsApp at 7018678064 or email at curate@rucksackadventures.com.",
     category: "general"
   },
   {
     id: "faq-2",
-    question: "How do custom package bookings work?",
-    answer: "Every journey is customized to your preferences. After you submit an enquiry, our senior destination planner contacts you within 4 hours to understand your travel dates, group size, and hotel preferences. We then provide a transparent day-wise itinerary and quote.",
-    category: "booking"
+    question: "What is the best time to visit Himachal Pradesh?",
+    answer: "March to June is ideal for pleasant weather, apple orchards, and outdoor activities. September to November offers crystal-clear mountain views and autumn colors. December to February is perfect for snow lovers in Shimla, Manali, and Kufri. Spiti Valley is best from May to September when road passes are open.",
+    category: "general"
   },
   {
     id: "faq-3",
-    question: "Do you provide taxi and intercity cab services from Shimla?",
-    answer: "Yes, taxi services are one of our core pillars. We manage a fleet of commercially licensed sedans (Dzire/Etios), premium SUVs (Innova Crysta), and tempo travelers for Chandigarh-Shimla transfers, Kinnaur, Spiti, local Shimla sightseeing, and Manali routes.",
-    category: "cabs"
+    question: "How do custom package bookings work?",
+    answer: "After you submit an enquiry, our destination planner contacts you within 4 hours to understand your dates, group size, budget, and preferences. We then craft a day-wise itinerary with transparent pricing. Once confirmed, we share a detailed booking voucher and handle all logistics end-to-end.",
+    category: "booking"
   },
   {
     id: "faq-4",
-    question: "What safety equipment is provided on high-altitude treks?",
-    answer: "Every mountain trek is led by certified mountaineering guides. We carry medical-grade portable oxygen cylinders, fingertip pulse oximeters, hyperbaric safety protocols, and comprehensive high-altitude medical kits.",
-    category: "treks"
+    question: "What payment methods do you accept?",
+    answer: "We accept UPI (Google Pay, PhonePe, Paytm), bank NEFT/RTGS transfers, credit and debit cards, and cash at our Shimla office. For advance bookings, we typically request a 30% deposit with the balance due 7 days before travel.",
+    category: "booking"
   },
   {
     id: "faq-5",
-    question: "What is your cancellation and refund policy?",
-    answer: "We maintain flexible, fair booking terms. Cancellations made 30+ days prior to travel receive an 85% refund; 15-29 days receive a 50% refund. High altitude permit and air/train tickets follow airline and government refund rules.",
-    category: "cancellation"
+    question: "What is included in a tour package?",
+    answer: "Our packages typically include accommodation in verified hotels or homestays, all ground transfers in private vehicles, daily breakfast and dinner, sightseeing as per itinerary, applicable permits and entry fees, and a dedicated trip coordinator. International packages also include visa assistance and airport transfers.",
+    category: "booking"
   },
   {
     id: "faq-6",
-    question: "How do you assist with the Pilgrimage Tour?",
-    answer: "We manage complete Pilgrimage Tour packages including helicopter ticket booking, compulsory health certificate guidance, verified hotel and luxury tent bookings, and ground taxi transfers from the nearest railhead or airport.",
+    question: "Do you provide taxi and intercity cab services from Shimla?",
+    answer: "Yes. We manage a fleet of sedans (Dzire/Etios), premium SUVs (Innova Crysta, Scorpio), and tempo travelers for Chandigarh-Shimla, Kinnaur, Spiti, Manali, and local sightseeing. All vehicles are commercially licensed with experienced mountain chauffeurs.",
+    category: "cabs"
+  },
+  {
+    id: "faq-7",
+    question: "How do I reach Shimla from Delhi or Chandigarh?",
+    answer: "From Delhi, you can take an overnight Volvo bus (approx. 8 hours), the Kalka-Shimla toy train (approx. 10 hours), or fly to Shimla airport. From Chandigarh, it is a 4-hour drive by taxi or bus. We can arrange pick-up from any of these points.",
+    category: "general"
+  },
+  {
+    id: "faq-8",
+    question: "What safety equipment is provided on high-altitude treks?",
+    answer: "Every trek is led by certified mountaineering guides. We carry portable oxygen cylinders, pulse oximeters, high-altitude medical kits, and satellite communication devices. Our guide-to-trekker ratio is 1:4 on challenging routes.",
+    category: "treks"
+  },
+  {
+    id: "faq-9",
+    question: "What should I pack for a Himalayan trek?",
+    answer: "Essentials include waterproof trekking boots with ankle support, 2-3 thermal layers, a fleece jacket, down jacket, rain poncho, sunscreen SPF 50+, sunglasses, headlamp, reusable water bottle, and personal medication. We share a detailed packing list after booking confirmation.",
+    category: "treks"
+  },
+  {
+    id: "faq-10",
+    question: "What is the typical group size for treks and tours?",
+    answer: "Our small-group treks have 8-12 participants for a personalized experience. Private tours can be arranged for solo travelers, couples, families, or groups of any size. We also offer exclusive luxury tours with dedicated guides and vehicles.",
+    category: "treks"
+  },
+  {
+    id: "faq-11",
+    question: "Do I need travel insurance for Himalayan trips?",
+    answer: "We strongly recommend travel insurance that covers high-altitude trekking up to 5,000 meters, medical emergencies, and trip cancellation. We can suggest suitable insurance providers upon request. It is mandatory for all our high-altitude trek expeditions.",
+    category: "general"
+  },
+  {
+    id: "faq-12",
+    question: "Are your packages suitable for families with children?",
+    answer: "Absolutely. We design family-friendly itineraries with comfortable pacing, child-safe accommodations, private vehicles, and gentle sightseeing. For high-altitude treks like Spiti or Ladakh, we recommend children aged 8 and above due to acclimatization requirements.",
     category: "booking"
   }
 ];
