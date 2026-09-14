@@ -27,6 +27,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className="scroll-smooth">
       <head>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+        <style dangerouslySetInnerHTML={{ __html: `
+          @keyframes cta-shimmer {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+          }
+        `}} />
       </head>
       <body className="min-h-screen flex flex-col bg-white text-brand-dark font-sans selection:bg-brand-turquoise selection:text-white">
         <Navbar />

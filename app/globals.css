@@ -4,28 +4,40 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 
-@theme {
-  --animate-gradient-pan: gradient-flow 6s ease infinite;
-
-  @keyframes gradient-flow {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-}
-
+/* CTA shimmer — moving gradient for buttons & text.
+   Keyframes injected via <style> in layout.tsx (Tailwind v4 strips @keyframes from globals.css) */
 .cta-shimmer {
   background: linear-gradient(
     110deg,
     #0B8F83 0%,
-    #20C4B5 20%,
-    #F6D743 40%,
-    #20C4B5 60%,
-    #0B8F83 80%,
-    #20C4B5 100%
+    #12A89D 18%,
+    #20C4B5 35%,
+    #F6D743 52%,
+    #D9A441 70%,
+    #0B8F83 100%
   );
   background-size: 300% 300%;
   animation: cta-shimmer 4s ease infinite;
+}
+
+/* Text shimmer — moving gradient for headings */
+.text-shimmer {
+  background: linear-gradient(
+    110deg,
+    #0B8F83 0%,
+    #12A89D 16%,
+    #20C4B5 32%,
+    #F6D743 50%,
+    #D9A441 68%,
+    #20C4B5 84%,
+    #0B8F83 100%
+  );
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: cta-shimmer 3.5s ease infinite;
+  filter: saturate(1.4) contrast(1.1);
 }
 
 :root {
@@ -98,54 +110,6 @@ html {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-}
-
-/* Moving gradient keyframes — extracted from reference */
-@keyframes gradient-flow {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* CTA shimmer — slow panning gradient for buttons */
-.cta-shimmer {
-  background: linear-gradient(
-    110deg,
-    #0B8F83 0%,
-    #12A89D 18%,
-    #20C4B5 35%,
-    #F6D743 52%,
-    #D9A441 70%,
-    #0B8F83 100%
-  );
-  background-size: 200% 200%;
-  animation: gradient-flow 5s ease infinite;
-}
-
-/* Shimmer text — bold panning gradient for headings */
-@keyframes text-shimmer {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-.text-shimmer {
-  background: linear-gradient(
-    110deg,
-    #0B8F83 0%,
-    #12A89D 16%,
-    #20C4B5 32%,
-    #F6D743 50%,
-    #D9A441 68%,
-    #20C4B5 84%,
-    #0B8F83 100%
-  );
-  background-size: 250% 250%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: text-shimmer 4s ease infinite;
-  filter: saturate(1.4) contrast(1.1);
 }
 
 /* Cards */

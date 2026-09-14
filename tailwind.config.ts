@@ -65,8 +65,14 @@ const config: Config = {
         "drift": "drift 8s ease-in-out infinite",
         "pulse-soft": "pulseSoft 3s ease-in-out infinite",
         "gradient-pan": "gradientPan 8s ease infinite",
+        "cta-shimmer": "cta-shimmer 4s ease infinite",
       },
       keyframes: {
+        "cta-shimmer": {
+          "0%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
+          "100%": { backgroundPosition: "0% 50%" },
+        },
         fadeIn: {
           "0%": { opacity: "0" },
           "100%": { opacity: "1" },
