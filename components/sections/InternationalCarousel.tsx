@@ -39,7 +39,7 @@ export const InternationalCarousel: React.FC<InternationalCarouselProps> = ({ de
         <AnimatePresence mode="wait">
           <motion.img
             key={current}
-            src={destinations[current].heroImage || "/images/landscape.jpg"}
+            src={destinations[current].heroImage || "/images/destinations/leh-ladakh.jpg"}
             alt={destinations[current].name}
             initial={{ opacity: 0, scale: 1.05 }}
             animate={{ opacity: 1, scale: 1 }}

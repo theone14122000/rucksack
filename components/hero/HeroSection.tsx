@@ -7,11 +7,11 @@ import { ArrowRight, MapPin, Mountain, Star } from "lucide-react";
 import { FloatingCompass } from "./FloatingCompass";
 
 const heroSlides = [
-  { src: "/images/himachal1.jpg", alt: "Himachal Pradesh mountains", label: "Himachal Pradesh" },
-  { src: "/images/kashmir.jpg", alt: "Kashmir valley", label: "Kashmir" },
-  { src: "/images/leh1.jpg", alt: "Leh Ladakh landscape", label: "Leh Ladakh" },
-  { src: "/images/bali.jpg", alt: "Bali tropical paradise", label: "Bali" },
-  { src: "/images/dubai.jpg", alt: "Dubai skyline", label: "Dubai" },
+  { src: "/images/hero/slide-1.jpg", alt: "Himachal Pradesh mountains", label: "Himachal Pradesh" },
+  { src: "/images/hero/slide-2.jpg", alt: "Kashmir valley", label: "Kashmir" },
+  { src: "/images/hero/slide-3.jpg", alt: "Leh Ladakh landscape", label: "Leh Ladakh" },
+  { src: "/images/hero/slide-4.jpg", alt: "Bali tropical paradise", label: "Bali" },
+  { src: "/images/hero/slide-5.jpg", alt: "Dubai skyline", label: "Dubai" },
 ];
 
 export const HeroSection: React.FC = () => {

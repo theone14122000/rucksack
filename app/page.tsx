@@ -29,18 +29,18 @@ export default async function HomePage() {
   const internationalDestinations = destinations.filter((d) => !d.isDomestic);
 
   const editorialImageMap: Record<string, string> = {
-    "himachal-pradesh": "/images/himachal2.jpg",
-    "kashmir": "/images/kashmir2.jpg",
-    "leh-ladakh": "/images/leh2.jpg",
-    "kinnaur": "/images/kinnaur1.jpg",
-    "uttarakhand": "/images/utrakhand.jfif",
-    "north-east": "/images/north-east2.jpg",
-    "andaman": "/images/andaman1.jpg",
-    "bali": "/images/bali.jpg",
-    "dubai": "/images/dubai.jpg",
-    "nepal": "/images/nepal.jpg",
-    "singapore": "/images/singapore.jpg",
-    "thailand": "/images/thailand.jpg",
+    "himachal-pradesh": "/images/editorial/philosophy.jpg",
+    "kashmir": "/images/editorial/international.jpg",
+    "leh-ladakh": "/images/destinations/leh-ladakh.jpg",
+    "kinnaur": "/images/destinations/kinnaur.jpg",
+    "uttarakhand": "/images/destinations/uttarakhand.jpg",
+    "north-east": "/images/destinations/north-east.jpg",
+    "andaman": "/images/destinations/andaman.jpg",
+    "bali": "/images/destinations/bali.jpg",
+    "dubai": "/images/destinations/dubai.jpg",
+    "nepal": "/images/destinations/nepal.jpg",
+    "singapore": "/images/destinations/singapore.jpg",
+    "thailand": "/images/destinations/thailand.jpg",
   };
 
   return (
@@ -82,7 +82,7 @@ export default async function HomePage() {
             </div>
             <div className="relative">
               <div className="aspect-[4/5] rounded-card-2xl overflow-hidden shadow-luxury">
-                <img src="/images/himachal2.jpg" alt="Himalayan landscape" className="w-full h-full object-cover" />
+                <img src="/images/editorial/philosophy.jpg" alt="Himalayan landscape" className="w-full h-full object-cover" />
               </div>
               <div className="absolute -bottom-6 -left-6 bg-white rounded-card-xl p-5 shadow-luxury border border-brand-turquoise/5">
                 <p className="font-hand text-2xl text-brand-turquoise">&ldquo;Mountains are calling&rdquo;</p>
