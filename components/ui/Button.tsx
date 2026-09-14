@@ -25,7 +25,7 @@ export const Button: React.FC<ButtonProps> = ({
     "inline-flex items-center justify-center gap-2 font-bold text-xs uppercase tracking-wider rounded-full transition-all duration-300 btn-premium",
     fullWidth && "w-full",
     {
-      "bg-gradient-to-r from-brand-turquoise to-brand-turquoise-bright text-white hover:from-brand-turquoise-light hover:to-brand-turquoise-bright shadow-sm": variant === "primary",
+      "cta-shimmer text-white shadow-sm": variant === "primary",
       "bg-brand-dark text-white hover:bg-brand-dark-light shadow-sm": variant === "secondary",
       "bg-white text-brand-dark border border-brand-turquoise/15 hover:border-brand-turquoise/30 hover:bg-brand-turquoise-50 shadow-soft": variant === "outline",
       "bg-transparent text-brand-turquoise hover:bg-brand-turquoise-50": variant === "ghost",

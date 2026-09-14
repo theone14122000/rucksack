@@ -5,19 +5,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 
 @theme {
-  --animate-gradient-pan: gradient-pan 6s ease infinite;
+  --animate-gradient-pan: gradient-flow 6s ease infinite;
 
-  @keyframes gradient-pan {
-    0%, 100% { background-position: 0% 50%; }
+  @keyframes gradient-flow {
+    0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
   }
-}
-
-/* Fallback for CTA shimmer — guaranteed to work regardless of Tailwind processing */
-@keyframes cta-shimmer {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
 }
 
 .cta-shimmer {
@@ -106,13 +100,15 @@ html {
   background-clip: text;
 }
 
-/* Shimmer text — brand colors cycling */
-@keyframes text-shimmer {
-  0%, 100% { background-position: 0% 50%; }
+/* Moving gradient keyframes — extracted from reference */
+@keyframes gradient-flow {
+  0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
-.text-shimmer {
+/* CTA shimmer — slow panning gradient for buttons */
+.cta-shimmer {
   background: linear-gradient(
     110deg,
     #0B8F83 0%,
@@ -123,11 +119,33 @@ html {
     #0B8F83 100%
   );
   background-size: 200% 200%;
+  animation: gradient-flow 5s ease infinite;
+}
+
+/* Shimmer text — bold panning gradient for headings */
+@keyframes text-shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.text-shimmer {
+  background: linear-gradient(
+    110deg,
+    #0B8F83 0%,
+    #12A89D 16%,
+    #20C4B5 32%,
+    #F6D743 50%,
+    #D9A441 68%,
+    #20C4B5 84%,
+    #0B8F83 100%
+  );
+  background-size: 250% 250%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: text-shimmer 3s ease infinite;
-  filter: saturate(1.3) contrast(1.1);
+  animation: text-shimmer 4s ease infinite;
+  filter: saturate(1.4) contrast(1.1);
 }
 
 /* Cards */
