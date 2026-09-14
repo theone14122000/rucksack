@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { MapPin, Calendar, Compass, Mountain, CheckCircle2, ArrowRight } from "lucide-react";
 import { Breadcrumbs } from "@/components/navigation/Breadcrumbs";
-import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
+import { getDestinationImage } from "@/lib/utils/images";
 import { PackageCard } from "@/components/cards/PackageCard";
 import { TrekCard } from "@/components/cards/TrekCard";
 import { EnquiryForm } from "@/components/ui/EnquiryForm";
@@ -92,12 +92,12 @@ export default async function DestinationDetailPage({ params }: DestinationPageP
 
           {/* Large Aspect Hero Image Placeholder */}
           <div className="mb-14 rounded-card overflow-hidden border border-brand-turquoise/30 shadow-luxury">
-            <ImagePlaceholder
-              src={destination.heroImage}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={getDestinationImage(destination.slug)}
               alt={destination.name}
-              aspectRatio="21:9"
-              category={destination.region}
-              label={destination.name}
+              className="w-full h-auto object-cover aspect-[21/9]"
+              loading="lazy"
             />
           </div>
 

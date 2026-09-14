@@ -4,7 +4,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { Mountain, Gauge, Calendar, ShieldCheck, CheckCircle2, XCircle, AlertTriangle, ArrowRight } from "lucide-react";
 import { Breadcrumbs } from "@/components/navigation/Breadcrumbs";
-import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
+import { getTrekImage } from "@/lib/utils/images";
 import { TrekCard } from "@/components/cards/TrekCard";
 import { EnquiryForm } from "@/components/ui/EnquiryForm";
 import { getTrekBySlug, getTreks } from "@/lib/cms/store";
@@ -78,13 +78,12 @@ export default async function TrekDetailPage({ params }: TrekPageProps) {
 
         {/* Visual Slot */}
         <div className="mb-14 rounded-card-lg overflow-hidden border border-brand-gold/15 shadow-2xl">
-          <ImagePlaceholder
-            src={trek.heroImage}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={getTrekImage(trek.slug)}
             alt={trek.name}
-            aspectRatio="21:9"
-            category="Himalayan Expedition"
-            label={trek.name}
-            elevation={trek.altitude}
+            className="w-full h-auto object-cover aspect-[21/9]"
+            loading="lazy"
           />
         </div>
 

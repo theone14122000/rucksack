@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { Clock, MapPin, ArrowRight, MessageCircle, TrendingUp } from "lucide-react";
 import { Trek } from "@/lib/cms/types";
-import { ImagePlaceholder } from "../ui/ImagePlaceholder";
+import { getTrekImage } from "@/lib/utils/images";
 
 interface TrekCardProps {
   trek: Trek;
@@ -26,8 +26,14 @@ export const TrekCard: React.FC<TrekCardProps> = ({ trek }) => {
     <div className="group bg-white rounded-card-2xl overflow-hidden flex flex-col justify-between transition-all duration-500 hover:shadow-luxury-hover hover:-translate-y-1 border border-brand-turquoise/5 hover:border-brand-turquoise/12">
       <div>
         <div className="relative overflow-hidden aspect-[16/10]">
-          <ImagePlaceholder src={trek.heroImage} alt={trek.name} aspectRatio="16:9" category="Himalayan Ascent" label={trek.name} elevation={trek.altitude} />
-          <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={getTrekImage(trek.slug)}
+            alt={trek.name}
+            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/50 via-brand-dark/10 to-transparent" />
           <div className="absolute top-3 left-3 z-20">
             <span className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full border backdrop-blur-sm ${difficultyConfig.bg} ${difficultyConfig.text} ${difficultyConfig.border}`}>{trek.difficulty}</span>
           </div>

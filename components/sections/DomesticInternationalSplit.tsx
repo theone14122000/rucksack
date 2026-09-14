@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Mountain, Globe2, CheckCircle2 } from "lucide-react";
 import { motion } from "framer-motion";
-import { ImagePlaceholder } from "../ui/ImagePlaceholder";
+import { getDestinationImage } from "@/lib/utils/images";
 
 export const DomesticInternationalSplit: React.FC = () => {
   const [activeSide, setActiveSide] = useState<"domestic" | "international">("domestic");
@@ -52,11 +52,12 @@ export const DomesticInternationalSplit: React.FC = () => {
 
               {/* Visual Placeholder */}
               <div className="mb-6 rounded-card overflow-hidden border border-brand-turquoise/10">
-                <ImagePlaceholder
-                  aspectRatio="16:9"
-                  category="Himalayan Sanctuary"
-                  label="Spiti, Kashmir & Ladakh"
-                  elevation="14,000+ ft"
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={getDestinationImage("leh-ladakh")}
+                  alt="Domestic Himalayan destinations"
+                  className="w-full aspect-[16/9] object-cover"
+                  loading="lazy"
                 />
               </div>
 
@@ -117,10 +118,12 @@ export const DomesticInternationalSplit: React.FC = () => {
 
               {/* Visual Placeholder */}
               <div className="mb-6 rounded-card overflow-hidden border border-brand-turquoise/10">
-                <ImagePlaceholder
-                  aspectRatio="16:9"
-                  category="Global Escapes"
-                  label="Bali, Dubai & Himalayas"
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={getDestinationImage("bali")}
+                  alt="International destinations"
+                  className="w-full aspect-[16/9] object-cover"
+                  loading="lazy"
                 />
               </div>
 

@@ -4,7 +4,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { Clock, MapPin, CheckCircle2, XCircle, ShieldCheck, ArrowRight, Calendar, MessageCircle } from "lucide-react";
 import { Breadcrumbs } from "@/components/navigation/Breadcrumbs";
-import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
+import { getPackageImage } from "@/lib/utils/images";
 import { PackageCard } from "@/components/cards/PackageCard";
 import { EnquiryForm } from "@/components/ui/EnquiryForm";
 import { getPackageBySlug, getPackages } from "@/lib/cms/store";
@@ -85,12 +85,12 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
 
         {/* Visual Hero */}
         <div className="mb-14 rounded-card-lg overflow-hidden border border-brand-turquoise/12 shadow-luxury">
-          <ImagePlaceholder
-            src={pkg.heroImage}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={getPackageImage(pkg.slug)}
             alt={pkg.title}
-            aspectRatio="21:9"
-            category={pkg.travelStyle}
-            label={pkg.destination}
+            className="w-full h-auto object-cover aspect-[21/9]"
+            loading="lazy"
           />
         </div>
 
