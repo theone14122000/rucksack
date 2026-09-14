@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
 import { MapPin, Phone, Mail, MessageSquare, ArrowUpRight, Compass, ArrowRight } from "lucide-react";
@@ -5,8 +7,24 @@ import { MapPin, Phone, Mail, MessageSquare, ArrowUpRight, Compass, ArrowRight }
 export const Footer: React.FC = () => {
   return (
     <footer className="bg-brand-dark text-white relative overflow-hidden">
-      {/* CTA Banner — animated shimmer gradient */}
-      <div className="relative py-16 overflow-hidden cta-shimmer">
+      {/* Inject shimmer keyframes directly */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes cta-shimmer {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+      `}} />
+
+      {/* CTA Banner */}
+      <div
+        className="relative py-16 overflow-hidden"
+        style={{
+          background: "linear-gradient(110deg, #0B8F83 0%, #20C4B5 25%, #F6D743 50%, #20C4B5 75%, #0B8F83 100%)",
+          backgroundSize: "300% 300%",
+          animation: "cta-shimmer 4s ease infinite",
+        }}
+      >
         <div className="absolute inset-0 bg-grid opacity-10" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
           <span className="text-[10px] font-mono font-bold uppercase tracking-[0.3em] text-brand-dark/50 block mb-3">Ready to Explore?</span>
