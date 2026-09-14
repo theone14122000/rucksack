@@ -5,8 +5,8 @@ import { MapPin, Phone, Mail, MessageSquare, ArrowUpRight, Compass, ArrowRight }
 export const Footer: React.FC = () => {
   return (
     <footer className="bg-brand-dark text-white relative overflow-hidden">
-      {/* CTA Banner */}
-      <div className="relative bg-gradient-to-r from-brand-turquoise via-brand-turquoise-bright to-brand-yellow py-16 overflow-hidden">
+      {/* CTA Banner — animated brand gradient */}
+      <div className="relative cta-animated-gradient py-16 overflow-hidden">
         <div className="absolute inset-0 bg-grid opacity-10" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
           <span className="text-[10px] font-mono font-bold uppercase tracking-[0.3em] text-brand-dark/50 block mb-3">Ready to Explore?</span>

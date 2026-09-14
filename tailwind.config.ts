@@ -64,6 +64,7 @@ const config: Config = {
         "float": "float 6s ease-in-out infinite",
         "drift": "drift 8s ease-in-out infinite",
         "pulse-soft": "pulseSoft 3s ease-in-out infinite",
+        "gradient-pan": "gradientPan 8s ease infinite",
       },
       keyframes: {
         fadeIn: {
@@ -90,6 +91,10 @@ const config: Config = {
         pulseSoft: {
           "0%, 100%": { opacity: "0.4" },
           "50%": { opacity: "0.7" },
+        },
+        gradientPan: {
+          "0%, 100%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
         },
       },
     },

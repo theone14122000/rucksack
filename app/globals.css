@@ -60,6 +60,19 @@ html {
   background: linear-gradient(135deg, #0B8F83 0%, #12A89D 40%, #F6D743 100%);
 }
 
+/* Animated CTA gradient — same brand combo, continuously panning */
+.cta-animated-gradient {
+  background: linear-gradient(110deg, #0B8F83, #20C4B5, #F6D743, #20C4B5, #0B8F83);
+  background-size: 200% 200%;
+  animation: ctaGradientPan 8s ease infinite;
+  will-change: background-position;
+}
+
+@keyframes ctaGradientPan {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
 .text-gradient-brand {
   background: linear-gradient(135deg, #0B8F83, #20C4B5, #F6D743);
   -webkit-background-clip: text;
