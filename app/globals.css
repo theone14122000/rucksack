@@ -13,6 +13,27 @@
   }
 }
 
+/* Fallback for CTA shimmer — guaranteed to work regardless of Tailwind processing */
+@keyframes cta-shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.cta-shimmer {
+  background: linear-gradient(
+    110deg,
+    #0B8F83 0%,
+    #20C4B5 20%,
+    #F6D743 40%,
+    #20C4B5 60%,
+    #0B8F83 80%,
+    #20C4B5 100%
+  );
+  background-size: 300% 300%;
+  animation: cta-shimmer 4s ease infinite;
+}
+
 :root {
   --font-serif: 'DM Serif Display', Georgia, serif;
   --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
