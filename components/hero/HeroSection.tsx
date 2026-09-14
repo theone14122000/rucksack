@@ -1,24 +1,81 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, MapPin, Mountain, Star } from "lucide-react";
 import { FloatingCompass } from "./FloatingCompass";
 
+const heroSlides = [
+  { src: "/images/himachal1.jpg", alt: "Himachal Pradesh mountains", label: "Himachal Pradesh" },
+  { src: "/images/kashmir.jpg", alt: "Kashmir valley", label: "Kashmir" },
+  { src: "/images/leh1.jpg", alt: "Leh Ladakh landscape", label: "Leh Ladakh" },
+  { src: "/images/bali.jpg", alt: "Bali tropical paradise", label: "Bali" },
+  { src: "/images/dubai.jpg", alt: "Dubai skyline", label: "Dubai" },
+];
+
 export const HeroSection: React.FC = () => {
+  const [current, setCurrent] = useState(0);
+
+  const next = useCallback(() => {
+    setCurrent((prev) => (prev + 1) % heroSlides.length);
+  }, []);
+
+  useEffect(() => {
+    const timer = setInterval(next, 5000);
+    return () => clearInterval(timer);
+  }, [next]);
+
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Background Image */}
+      {/* Background Image Carousel */}
       <div className="absolute inset-0">
-        <img
-          src="/images/destinations/himachal-pradesh.jpg"
-          alt="Himalayan mountain landscape"
-          className="w-full h-full object-cover"
-        />
-        {/* Cinematic Overlay - lighter, more gradient */}
-        <div className="absolute inset-0 bg-gradient-to-r from-brand-dark/80 via-brand-dark/40 to-transparent" />
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={current}
+            src={heroSlides[current].src}
+            alt={heroSlides[current].alt}
+            initial={{ opacity: 0, scale: 1.05 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.98 }}
+            transition={{ duration: 1.2, ease: "easeInOut" }}
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        </AnimatePresence>
+        {/* Cinematic Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-brand-dark/85 via-brand-dark/40 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/60 via-transparent to-brand-dark/20" />
+      </div>
+
+      {/* Slide Indicators */}
+      <div className="absolute bottom-20 left-4 sm:left-8 z-20 flex items-center gap-2">
+        {heroSlides.map((slide, idx) => (
+          <button
+            key={idx}
+            onClick={() => setCurrent(idx)}
+            className={`transition-all duration-500 rounded-full ${
+              idx === current
+                ? "w-8 h-2 bg-gradient-to-r from-brand-turquoise to-brand-yellow"
+                : "w-2 h-2 bg-white/30 hover:bg-white/50"
+            }`}
+            aria-label={`Go to slide: ${slide.label}`}
+          />
+        ))}
+      </div>
+
+      {/* Current Slide Label */}
+      <div className="absolute bottom-20 right-4 sm:right-8 z-20">
+        <AnimatePresence mode="wait">
+          <motion.span
+            key={current}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="text-[10px] font-mono uppercase tracking-[0.2em] text-white/40"
+          >
+            {heroSlides[current].label} — {current + 1}/{heroSlides.length}
+          </motion.span>
+        </AnimatePresence>
       </div>
 
       {/* Floating Compass - Desktop Only */}

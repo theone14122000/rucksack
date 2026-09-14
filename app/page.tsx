@@ -9,25 +9,43 @@ import { TrekCard } from "@/components/cards/TrekCard";
 import { TestimonialCard } from "@/components/cards/TestimonialCard";
 import { EnquiryForm } from "@/components/ui/EnquiryForm";
 import { Button } from "@/components/ui/Button";
-import { getDestinations, getPackages, getTreks, getExperiences, getTestimonials } from "@/lib/cms/store";
+import { FAQAccordion } from "@/components/sections/FAQAccordion";
+import { InternationalCarousel } from "@/components/sections/InternationalCarousel";
+import { getDestinations, getPackages, getTreks, getExperiences, getTestimonials, getFAQs } from "@/lib/cms/store";
 
 export const revalidate = 0;
 
 export default async function HomePage() {
-  const [destinations, featuredPackages, featuredTreks, experiences, testimonials] = await Promise.all([
+  const [destinations, featuredPackages, featuredTreks, experiences, testimonials, faqs] = await Promise.all([
     getDestinations(),
     getPackages({ featured: true }),
     getTreks({ featured: true }),
     getExperiences(),
     getTestimonials(),
+    getFAQs(),
   ]);
 
   const domesticDestinations = destinations.filter((d) => d.isDomestic);
   const internationalDestinations = destinations.filter((d) => !d.isDomestic);
 
+  const editorialImageMap: Record<string, string> = {
+    "himachal-pradesh": "/images/himachal2.jpg",
+    "kashmir": "/images/kashmir2.jpg",
+    "leh-ladakh": "/images/leh2.jpg",
+    "kinnaur": "/images/kinnaur1.jpg",
+    "uttarakhand": "/images/utrakhand.jfif",
+    "north-east": "/images/north-east2.jpg",
+    "andaman": "/images/andaman1.jpg",
+    "bali": "/images/bali.jpg",
+    "dubai": "/images/dubai.jpg",
+    "nepal": "/images/nepal.jpg",
+    "singapore": "/images/singapore.jpg",
+    "thailand": "/images/thailand.jpg",
+  };
+
   return (
     <div>
-      {/* 1. HERO - Cinematic */}
+      {/* 1. HERO - Auto-Toggle Image Carousel */}
       <HeroSection />
 
       {/* 2. EDITORIAL INTRO - Light, Spacious */}
@@ -64,7 +82,7 @@ export default async function HomePage() {
             </div>
             <div className="relative">
               <div className="aspect-[4/5] rounded-card-2xl overflow-hidden shadow-luxury">
-                <img src="/images/destinations/himachal-pradesh.jpg" alt="Himalayan landscape" className="w-full h-full object-cover" />
+                <img src="/images/himachal2.jpg" alt="Himalayan landscape" className="w-full h-full object-cover" />
               </div>
               <div className="absolute -bottom-6 -left-6 bg-white rounded-card-xl p-5 shadow-luxury border border-brand-turquoise/5">
                 <p className="font-hand text-2xl text-brand-turquoise">&ldquo;Mountains are calling&rdquo;</p>
@@ -75,7 +93,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* 3. FEATURED DESTINATIONS - Carousel */}
+      {/* 3. FEATURED DESTINATIONS - Domestic Carousel */}
       <section className="py-20 lg:py-28 bg-brand-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
@@ -99,16 +117,16 @@ export default async function HomePage() {
         </Carousel>
       </section>
 
-      {/* 4. IMAGE + TEXT STORY - Editorial */}
+      {/* 4. INTERNATIONAL ESCAPES - Auto-Toggle Carousel + Links */}
       <section className="py-20 lg:py-28 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            {/* Auto-Toggle Image Carousel */}
             <div className="relative order-2 lg:order-1">
-              <div className="aspect-[3/4] rounded-card-2xl overflow-hidden shadow-luxury">
-                <img src="/images/destinations/kashmir.jpg" alt="Kashmir valley" className="w-full h-full object-cover" />
-              </div>
-              <div className="absolute -top-4 -right-4 w-24 h-24 rounded-full bg-brand-yellow/20 blur-2xl" />
+              <InternationalCarousel destinations={internationalDestinations} />
             </div>
+
+            {/* Text + Links */}
             <div className="space-y-6 order-1 lg:order-2">
               <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-gold flex items-center gap-2">
                 <div className="w-8 h-px bg-brand-gold" /> International Escapes
@@ -248,8 +266,15 @@ export default async function HomePage() {
         </Carousel>
       </section>
 
-      {/* 9. ENQUIRY - Clean, Light */}
-      <section className="py-20 lg:py-28 bg-brand-cream">
+      {/* 9. FAQ - Preserved */}
+      {faqs.length > 0 && (
+        <section className="py-20 lg:py-28 bg-brand-cream">
+          <FAQAccordion faqs={faqs} />
+        </section>
+      )}
+
+      {/* 10. ENQUIRY - Clean, Light */}
+      <section className="py-20 lg:py-28 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10 space-y-2">
             <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-turquoise">Direct Himalayan Concierge</span>
@@ -258,7 +283,7 @@ export default async function HomePage() {
             </h2>
             <p className="text-xs sm:text-sm text-brand-taupe max-w-md mx-auto">Share your travel aspirations. Our planners in Kasumpti, Shimla craft each journey individually.</p>
           </div>
-          <div className="bg-white border border-brand-turquoise/5 p-6 sm:p-10 rounded-card-2xl shadow-luxury">
+          <div className="bg-brand-cream border border-brand-turquoise/5 p-6 sm:p-10 rounded-card-2xl shadow-luxury">
             <EnquiryForm />
           </div>
         </div>
