@@ -14,9 +14,10 @@ export const initialSiteSettings: SiteSettings = {
   ratingsCount: 242,
   curatedJourneysCount: "3,800+",
   socialLinks: {
-    instagram: "https://instagram.com/rucksackadventures",
-    facebook: "https://facebook.com/rucksackadventures",
-    twitter: "https://x.com/rucksackadv",
+    instagram: "https://www.instagram.com/realitywithriss/",
+    facebook: "https://www.facebook.com/adventuresrucksack/",
+    youtube: "https://www.youtube.com/@rucksackadventures6559",
+    linkedin: "https://in.linkedin.com/in/rucksack-adventures-2a7198179",
   },
   seoDefaults: {
     title: "Rucksack Adventures | Premium Travel Agency in Shimla, Himachal Pradesh",

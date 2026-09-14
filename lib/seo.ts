@@ -48,7 +48,8 @@ export function getLocalBusinessSchema() {
     sameAs: [
       initialSiteSettings.socialLinks.instagram,
       initialSiteSettings.socialLinks.facebook,
-      initialSiteSettings.socialLinks.twitter,
+      initialSiteSettings.socialLinks.youtube,
+      initialSiteSettings.socialLinks.linkedin,
     ].filter(Boolean),
   };
 }

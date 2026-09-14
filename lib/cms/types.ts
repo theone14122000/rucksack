@@ -133,8 +133,8 @@ export interface SiteSettings {
   socialLinks: {
     instagram: string;
     facebook: string;
-    twitter?: string;
     youtube?: string;
+    linkedin?: string;
   };
   seoDefaults: {
     title: string;
