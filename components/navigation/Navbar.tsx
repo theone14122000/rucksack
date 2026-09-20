@@ -34,6 +34,7 @@ export const Navbar: React.FC = () => {
   ];
 
   const services = [
+    { href: "/custom-package", title: "Custom Package", desc: "Build your own itinerary", icon: "🧳" },
     { href: "/taxi-services", title: "Shimla Cab Services", desc: "Local & outstation cabs", icon: "🚗" },
     { href: "/pilgrimage-tour", title: "Pilgrimage Tour", desc: "Sacred Char Dham & temple circuits", icon: "🛕" },
     { href: "/bus-booking", title: "Volvo & Bus Booking", desc: "Himalayan highway routes", icon: "🚌" },
@@ -103,7 +104,7 @@ export const Navbar: React.FC = () => {
             <div className="relative" onMouseEnter={() => setServicesDropdown(true)} onMouseLeave={() => setServicesDropdown(false)}>
               <button className={cn(
                 "flex items-center gap-1 transition-all duration-300 px-3 py-2 rounded-card",
-                pathname.includes("services") || pathname.includes("booking") || pathname.includes("pilgrimage")
+                pathname.includes("services") || pathname.includes("booking") || pathname.includes("pilgrimage") || pathname.includes("custom-package")
                   ? scrolled ? "text-brand-turquoise font-semibold" : "text-white font-semibold"
                   : scrolled ? "text-brand-dark/60 hover:text-brand-dark" : "text-white/65 hover:text-white"
               )}>

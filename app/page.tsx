@@ -167,6 +167,27 @@ export default async function HomePage() {
             <PackageCard key={pkg.id} pkg={pkg} />
           ))}
         </Carousel>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+          <Link href="/custom-package" className="group bg-white rounded-card-2xl border border-brand-turquoise/10 hover:border-brand-turquoise/20 p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center gap-4 hover:shadow-luxury transition-all duration-500">
+            <div className="flex items-center gap-4 flex-1">
+              <span className="text-3xl shrink-0">🧳</span>
+              <div>
+                <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-turquoise">
+                  Can&apos;t find your perfect journey?
+                </p>
+                <h3 className="font-editorial text-xl sm:text-2xl font-bold text-brand-dark tracking-tight group-hover:text-brand-turquoise transition-colors">
+                  Custom Package
+                </h3>
+                <p className="text-xs sm:text-sm text-brand-dark/55 leading-relaxed mt-1">
+                  Choose your regions, duration, travellers, stays, cabs, and mountain experiences — we craft the rest.
+                </p>
+              </div>
+            </div>
+            <span className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-brand-turquoise shrink-0">
+              Build Custom Package <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+            </span>
+          </Link>
+        </div>
       </section>
 
       {/* 6. TREKS - Light Section with Timeline Feel */}

@@ -18,6 +18,7 @@ const navLinks = [
   { href: "/packages", label: "Adventures" },
   { href: "/treks", label: "Himalayan Treks" },
   { href: "/experiences", label: "Experiences" },
+  { href: "/custom-package", label: "Custom Package" },
   { href: "/taxi-services", label: "Shimla Cab Services" },
   { href: "/pilgrimage-tour", label: "Pilgrimage Tour" },
   { href: "/bus-booking", label: "Bus Booking" },
