@@ -98,6 +98,40 @@ export const TICKET_OPTIONS = [
   "Flight Tickets",
 ];
 
+/** Flow variant. "package" preserves the existing Custom Package flow exactly. */
+export type FlowMode = "package" | "destination";
+
+/** Extended option lists for the Custom Destination flow (additive only). */
+export const DEST_CAB_OPTIONS = [
+  ...CAB_OPTIONS,
+  "Tempo Traveller",
+  "Luxury Vehicle",
+];
+
+export const DEST_HOTEL_OPTIONS = [
+  ...HOTEL_OPTIONS,
+  "Luxury Hotel",
+  "Homestay",
+  "Resort",
+  "Budget Stay",
+  "Other",
+];
+
+export const TRAVEL_STYLE_OPTIONS = [
+  "Family Trip",
+  "Couple Trip",
+  "Friends/Group Trip",
+  "Solo Trip",
+  "Corporate/Business Trip",
+  "Honeymoon",
+  "Pilgrimage",
+  "Adventure Trip",
+  "Leisure/Holiday",
+  "Other",
+];
+
+export type BudgetType = "per_person" | "total";
+
 export type ChildPricingCategory = "complimentary" | "half_charge";
 
 export interface CustomPackageData {
@@ -124,6 +158,26 @@ export interface CustomPackageData {
   email: string;
   travelDate: string;
   notes: string;
+  /* --- Custom Destination flow (destination mode only; ignored by package mode) --- */
+  customDestinationText: string;
+  departureDate: string;
+  returnDate: string;
+  travelStyles: string[];
+  travelStyleOther: string;
+  stayOther: string;
+  noTickets: boolean;
+  vehiclePreferred: string;
+  vehicleDays: number | "";
+  vehiclePickup: string;
+  vehicleDropoff: string;
+  bikeCount: number | "";
+  bikeDays: number | "";
+  gypsyDate: string;
+  gypsyPeople: number | "";
+  gypsyLocation: string;
+  budgetAmount: number | "";
+  budgetType: BudgetType | "";
+  whatsapp: string;
 }
 
 export const initialCustomPackageData: CustomPackageData = {
@@ -149,6 +203,25 @@ export const initialCustomPackageData: CustomPackageData = {
   email: "",
   travelDate: "",
   notes: "",
+  customDestinationText: "",
+  departureDate: "",
+  returnDate: "",
+  travelStyles: [],
+  travelStyleOther: "",
+  stayOther: "",
+  noTickets: false,
+  vehiclePreferred: "",
+  vehicleDays: "",
+  vehiclePickup: "",
+  vehicleDropoff: "",
+  bikeCount: "",
+  bikeDays: "",
+  gypsyDate: "",
+  gypsyPeople: "",
+  gypsyLocation: "",
+  budgetAmount: "",
+  budgetType: "",
+  whatsapp: "",
 };
 
 export const WHATSAPP_NUMBER = "917018678064";
@@ -185,9 +258,29 @@ function childAgesLabel(childAges: (number | "")[]): string {
     .join(", ");
 }
 
+/** Whole days between two YYYY-MM-DD dates, or null when unusable. */
+export function daysBetween(departure: string, ret: string): number | null {
+  if (!departure || !ret) return null;
+  const start = new Date(`${departure}T00:00:00`);
+  const end = new Date(`${ret}T00:00:00`);
+  if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) return null;
+  const diff = Math.round((end.getTime() - start.getTime()) / 86400000);
+  return diff >= 0 ? diff : null;
+}
+
+export function buildBudgetLabel(data: CustomPackageData): string {
+  if (data.budgetAmount === "" || !data.budgetType) return "—";
+  const amount = `₹${Number(data.budgetAmount).toLocaleString("en-IN")}`;
+  return data.budgetType === "per_person" ? `${amount} per person` : `${amount} total`;
+}
+
 export function buildDestinationSummary(data: CustomPackageData): string {
   if (data.tripType === "domestic") {
-    const states = data.states.length > 0 ? data.states.join(", ") : "—";
+    const parts = [...data.states];
+    if (data.customDestinationText.trim()) {
+      parts.push(`Custom: ${data.customDestinationText.trim()}`);
+    }
+    const states = parts.length > 0 ? parts.join(", ") : "—";
     const from = data.homeLocation.trim() || "—";
     return `Custom Domestic from ${from}: ${states}`;
   }
@@ -207,19 +300,61 @@ export function buildTravellersSummary(data: CustomPackageData): string {
   return `${data.adults} Adults${children} — Total ${total}`;
 }
 
-export function buildServicesSummary(data: CustomPackageData): string[] {
+export function buildServicesSummary(
+  data: CustomPackageData,
+  mode: FlowMode = "package"
+): string[] {
   const lines: string[] = [];
   if (data.cab.length > 0) lines.push(`Cab: ${data.cab.join(", ")}`);
-  if (data.hotels.length > 0) lines.push(`Stay: ${data.hotels.join(", ")}`);
+  if (data.hotels.length > 0) {
+    let stay = `Stay: ${data.hotels.join(", ")}`;
+    if (
+      mode === "destination" &&
+      data.stayOther.trim() &&
+      data.hotels.includes("Other")
+    ) {
+      stay = stay.replace("Other", `Other (${data.stayOther.trim()})`);
+    }
+    lines.push(stay);
+  }
   if (data.tickets.length > 0) lines.push(`Tickets: ${data.tickets.join(", ")}`);
+  if (mode === "destination" && data.noTickets && data.tickets.length === 0) {
+    lines.push("Tickets: No tickets required");
+  }
   if (data.adventureActivity) {
     lines.push(
       `Adventure Activity${data.adventureDetails.trim() ? `: ${data.adventureDetails.trim()}` : ""}`
     );
   }
   if (data.vehicleRent) lines.push("Vehicle Rent");
+  if (mode === "destination" && data.vehicleRent) {
+    const bits = [
+      data.vehiclePreferred.trim() || "",
+      data.vehicleDays !== "" ? `${data.vehicleDays} days` : "",
+      data.vehiclePickup.trim() ? `Pickup: ${data.vehiclePickup.trim()}` : "",
+      data.vehicleDropoff.trim() ? `Drop: ${data.vehicleDropoff.trim()}` : "",
+    ].filter(Boolean);
+    if (bits.length > 0) lines.push(`Rental Details: ${bits.join(" | ")}`);
+  }
   if (data.mountainBike) lines.push("Mountain Bike");
+  if (mode === "destination" && data.mountainBike) {
+    const bits = [
+      data.bikeCount !== "" ? `${data.bikeCount} bikes` : "",
+      data.bikeDays !== "" ? `${data.bikeDays} days` : "",
+    ].filter(Boolean);
+    if (bits.length > 0) lines.push(`Bike Details: ${bits.join(" | ")}`);
+  }
   if (data.gypsyTour) lines.push("Gypsy Tour");
+  if (mode === "destination" && data.gypsyTour) {
+    const bits = [
+      data.gypsyDate ? `Date: ${data.gypsyDate}` : "",
+      data.gypsyPeople !== "" ? `${data.gypsyPeople} people` : "",
+      data.gypsyLocation.trim()
+        ? `Location: ${data.gypsyLocation.trim()}`
+        : "",
+    ].filter(Boolean);
+    if (bits.length > 0) lines.push(`Gypsy Details: ${bits.join(" | ")}`);
+  }
   if (data.mtb4x4) lines.push("MTB 4x4");
   return lines;
 }
@@ -237,9 +372,13 @@ export function hasAnyService(data: CustomPackageData): boolean {
   );
 }
 
-export function buildEnquiryMessage(data: CustomPackageData): string {
+export function buildEnquiryMessage(
+  data: CustomPackageData,
+  mode: FlowMode = "package"
+): string {
+  const isDestination = mode === "destination";
   const lines = [
-    "CUSTOM PACKAGE REQUEST",
+    isDestination ? "CUSTOM DESTINATION REQUEST" : "CUSTOM PACKAGE REQUEST",
     "",
     `Trip Type: ${data.tripType === "domestic" ? "Domestic" : "International"}`,
   ];
@@ -248,8 +387,12 @@ export function buildEnquiryMessage(data: CustomPackageData): string {
     lines.push(
       `Regions: ${data.regions.length > 0 ? data.regions.map(getRegionLabel).join(", ") : "—"}`
     );
+    const destParts = [...data.states];
+    if (data.customDestinationText.trim()) {
+      destParts.push(`Custom: ${data.customDestinationText.trim()}`);
+    }
     lines.push(
-      `Destinations / States: ${data.states.length > 0 ? data.states.join(", ") : "—"}`
+      `Destinations / States: ${destParts.length > 0 ? destParts.join(", ") : "—"}`
     );
   } else {
     lines.push(
@@ -260,16 +403,42 @@ export function buildEnquiryMessage(data: CustomPackageData): string {
       }`
     );
   }
+  if (isDestination) {
+    if (data.departureDate || data.returnDate) {
+      lines.push(
+        `Travel Dates: ${data.departureDate || "—"} to ${data.returnDate || "—"}`
+      );
+    }
+  }
   lines.push(`Duration: ${data.durationDays} Days`);
   lines.push(`Adults: ${data.adults}`);
   lines.push(`Children: ${data.childAges.length}`);
   if (data.childAges.length > 0) {
     lines.push(`Child Ages & Pricing: ${childAgesLabel(data.childAges)}`);
   }
-  const services = buildServicesSummary(data);
+  if (isDestination && data.travelStyles.length > 0) {
+    const styles = [...data.travelStyles];
+    if (data.travelStyleOther.trim() && styles.includes("Other")) {
+      styles[styles.indexOf("Other")] = `Other (${data.travelStyleOther.trim()})`;
+    }
+    lines.push(`Travel Styles: ${styles.join(", ")}`);
+  }
+  const services = buildServicesSummary(data, mode);
   lines.push(`Services Required: ${services.length > 0 ? services.join(" | ") : "—"}`);
+  if (isDestination && (data.budgetAmount !== "" || data.budgetType)) {
+    lines.push(`Approximate Budget: ${buildBudgetLabel(data)}`);
+  }
   if (data.travelDate) lines.push(`Preferred Travel Date: ${data.travelDate}`);
-  if (data.notes.trim()) lines.push(`Additional Notes: ${data.notes.trim()}`);
+  if (data.notes.trim()) {
+    lines.push(
+      isDestination
+        ? `Special Requirements: ${data.notes.trim()}`
+        : `Additional Notes: ${data.notes.trim()}`
+    );
+  }
+  if (isDestination && data.whatsapp.trim()) {
+    lines.push(`WhatsApp Number: ${data.whatsapp.trim()}`);
+  }
   return lines.join("\n");
 }
 
@@ -283,10 +452,14 @@ export function buildWhatsAppUrl(data: CustomPackageData): string {
 /** Step-level validation. Returns an error message or null when the step is valid. */
 export function validateCustomPackageStep(
   data: CustomPackageData,
-  step: number
+  step: number,
+  mode: FlowMode = "package"
 ): string | null {
+  const isDestination = mode === "destination";
   if (step === 0 && !data.tripType) {
-    return "Please select whether your trip is Domestic or International.";
+    return isDestination
+      ? "Please select Domestic or International."
+      : "Please select whether your trip is Domestic or International.";
   }
   if (step === 1) {
     if (data.tripType === "domestic") {
@@ -296,7 +469,10 @@ export function validateCustomPackageStep(
       if (data.regions.length === 0) {
         return "Please select at least one region (North / South / East / West India).";
       }
-      if (data.states.length === 0) {
+      if (
+        data.states.length === 0 &&
+        !(isDestination && data.customDestinationText.trim())
+      ) {
         return "Please select at least one destination / state.";
       }
     } else if (data.tripType === "international") {
@@ -308,6 +484,14 @@ export function validateCustomPackageStep(
     }
   }
   if (step === 2) {
+    if (
+      isDestination &&
+      data.departureDate &&
+      data.returnDate &&
+      data.returnDate < data.departureDate
+    ) {
+      return "Return date cannot be before the departure date.";
+    }
     if (data.durationDays === "" || Number(data.durationDays) < 1) {
       return "Please specify the trip duration in days (minimum 1 day).";
     }

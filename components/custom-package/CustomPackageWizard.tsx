@@ -28,21 +28,27 @@ import { Button } from "../ui/Button";
 import { cn } from "@/lib/utils";
 import {
   CAB_OPTIONS,
+  DEST_CAB_OPTIONS,
+  DEST_HOTEL_OPTIONS,
   DOMESTIC_REGIONS,
   HOTEL_OPTIONS,
   HOME_LOCATION_SUGGESTIONS,
   TICKET_OPTIONS,
+  TRAVEL_STYLE_OPTIONS,
+  buildBudgetLabel,
   buildDestinationSummary,
   buildEnquiryMessage,
   buildServicesSummary,
   buildTravellersSummary,
   buildWhatsAppUrl,
+  daysBetween,
   getChildPricing,
   getRegionLabel,
   initialCustomPackageData,
   toggleInList,
   validateCustomPackageStep,
   type CustomPackageData,
+  type FlowMode,
 } from "@/lib/custom-package";
 
 const STEPS = [
@@ -60,6 +66,8 @@ const labelClass =
 
 interface CustomPackageWizardProps {
   internationalOptions: string[];
+  /** "package" preserves the existing Custom Package flow; "destination" adds destination-specific fields. */
+  mode?: FlowMode;
 }
 
 const Chip: React.FC<{
@@ -121,7 +129,9 @@ const Stepper: React.FC<{
 
 export const CustomPackageWizard: React.FC<CustomPackageWizardProps> = ({
   internationalOptions,
+  mode = "package",
 }) => {
+  const isDestination = mode === "destination";
   const [data, setData] = useState<CustomPackageData>(initialCustomPackageData);
   const [step, setStep] = useState(0);
   const [stepError, setStepError] = useState<string | null>(null);
@@ -147,6 +157,19 @@ export const CustomPackageWizard: React.FC<CustomPackageWizardProps> = ({
     setStepError(null);
   };
 
+  const handleDateChange = (
+    key: "departureDate" | "returnDate",
+    value: string
+  ) => {
+    setData((prev) => {
+      const next = { ...prev, [key]: value };
+      const diff = daysBetween(next.departureDate, next.returnDate);
+      if (diff !== null && diff >= 1) next.durationDays = diff;
+      return next;
+    });
+    setStepError(null);
+  };
+
   const setChildAge = (index: number, raw: string) => {
     const parsed = raw === "" ? "" : Number(raw);
     setData((prev) => {
@@ -165,7 +188,7 @@ export const CustomPackageWizard: React.FC<CustomPackageWizardProps> = ({
   };
 
   const goNext = () => {
-    const err = validateCustomPackageStep(data, step);
+    const err = validateCustomPackageStep(data, step, mode);
     if (err) {
       setStepError(err);
       return;
@@ -183,7 +206,7 @@ export const CustomPackageWizard: React.FC<CustomPackageWizardProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const err = validateCustomPackageStep(data, 4);
+    const err = validateCustomPackageStep(data, 4, mode);
     if (err) {
       setStepError(err);
       return;
@@ -200,10 +223,12 @@ export const CustomPackageWizard: React.FC<CustomPackageWizardProps> = ({
           email: data.email.trim(),
           destination: buildDestinationSummary(data),
           travelType: data.tripType === "domestic" ? "Domestic" : "International",
-          travelDate: data.travelDate || "Flexible",
+          travelDate: isDestination
+            ? data.departureDate || "Flexible"
+            : data.travelDate || "Flexible",
           travellersCount: buildTravellersSummary(data),
-          budget: "",
-          message: buildEnquiryMessage(data),
+          budget: isDestination ? buildBudgetLabel(data) : "",
+          message: buildEnquiryMessage(data, mode),
         }),
       });
       if (!res.ok) {
@@ -235,7 +260,9 @@ export const CustomPackageWizard: React.FC<CustomPackageWizardProps> = ({
       <div className="bg-brand-cream border border-brand-turquoise/15 p-8 rounded-card-2xl text-center shadow-luxury">
         <CheckCircle2 className="w-12 h-12 text-emerald-700 mx-auto mb-3" />
         <h3 className="font-editorial text-2xl font-bold text-brand-dark mb-2">
-          Custom Package Request Received
+          {isDestination
+            ? "Custom Destination Request Received"
+            : "Custom Package Request Received"}
         </h3>
         <p className="text-sm text-brand-dark/80 mb-2 max-w-md mx-auto leading-relaxed">
           {buildDestinationSummary(data)} &bull; {data.durationDays} Days &bull;{" "}
@@ -316,7 +343,9 @@ export const CustomPackageWizard: React.FC<CustomPackageWizardProps> = ({
         <div className="space-y-5">
           <div>
             <h2 className="font-editorial text-2xl sm:text-3xl font-bold text-brand-dark tracking-tight mb-2">
-              What kind of trip are you looking for?
+              {isDestination
+                ? "Where would you like to travel?"
+                : "What kind of trip are you looking for?"}
             </h2>
             <p className="text-sm text-brand-dark/60">
               Select one — you&apos;ll move to the next step automatically.
@@ -481,6 +510,25 @@ export const CustomPackageWizard: React.FC<CustomPackageWizardProps> = ({
               )}
             </fieldset>
           )}
+
+          {isDestination && (
+            <div className="p-5 rounded-card-2xl border border-dashed border-brand-turquoise/25 bg-white">
+              <label htmlFor="cp-custom-dest" className={labelClass}>
+                Can&apos;t find your destination?
+              </label>
+              <input
+                id="cp-custom-dest"
+                type="text"
+                placeholder="e.g. Manali + Spiti Valley, Meghalaya + Sikkim"
+                value={data.customDestinationText}
+                onChange={(e) => set("customDestinationText", e.target.value)}
+                className={inputClass}
+              />
+              <p className="text-[11px] text-brand-taupe mt-1.5">
+                Enter any place not listed above — we&apos;ll plan around it.
+              </p>
+            </div>
+          )}
         </div>
       )}
 
@@ -622,6 +670,78 @@ export const CustomPackageWizard: React.FC<CustomPackageWizardProps> = ({
             </div>
           </div>
 
+          {isDestination && (
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor="cp-departure" className={labelClass}>
+                    Departure Date
+                  </label>
+                  <input
+                    id="cp-departure"
+                    type="date"
+                    value={data.departureDate}
+                    onChange={(e) =>
+                      handleDateChange("departureDate", e.target.value)
+                    }
+                    className={inputClass}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="cp-return" className={labelClass}>
+                    Return Date
+                  </label>
+                  <input
+                    id="cp-return"
+                    type="date"
+                    value={data.returnDate}
+                    min={data.departureDate || undefined}
+                    onChange={(e) =>
+                      handleDateChange("returnDate", e.target.value)
+                    }
+                    className={inputClass}
+                  />
+                </div>
+              </div>
+              <fieldset>
+                <legend className={labelClass}>
+                  What kind of trip is this? (optional)
+                </legend>
+                <div className="flex flex-wrap gap-2.5">
+                  {TRAVEL_STYLE_OPTIONS.map((style) => (
+                    <Chip
+                      key={style}
+                      active={data.travelStyles.includes(style)}
+                      onClick={() =>
+                        set(
+                          "travelStyles",
+                          toggleInList(data.travelStyles, style)
+                        )
+                      }
+                    >
+                      {style}
+                    </Chip>
+                  ))}
+                </div>
+              </fieldset>
+              {data.travelStyles.includes("Other") && (
+                <div>
+                  <label htmlFor="cp-style-other" className={labelClass}>
+                    Describe your trip style
+                  </label>
+                  <input
+                    id="cp-style-other"
+                    type="text"
+                    placeholder="e.g. Photography expedition"
+                    value={data.travelStyleOther}
+                    onChange={(e) => set("travelStyleOther", e.target.value)}
+                    className={inputClass}
+                  />
+                </div>
+              )}
+            </>
+          )}
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Stepper
               label="Adults *"
@@ -698,10 +818,10 @@ export const CustomPackageWizard: React.FC<CustomPackageWizardProps> = ({
 
           <fieldset>
             <legend className={`${labelClass} flex items-center gap-1.5`}>
-              <Car className="w-3.5 h-3.5 text-brand-turquoise" /> Cab preference
+              <Car className="w-3.5 h-3.5 text-brand-turquoise" /> Cab / vehicle preference
             </legend>
             <div className="flex flex-wrap gap-2.5">
-              {CAB_OPTIONS.map((cab) => (
+              {(isDestination ? DEST_CAB_OPTIONS : CAB_OPTIONS).map((cab) => (
                 <Chip
                   key={cab}
                   active={data.cab.includes(cab)}
@@ -718,16 +838,35 @@ export const CustomPackageWizard: React.FC<CustomPackageWizardProps> = ({
               <BedDouble className="w-3.5 h-3.5 text-brand-turquoise" /> Hotel / stay preference
             </legend>
             <div className="flex flex-wrap gap-2.5">
-              {HOTEL_OPTIONS.map((hotel) => (
-                <Chip
-                  key={hotel}
-                  active={data.hotels.includes(hotel)}
-                  onClick={() => set("hotels", toggleInList(data.hotels, hotel))}
-                >
-                  {hotel}
-                </Chip>
-              ))}
+              {(isDestination ? DEST_HOTEL_OPTIONS : HOTEL_OPTIONS).map(
+                (hotel) => (
+                  <Chip
+                    key={hotel}
+                    active={data.hotels.includes(hotel)}
+                    onClick={() =>
+                      set("hotels", toggleInList(data.hotels, hotel))
+                    }
+                  >
+                    {hotel}
+                  </Chip>
+                )
+              )}
             </div>
+            {isDestination && data.hotels.includes("Other") && (
+              <div className="mt-3">
+                <label htmlFor="cp-stay-other" className={labelClass}>
+                  Describe your stay preference
+                </label>
+                <input
+                  id="cp-stay-other"
+                  type="text"
+                  placeholder="e.g. Riverside camps, heritage haveli"
+                  value={data.stayOther}
+                  onChange={(e) => set("stayOther", e.target.value)}
+                  className={inputClass}
+                />
+              </div>
+            )}
           </fieldset>
 
           <fieldset>
@@ -739,13 +878,25 @@ export const CustomPackageWizard: React.FC<CustomPackageWizardProps> = ({
                 <Chip
                   key={ticket}
                   active={data.tickets.includes(ticket)}
-                  onClick={() =>
-                    set("tickets", toggleInList(data.tickets, ticket))
-                  }
+                  onClick={() => {
+                    if (isDestination && data.noTickets) set("noTickets", false);
+                    set("tickets", toggleInList(data.tickets, ticket));
+                  }}
                 >
                   {ticket}
                 </Chip>
               ))}
+              {isDestination && (
+                <Chip
+                  active={data.noTickets}
+                  onClick={() => {
+                    set("noTickets", !data.noTickets);
+                    if (!data.noTickets) set("tickets", []);
+                  }}
+                >
+                  No tickets required
+                </Chip>
+              )}
             </div>
           </fieldset>
 
@@ -794,6 +945,180 @@ export const CustomPackageWizard: React.FC<CustomPackageWizardProps> = ({
               </Chip>
             </div>
           </fieldset>
+
+          {isDestination && data.vehicleRent && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-5 rounded-card-2xl border border-brand-turquoise/15 bg-white">
+              <div className="sm:col-span-2">
+                <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-turquoise">
+                  Vehicle rental details
+                </p>
+              </div>
+              <div>
+                <label htmlFor="cp-vehicle-pref" className={labelClass}>
+                  Preferred vehicle
+                </label>
+                <input
+                  id="cp-vehicle-pref"
+                  type="text"
+                  placeholder="e.g. Innova Crysta, 4x4 Scorpio"
+                  value={data.vehiclePreferred}
+                  onChange={(e) => set("vehiclePreferred", e.target.value)}
+                  className={inputClass}
+                />
+              </div>
+              <div>
+                <label htmlFor="cp-vehicle-days" className={labelClass}>
+                  Number of days
+                </label>
+                <input
+                  id="cp-vehicle-days"
+                  type="number"
+                  min={1}
+                  max={60}
+                  placeholder="e.g. 5"
+                  value={data.vehicleDays}
+                  onChange={(e) =>
+                    set(
+                      "vehicleDays",
+                      e.target.value === "" ? "" : Number(e.target.value)
+                    )
+                  }
+                  className={inputClass}
+                />
+              </div>
+              <div>
+                <label htmlFor="cp-vehicle-pickup" className={labelClass}>
+                  Pickup location
+                </label>
+                <input
+                  id="cp-vehicle-pickup"
+                  type="text"
+                  placeholder="e.g. Shimla"
+                  value={data.vehiclePickup}
+                  onChange={(e) => set("vehiclePickup", e.target.value)}
+                  className={inputClass}
+                />
+              </div>
+              <div>
+                <label htmlFor="cp-vehicle-drop" className={labelClass}>
+                  Drop-off location
+                </label>
+                <input
+                  id="cp-vehicle-drop"
+                  type="text"
+                  placeholder="e.g. Manali"
+                  value={data.vehicleDropoff}
+                  onChange={(e) => set("vehicleDropoff", e.target.value)}
+                  className={inputClass}
+                />
+              </div>
+            </div>
+          )}
+
+          {isDestination && data.mountainBike && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-5 rounded-card-2xl border border-brand-turquoise/15 bg-white">
+              <div className="sm:col-span-2">
+                <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-turquoise">
+                  Mountain bike details
+                </p>
+              </div>
+              <div>
+                <label htmlFor="cp-bike-count" className={labelClass}>
+                  Number of bikes
+                </label>
+                <input
+                  id="cp-bike-count"
+                  type="number"
+                  min={1}
+                  max={30}
+                  placeholder="e.g. 2"
+                  value={data.bikeCount}
+                  onChange={(e) =>
+                    set(
+                      "bikeCount",
+                      e.target.value === "" ? "" : Number(e.target.value)
+                    )
+                  }
+                  className={inputClass}
+                />
+              </div>
+              <div>
+                <label htmlFor="cp-bike-days" className={labelClass}>
+                  Number of days
+                </label>
+                <input
+                  id="cp-bike-days"
+                  type="number"
+                  min={1}
+                  max={60}
+                  placeholder="e.g. 3"
+                  value={data.bikeDays}
+                  onChange={(e) =>
+                    set(
+                      "bikeDays",
+                      e.target.value === "" ? "" : Number(e.target.value)
+                    )
+                  }
+                  className={inputClass}
+                />
+              </div>
+            </div>
+          )}
+
+          {isDestination && data.gypsyTour && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-5 rounded-card-2xl border border-brand-turquoise/15 bg-white">
+              <div className="sm:col-span-2">
+                <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-turquoise">
+                  Gypsy tour details
+                </p>
+              </div>
+              <div>
+                <label htmlFor="cp-gypsy-date" className={labelClass}>
+                  Preferred date
+                </label>
+                <input
+                  id="cp-gypsy-date"
+                  type="date"
+                  value={data.gypsyDate}
+                  onChange={(e) => set("gypsyDate", e.target.value)}
+                  className={inputClass}
+                />
+              </div>
+              <div>
+                <label htmlFor="cp-gypsy-people" className={labelClass}>
+                  Number of people
+                </label>
+                <input
+                  id="cp-gypsy-people"
+                  type="number"
+                  min={1}
+                  max={30}
+                  placeholder="e.g. 4"
+                  value={data.gypsyPeople}
+                  onChange={(e) =>
+                    set(
+                      "gypsyPeople",
+                      e.target.value === "" ? "" : Number(e.target.value)
+                    )
+                  }
+                  className={inputClass}
+                />
+              </div>
+              <div className="sm:col-span-2">
+                <label htmlFor="cp-gypsy-loc" className={labelClass}>
+                  Location / destination
+                </label>
+                <input
+                  id="cp-gypsy-loc"
+                  type="text"
+                  placeholder="e.g. Spiti Valley"
+                  value={data.gypsyLocation}
+                  onChange={(e) => set("gypsyLocation", e.target.value)}
+                  className={inputClass}
+                />
+              </div>
+            </div>
+          )}
 
           {data.adventureActivity && (
             <div>
@@ -861,10 +1186,25 @@ export const CustomPackageWizard: React.FC<CustomPackageWizardProps> = ({
               </span>
               <span className="font-semibold text-brand-dark text-right">
                 {data.tripType === "domestic"
-                  ? data.states.join(", ")
+                  ? [
+                      ...data.states,
+                      ...(data.customDestinationText.trim()
+                        ? [`Custom: ${data.customDestinationText.trim()}`]
+                        : []),
+                    ].join(", ") || "—"
                   : data.internationalDestinations.join(", ")}
               </span>
             </div>
+            {isDestination && (data.departureDate || data.returnDate) && (
+              <div className="flex items-start justify-between gap-3 pt-3 border-t border-brand-turquoise/5">
+                <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-taupe shrink-0 pt-0.5">
+                  Travel Dates
+                </span>
+                <span className="font-semibold text-brand-dark text-right">
+                  {data.departureDate || "—"} to {data.returnDate || "—"}
+                </span>
+              </div>
+            )}
             <div className="flex items-start justify-between gap-3 pt-3 border-t border-brand-turquoise/5">
               <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-taupe shrink-0 pt-0.5">
                 Duration
@@ -873,6 +1213,22 @@ export const CustomPackageWizard: React.FC<CustomPackageWizardProps> = ({
                 {data.durationDays} Days
               </span>
             </div>
+            {isDestination && data.travelStyles.length > 0 && (
+              <div className="flex items-start justify-between gap-3 pt-3 border-t border-brand-turquoise/5">
+                <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-taupe shrink-0 pt-0.5">
+                  Trip Styles
+                </span>
+                <span className="font-semibold text-brand-dark text-right">
+                  {data.travelStyles
+                    .map((s) =>
+                      s === "Other" && data.travelStyleOther.trim()
+                        ? `Other (${data.travelStyleOther.trim()})`
+                        : s
+                    )
+                    .join(", ")}
+                </span>
+              </div>
+            )}
             <div className="flex items-start justify-between gap-3 pt-3 border-t border-brand-turquoise/5">
               <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-taupe shrink-0 pt-0.5">
                 Travellers
@@ -886,9 +1242,20 @@ export const CustomPackageWizard: React.FC<CustomPackageWizardProps> = ({
                 Services
               </span>
               <span className="font-semibold text-brand-dark text-right">
-                {buildServicesSummary(data).join(" | ")}
+                {buildServicesSummary(data, mode).join(" | ")}
               </span>
             </div>
+            {isDestination &&
+              (data.budgetAmount !== "" || data.budgetType) && (
+                <div className="flex items-start justify-between gap-3 pt-3 border-t border-brand-turquoise/5">
+                  <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-taupe shrink-0 pt-0.5">
+                    Budget
+                  </span>
+                  <span className="font-semibold text-brand-dark text-right">
+                    {buildBudgetLabel(data)}
+                  </span>
+                </div>
+              )}
             <Button variant="ghost" size="sm" onClick={goBack} type="button">
               Edit selections
             </Button>
@@ -943,28 +1310,92 @@ export const CustomPackageWizard: React.FC<CustomPackageWizardProps> = ({
                 autoComplete="email"
               />
             </div>
-            <div>
-              <label htmlFor="cp-date" className={labelClass}>
-                Preferred Travel Date
-              </label>
-              <input
-                id="cp-date"
-                type="date"
-                value={data.travelDate}
-                onChange={(e) => set("travelDate", e.target.value)}
-                className={inputClass}
-              />
-            </div>
+            {isDestination ? (
+              <div>
+                <label htmlFor="cp-whatsapp" className={labelClass}>
+                  WhatsApp Number
+                </label>
+                <input
+                  id="cp-whatsapp"
+                  type="tel"
+                  placeholder="Same as phone if left blank"
+                  value={data.whatsapp}
+                  onChange={(e) => set("whatsapp", e.target.value)}
+                  className={inputClass}
+                  autoComplete="tel"
+                />
+              </div>
+            ) : (
+              <div>
+                <label htmlFor="cp-date" className={labelClass}>
+                  Preferred Travel Date
+                </label>
+                <input
+                  id="cp-date"
+                  type="date"
+                  value={data.travelDate}
+                  onChange={(e) => set("travelDate", e.target.value)}
+                  className={inputClass}
+                />
+              </div>
+            )}
           </div>
+
+          {isDestination && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label htmlFor="cp-budget" className={labelClass}>
+                  Approximate Budget (optional)
+                </label>
+                <input
+                  id="cp-budget"
+                  type="number"
+                  min={0}
+                  placeholder="e.g. 50000"
+                  value={data.budgetAmount}
+                  onChange={(e) =>
+                    set(
+                      "budgetAmount",
+                      e.target.value === "" ? "" : Number(e.target.value)
+                    )
+                  }
+                  className={inputClass}
+                />
+              </div>
+              <div>
+                <label htmlFor="cp-budget-type" className={labelClass}>
+                  Budget Type
+                </label>
+                <select
+                  id="cp-budget-type"
+                  value={data.budgetType}
+                  onChange={(e) =>
+                    set("budgetType", e.target.value as "" | "per_person" | "total")
+                  }
+                  className={inputClass}
+                >
+                  <option value="">Select…</option>
+                  <option value="per_person">Budget per person</option>
+                  <option value="total">Total trip budget</option>
+                </select>
+              </div>
+            </div>
+          )}
 
           <div>
             <label htmlFor="cp-notes" className={labelClass}>
-              Additional Notes / Preferences
+              {isDestination
+                ? "Anything else you'd like us to know?"
+                : "Additional Notes / Preferences"}
             </label>
             <textarea
               id="cp-notes"
               rows={3}
-              placeholder="Pace of travel, dietary preferences, budget hints..."
+              placeholder={
+                isDestination
+                  ? "Special hotel, dietary, accessibility, sightseeing, pickup, occasions, budget preferences..."
+                  : "Pace of travel, dietary preferences, budget hints..."
+              }
               value={data.notes}
               onChange={(e) => set("notes", e.target.value)}
               className={inputClass}
@@ -986,7 +1417,11 @@ export const CustomPackageWizard: React.FC<CustomPackageWizardProps> = ({
                 )
               }
             >
-              {loading ? "Transmitting..." : "Request Custom Package"}
+              {loading
+                ? "Transmitting..."
+                : isDestination
+                  ? "Request Custom Destination"
+                  : "Request Custom Package"}
             </Button>
             <Button
               type="button"

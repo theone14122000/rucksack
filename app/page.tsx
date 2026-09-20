@@ -103,6 +103,40 @@ export default async function HomePage() {
             <DestinationCard key={dest.id} destination={dest} />
           ))}
         </Carousel>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+          <Link href="/custom-destination" className="group bg-white rounded-card-2xl overflow-hidden border border-brand-turquoise/5 hover:border-brand-turquoise/12 hover:shadow-luxury-hover transition-all duration-500 flex flex-col sm:flex-row">
+            <div className="relative overflow-hidden sm:w-72 shrink-0 aspect-[16/10] sm:aspect-auto">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/editorial/international.jpg"
+                alt="Custom destination"
+                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/50 via-brand-dark/10 to-transparent" />
+              <div className="absolute top-3 left-3 z-20">
+                <span className="text-[10px] uppercase tracking-widest font-semibold px-2.5 py-1 bg-white/95 text-brand-dark rounded-full shadow-soft backdrop-blur-sm">
+                  You Choose
+                </span>
+              </div>
+            </div>
+            <div className="p-5 sm:p-6 flex-1">
+              <span className="text-[11px] font-semibold uppercase tracking-widest text-brand-turquoise flex items-center gap-1">
+                <MapPin className="w-3.5 h-3.5" />Can&apos;t find your destination?
+              </span>
+              <h3 className="font-editorial text-2xl font-bold text-brand-dark tracking-tight group-hover:text-brand-turquoise transition-colors mt-2">Custom Destination</h3>
+              <p className="text-xs sm:text-sm text-brand-dark/55 line-clamp-2 leading-relaxed mt-2">Name any place in India or worldwide — regions, dates, travellers, stays, cabs, and mountain experiences included.</p>
+              <div className="pt-3 mt-3 border-t border-brand-turquoise/5 flex flex-wrap items-center gap-1.5">
+                <span className="text-[10px] text-brand-taupe bg-brand-cream px-2.5 py-1 rounded-full">Any region</span>
+                <span className="text-[10px] text-brand-taupe bg-brand-cream px-2.5 py-1 rounded-full">Any dates</span>
+                <span className="text-[10px] text-brand-taupe bg-brand-cream px-2.5 py-1 rounded-full">Your pace</span>
+                <span className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-brand-turquoise ml-auto">
+                  Request Custom Destination <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                </span>
+              </div>
+            </div>
+          </Link>
+        </div>
       </section>
 
       {/* 4. INTERNATIONAL ESCAPES - Auto-Toggle Carousel + Links */}
