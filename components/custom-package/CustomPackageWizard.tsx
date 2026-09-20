@@ -157,6 +157,13 @@ export const CustomPackageWizard: React.FC<CustomPackageWizardProps> = ({
     setStepError(null);
   };
 
+  const selectTripType = (value: "domestic" | "international") => {
+    setData((prev) => ({ ...prev, tripType: value }));
+    setStepError(null);
+    setStep(1);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   const goNext = () => {
     const err = validateCustomPackageStep(data, step);
     if (err) {
@@ -312,7 +319,7 @@ export const CustomPackageWizard: React.FC<CustomPackageWizardProps> = ({
               What kind of trip are you looking for?
             </h2>
             <p className="text-sm text-brand-dark/60">
-              Select one — the next questions adapt to your choice.
+              Select one — you&apos;ll move to the next step automatically.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4" role="radiogroup" aria-label="Trip type">
@@ -337,7 +344,7 @@ export const CustomPackageWizard: React.FC<CustomPackageWizardProps> = ({
                 type="button"
                 role="radio"
                 aria-checked={data.tripType === opt.value}
-                onClick={() => set("tripType", opt.value)}
+                onClick={() => selectTripType(opt.value)}
                 className={cn(
                   "text-left p-5 sm:p-6 rounded-card-2xl border transition-all duration-300",
                   data.tripType === opt.value
