@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
 import { Camera, ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -34,7 +35,8 @@ export const ClientMoments: React.FC = () => {
   const [instant, setInstant] = useState(false);
   const [paused, setPaused] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
-  const timer = useRef<ReturnType<typeof setInterval> | null>(null);
+  const indexRef = useRef(0);
+  indexRef.current = index;
 
   useEffect(() => {
     setVisible(getVisibleCount());
@@ -60,32 +62,41 @@ export const ClientMoments: React.FC = () => {
   }, [index, total]);
 
   const goNext = useCallback(() => {
+    setInstant(false);
     setIndex((i) => (i >= total ? total : i + 1));
   }, [total]);
 
   const goPrev = useCallback(() => {
-    setIndex((i) => {
-      if (i > 0) return i - 1;
+    const current = indexRef.current;
+    if (current > 0) {
+      setInstant(false);
+      setIndex(current - 1);
+    } else {
       // Seamless backward loop: jump (instantly) to the trailing clones,
       // which look identical to the first slide, then step back animated.
       setInstant(true);
+      setIndex(total);
       setTimeout(() => {
         setInstant(false);
         setIndex(total - 1);
       }, 40);
-      return total;
-    });
+    }
   }, [total]);
+
+  const goTo = useCallback((page: number) => {
+    setInstant(false);
+    setIndex(page);
+  }, []);
 
   useEffect(() => {
     if (paused || reducedMotion) return;
-    timer.current = setInterval(() => {
+    const timer = setInterval(() => {
       if (!document.hidden) goNext();
     }, AUTOPLAY_MS);
-    return () => {
-      if (timer.current) clearInterval(timer.current);
-    };
+    return () => clearInterval(timer);
   }, [paused, reducedMotion, goNext, index]);
+
+  const page = index % total;
 
   const slides = [...MOMENT_IMAGES, ...MOMENT_IMAGES.slice(0, visible)];
 
@@ -164,6 +175,33 @@ export const ClientMoments: React.FC = () => {
               </div>
             ))}
           </div>
+        </div>
+
+        {/* Auto-toggle progress indicators */}
+        <div className="flex items-center justify-center gap-2 mt-6">
+          {MOMENT_IMAGES.map((src, idx) => (
+            <button
+              key={src}
+              onClick={() => goTo(idx)}
+              className="relative h-2 rounded-full overflow-hidden transition-all duration-300"
+              style={{
+                width: idx === page ? 32 : 8,
+                background:
+                  idx === page ? "transparent" : "rgba(11,143,131,0.2)",
+              }}
+              aria-label={`Go to photo ${idx + 1}`}
+            >
+              {idx === page && !reducedMotion && (
+                <motion.div
+                  key={`progress-${page}`}
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{ duration: AUTOPLAY_MS / 1000, ease: "linear" }}
+                  className="absolute inset-0 bg-gradient-to-r from-brand-turquoise to-brand-yellow origin-left rounded-full"
+                />
+              )}
+            </button>
+          ))}
         </div>
       </div>
     </section>
