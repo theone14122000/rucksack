@@ -11,6 +11,7 @@ import { TestimonialCard } from "@/components/cards/TestimonialCard";
 import { EnquiryForm } from "@/components/ui/EnquiryForm";
 import { Button } from "@/components/ui/Button";
 import { FAQSection } from "@/components/sections/FAQSection";
+import { ClientMoments } from "@/components/sections/ClientMoments";
 import { InternationalCarousel } from "@/components/sections/InternationalCarousel";
 import { getDestinations, getPackages, getTreks, getExperiences, getTestimonials, getFAQs } from "@/lib/cms/store";
 
@@ -308,6 +309,9 @@ export default async function HomePage() {
           ))}
         </Carousel>
       </section>
+
+      {/* 8b. CLIENT MOMENTS - Auto-Playing Gallery */}
+      <ClientMoments />
 
       {/* 9. FAQ - Dynamic Section */}
       {faqs.length > 0 && (

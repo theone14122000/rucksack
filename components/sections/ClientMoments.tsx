@@ -1,0 +1,171 @@
+"use client";
+
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { Camera, ChevronLeft, ChevronRight } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+const MOMENT_IMAGES = [
+  "/gallery/gallery1.jpg",
+  "/gallery/gallery2.jpg",
+  "/gallery/gallery3.jpg",
+  "/gallery/gallery4.jpg",
+  "/gallery/gallery5.jpg",
+  "/gallery/gallery6.jpg",
+  "/gallery/gallery7.jpg",
+  "/gallery/gallery8.jpg",
+  "/gallery/gallery9.jpg",
+  "/gallery/galler10.jpg",
+];
+
+const TRANSITION_MS = 700;
+const AUTOPLAY_MS = 3500;
+
+function getVisibleCount(): number {
+  if (typeof window === "undefined") return 1;
+  if (window.matchMedia("(min-width: 1280px)").matches) return 4;
+  if (window.matchMedia("(min-width: 1024px)").matches) return 3;
+  if (window.matchMedia("(min-width: 640px)").matches) return 2;
+  return 1;
+}
+
+export const ClientMoments: React.FC = () => {
+  const [visible, setVisible] = useState(1);
+  const [index, setIndex] = useState(0);
+  const [instant, setInstant] = useState(false);
+  const [paused, setPaused] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
+  const timer = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  useEffect(() => {
+    setVisible(getVisibleCount());
+    setReducedMotion(
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    );
+    const onResize = () => setVisible(getVisibleCount());
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  const total = MOMENT_IMAGES.length;
+
+  // Snap from the trailing clones back to the real first slide (no visual jump).
+  useEffect(() => {
+    if (index !== total) return;
+    const snap = setTimeout(() => {
+      setInstant(true);
+      setIndex(0);
+      setTimeout(() => setInstant(false), 40);
+    }, TRANSITION_MS);
+    return () => clearTimeout(snap);
+  }, [index, total]);
+
+  const goNext = useCallback(() => {
+    setIndex((i) => (i >= total ? total : i + 1));
+  }, [total]);
+
+  const goPrev = useCallback(() => {
+    setIndex((i) => {
+      if (i > 0) return i - 1;
+      // Seamless backward loop: jump (instantly) to the trailing clones,
+      // which look identical to the first slide, then step back animated.
+      setInstant(true);
+      setTimeout(() => {
+        setInstant(false);
+        setIndex(total - 1);
+      }, 40);
+      return total;
+    });
+  }, [total]);
+
+  useEffect(() => {
+    if (paused || reducedMotion) return;
+    timer.current = setInterval(() => {
+      if (!document.hidden) goNext();
+    }, AUTOPLAY_MS);
+    return () => {
+      if (timer.current) clearInterval(timer.current);
+    };
+  }, [paused, reducedMotion, goNext, index]);
+
+  const slides = [...MOMENT_IMAGES, ...MOMENT_IMAGES.slice(0, visible)];
+
+  return (
+    <section className="py-16 lg:py-28 bg-white overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 gap-4">
+          <div className="space-y-2 max-w-2xl">
+            <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-turquoise flex items-center gap-2">
+              <Camera className="w-3.5 h-3.5" /> Client Memories
+            </span>
+            <h2 className="font-editorial text-3xl sm:text-5xl font-bold text-brand-dark tracking-tight">
+              Our Precious and{" "}
+              <span className="font-hand text-shimmer text-[1.1em]">Happy Moments</span>{" "}
+              from Our Clients
+            </h2>
+          </div>
+          <div className="flex items-center gap-2 shrink-0">
+            <button
+              onClick={goPrev}
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white shadow-elevated border border-brand-turquoise/10 flex items-center justify-center text-brand-dark hover:bg-brand-turquoise hover:text-white hover:border-brand-turquoise transition-all duration-300"
+              aria-label="Previous photos"
+            >
+              <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+            </button>
+            <button
+              onClick={goNext}
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white shadow-elevated border border-brand-turquoise/10 flex items-center justify-center text-brand-dark hover:bg-brand-turquoise hover:text-white hover:border-brand-turquoise transition-all duration-300"
+              aria-label="Next photos"
+            >
+              <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+      >
+        <div
+          className="overflow-hidden"
+          role="region"
+          aria-roledescription="carousel"
+          aria-label="Happy client moments gallery"
+        >
+          <div
+            className={cn(
+              "flex",
+              !instant &&
+                "transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
+            )}
+            style={{ transform: `translateX(-${index * (100 / visible)}%)` }}
+          >
+            {slides.map((src, idx) => (
+              <div
+                key={`${src}-${idx}`}
+                className="shrink-0 px-2 sm:px-3"
+                style={{ width: `${100 / visible}%` }}
+                aria-hidden={idx >= total}
+                role="group"
+                aria-roledescription="slide"
+                aria-label={`${(idx % total) + 1} of ${total}`}
+              >
+                <div className="group rounded-card-2xl overflow-hidden border border-brand-turquoise/5 hover:border-brand-turquoise/12 hover:shadow-luxury transition-all duration-500">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={src}
+                    alt={`Happy client moment ${(idx % total) + 1} from Rucksack Adventures`}
+                    className="w-full aspect-[4/3] object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    loading={idx < visible * 2 ? "eager" : "lazy"}
+                    draggable={false}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
