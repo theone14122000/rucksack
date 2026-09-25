@@ -6,9 +6,9 @@ import { DestinationCard } from "@/components/cards/DestinationCard";
 import { getDestinations } from "@/lib/cms/store";
 
 export const metadata: Metadata = {
-  title: "Destinations | Curated Himalayan & Global Escapes",
+  title: "Destinations | Shimla, Manali, Dharamshala, Spiti & Ladakh",
   description:
-    "Explore domestic Himalayan destinations including Kashmir, Leh Ladakh, Spiti, Uttarakhand, and North East India, alongside bespoke international escapes to Bali, Dubai, and Thailand.",
+    "Explore curated Himalayan destinations with Rucksack Adventures: Shimla, Manali, Dharamshala, Dalhousie, Kinnaur, Lahaul & Spiti, and Leh Ladakh.",
 };
 
 export const revalidate = 0;
@@ -45,7 +45,7 @@ export default async function DestinationsPage({
             Curated Destinations
           </h1>
           <p className="text-sm sm:text-base text-brand-dark/80 max-w-2xl leading-relaxed">
-            From the high alpine passes of Spiti and Ladakh to the tranquil emerald shores of Bali and Andaman. Every destination is anchored in our philosophy of mindful, refined travel.
+            From the colonial heritage of Shimla and the meadows of Dalhousie to the high passes of Spiti and Ladakh. Every destination is anchored in our philosophy of mindful, refined travel.
           </p>
 
           {/* Filter Pills */}

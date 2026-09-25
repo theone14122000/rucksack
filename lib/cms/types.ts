@@ -10,6 +10,7 @@
   gallery?: string[];
   bestTimeToVisit: string;
   highlights: string[];
+  attractions?: { name: string; description: string }[];
   packagesCount: number;
   treksCount?: number;
   featured: boolean;

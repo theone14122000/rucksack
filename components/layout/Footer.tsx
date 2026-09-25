@@ -91,11 +91,13 @@ export const Footer: React.FC = () => {
                   { href: "/custom-package", label: "Custom Package" },
                   { href: "/treks", label: "Himalayan Treks" },
                   { href: "/experiences", label: "Signature Experiences" },
-                  { href: "/destinations/himachal-pradesh", label: "Himachal Pradesh" },
-                  { href: "/destinations/kashmir", label: "Kashmir Valleys" },
+                  { href: "/destinations/shimla", label: "Shimla" },
+                  { href: "/destinations/manali", label: "Manali" },
+                  { href: "/destinations/dharamshala", label: "Dharamshala" },
+                  { href: "/destinations/dalhousie", label: "Dalhousie" },
+                  { href: "/destinations/kinnaur", label: "Kinnaur" },
+                  { href: "/destinations/lahaul-spiti", label: "Lahaul & Spiti" },
                   { href: "/destinations/leh-ladakh", label: "Leh Ladakh" },
-                  { href: "/destinations/nepal", label: "Nepal Holidays" },
-                  { href: "/destinations/bhutan", label: "Bhutan Journeys" },
                 ].map((link) => (
                   <li key={link.href}><Link href={link.href} className="hover:text-white transition-colors">{link.label}</Link></li>
                 ))}

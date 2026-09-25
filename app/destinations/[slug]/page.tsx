@@ -127,6 +127,44 @@ export default async function DestinationDetailPage({ params }: DestinationPageP
                   ))}
                 </div>
               </div>
+
+              {destination.attractions && destination.attractions.length > 0 && (
+                <div className="pt-4">
+                  <h3 className="text-xs font-semibold uppercase tracking-widest text-brand-turquoise mb-4">
+                    Signature Attractions
+                  </h3>
+                  <div className="space-y-3">
+                    {destination.attractions.map((attr, idx) => (
+                      <div
+                        key={idx}
+                        className="p-4 bg-brand-cream/40 border border-brand-turquoise/30 rounded-card"
+                      >
+                        <p className="text-sm font-semibold text-brand-dark flex items-center gap-2.5">
+                          <CheckCircle2 className="w-4 h-4 text-brand-turquoise shrink-0" />
+                          <span>{attr.name}</span>
+                        </p>
+                        {attr.description && (
+                          <p className="text-xs sm:text-sm text-brand-dark/75 leading-relaxed mt-1.5 ml-[26px]">
+                            {attr.description}
+                          </p>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-4 p-4 bg-brand-turquoise/5 border border-brand-turquoise/15 rounded-card">
+                    <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-turquoise mb-1.5">
+                      Travel Responsibly
+                    </p>
+                    <p className="text-xs text-brand-dark/70 leading-relaxed">
+                      Mountain environments are fragile. Please respect local
+                      communities, follow local regulations, avoid littering,
+                      respect wildlife and cultural sites, and follow the
+                      guidance of trained professionals during adventure
+                      activities.
+                    </p>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Sidebar Meta Box */}
