@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
-import { ArrowRight, Mountain, Train, Compass, Star, MapPin } from "lucide-react";
+import { ArrowRight, Mountain, Train, Compass, Star, MapPin, MessageSquare } from "lucide-react";
+import { Reveal, Parallax } from "@/components/ui/Reveal";
 import { HeroSection } from "@/components/hero/HeroSection";
 import { StatsBar } from "@/components/ui/StatsBar";
 import { Carousel } from "@/components/ui/Carousel";
@@ -60,7 +61,7 @@ export default async function HomePage() {
       <section className="py-16 sm:py-24 lg:py-32 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-16 lg:gap-24 items-center">
-            <div className="space-y-6">
+            <Reveal className="space-y-6">
               <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-turquoise flex items-center gap-2">
                 <div className="w-8 h-px bg-brand-turquoise" /> Our Philosophy
               </span>
@@ -71,16 +72,16 @@ export default async function HomePage() {
               <p className="text-base sm:text-lg text-brand-dark/60 leading-relaxed max-w-lg">
                 From the first conversation to the last mile of your journey, we handle every detail. Curated itineraries, verified accommodations, experienced guides, and round-the-hour support — all from our mountain headquarters in Shimla.
               </p>
-            </div>
-            <div className="relative">
-              <div className="aspect-[4/5] rounded-card-2xl overflow-hidden shadow-luxury">
-                <img src="/images/editorial/philosophy.jpg" alt="Himalayan landscape" className="w-full h-full object-cover" />
-              </div>
+            </Reveal>
+            <Reveal delay={0.15} className="relative">
+              <Parallax speed={36} className="aspect-[4/5] rounded-card-2xl shadow-luxury group">
+                <img src="/images/editorial/philosophy.jpg" alt="Himalayan landscape" className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]" loading="lazy" />
+              </Parallax>
               <div className="absolute -bottom-6 -left-6 bg-white rounded-card-xl p-5 shadow-luxury border border-brand-turquoise/5">
                 <p className="font-hand text-2xl text-brand-turquoise">&ldquo;Mountains are calling&rdquo;</p>
                 <p className="text-[10px] text-brand-taupe mt-1">— Every adventurer ever</p>
               </div>
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>
@@ -88,7 +89,7 @@ export default async function HomePage() {
       {/* 3. FEATURED DESTINATIONS - Domestic Carousel */}
       <section className="py-16 lg:py-28 bg-brand-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 gap-4">
+          <Reveal className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 gap-4">
             <div className="space-y-2 max-w-2xl">
               <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-turquoise flex items-center gap-2">
                 <MapPin className="w-3.5 h-3.5" /> Explore India
@@ -100,14 +101,14 @@ export default async function HomePage() {
             <Link href="/destinations?region=domestic" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-brand-turquoise hover:text-brand-turquoise-light transition-colors">
               View All ({domesticDestinations.length}) <ArrowRight className="w-4 h-4" />
             </Link>
-          </div>
+          </Reveal>
         </div>
         <Carousel itemClassName="w-[320px] sm:w-[360px] lg:w-[400px]">
           {domesticDestinations.map((dest) => (
             <DestinationCard key={dest.id} destination={dest} />
           ))}
         </Carousel>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+        <Reveal className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
           <Link href="/custom-destination" className="group bg-white rounded-card-2xl overflow-hidden border border-brand-turquoise/5 hover:border-brand-turquoise/12 hover:shadow-luxury-hover transition-all duration-500 flex flex-col sm:flex-row">
             <div className="relative overflow-hidden sm:w-72 shrink-0 aspect-[16/10] sm:aspect-auto">
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -140,7 +141,7 @@ export default async function HomePage() {
               </div>
             </div>
           </Link>
-        </div>
+        </Reveal>
       </section>
 
       {/* 4. INTERNATIONAL ESCAPES - Auto-Toggle Carousel + Links */}
@@ -153,7 +154,7 @@ export default async function HomePage() {
             </div>
 
             {/* Text + Links */}
-            <div className="space-y-6 order-1 lg:order-2">
+            <Reveal className="space-y-6 order-1 lg:order-2">
               <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-gold flex items-center gap-2">
                 <div className="w-8 h-px bg-brand-gold" /> International Escapes
               </span>
@@ -178,7 +179,7 @@ export default async function HomePage() {
               <Link href="/destinations?region=international" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-brand-turquoise hover:text-brand-turquoise-light transition-colors pt-2">
                 Explore All Global <ArrowRight className="w-4 h-4" />
               </Link>
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>
@@ -186,7 +187,7 @@ export default async function HomePage() {
       {/* 5. FEATURED ADVENTURES - Carousel */}
       <section className="py-16 lg:py-28 bg-brand-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+          <Reveal className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
             <div className="space-y-2 max-w-2xl">
               <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-gold flex items-center gap-2">
                 <Compass className="w-3.5 h-3.5" /> Handcrafted Itineraries
@@ -198,14 +199,14 @@ export default async function HomePage() {
             <Link href="/packages" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-brand-turquoise hover:text-brand-turquoise-light transition-colors">
               Browse All <ArrowRight className="w-4 h-4" />
             </Link>
-          </div>
+          </Reveal>
         </div>
         <Carousel itemClassName="w-[320px] sm:w-[380px] lg:w-[420px]">
           {featuredPackages.map((pkg) => (
             <PackageCard key={pkg.id} pkg={pkg} />
           ))}
         </Carousel>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+        <Reveal className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
           <Link href="/custom-package" className="group bg-white rounded-card-2xl border border-brand-turquoise/10 hover:border-brand-turquoise/20 p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center gap-4 hover:shadow-luxury transition-all duration-500">
             <div className="flex items-center gap-4 flex-1">
               <span className="text-3xl shrink-0">🧳</span>
@@ -225,7 +226,7 @@ export default async function HomePage() {
               Build Custom Package <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
             </span>
           </Link>
-        </div>
+        </Reveal>
       </section>
 
       {/* 5b. ACTIVITIES - Adventure Levels */}
@@ -234,7 +235,7 @@ export default async function HomePage() {
       {/* 6. TREKS - Light Section with Timeline Feel */}
       <section className="py-16 lg:py-28 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-14 space-y-3">
+          <Reveal className="text-center max-w-2xl mx-auto mb-8 sm:mb-14 space-y-3">
             <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-turquoise flex items-center justify-center gap-2">
               <Mountain className="w-3.5 h-3.5" /> High Himalayan Ascents
             </span>
@@ -244,7 +245,7 @@ export default async function HomePage() {
             <p className="text-sm sm:text-base text-brand-dark/60 leading-relaxed">
               Curated Himalayan trekking experiences for explorers seeking something beyond conventional travel.
             </p>
-          </div>
+          </Reveal>
         </div>
         <Carousel itemClassName="w-[300px] sm:w-[340px] lg:w-[380px]">
           {featuredTreks.map((trek) => (
@@ -261,7 +262,7 @@ export default async function HomePage() {
       {/* 7. SERVICES - Interactive List */}
       <section className="py-16 lg:py-28 bg-brand-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14 space-y-3">
+          <Reveal className="text-center max-w-2xl mx-auto mb-10 sm:mb-14 space-y-3">
             <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-turquoise">
               Reliable Ground Logistics
             </span>
@@ -269,7 +270,7 @@ export default async function HomePage() {
               Specialized Transport &{" "}
               <span className="font-hand text-shimmer text-[1.1em]">Pilgrimage</span> Desk
             </h2>
-          </div>
+          </Reveal>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-8">
             {[
               { icon: "🚗", title: "Premium Cab Services", desc: "Airport transfers, local sightseeing, and mountain 4x4 transfers to Kinnaur and Spiti.", href: "/taxi-services", items: ["Toyota Innova Crysta & 4x4 Scorpio", "Professional mountain chauffeurs", "Transparent pricing"] },
@@ -294,20 +295,38 @@ export default async function HomePage() {
               </Link>
             ))}
           </div>
+          <Reveal className="mt-10 sm:mt-14 text-center space-y-4">
+            <p className="text-sm text-brand-dark/60 max-w-xl mx-auto">
+              Need cabs, pilgrimage support, or something entirely bespoke? Talk directly to our Shimla travel desk.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+              <Button variant="primary" size="lg" href="/custom-package">
+                Request a Custom Trip
+              </Button>
+              <a
+                href={`https://wa.me/917018678064?text=${encodeURIComponent("Hello Rucksack Adventures! I need help with transport and travel planning.")}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 font-bold text-xs uppercase tracking-wider rounded-full transition-all duration-300 btn-premium bg-white text-brand-dark border border-brand-turquoise/15 hover:border-brand-turquoise/30 hover:bg-brand-turquoise-50 shadow-soft py-4 px-8"
+              >
+                <MessageSquare className="w-4 h-4 text-[#25D366]" /> Talk to Our Travel Team
+              </a>
+            </div>
+          </Reveal>
         </div>
       </section>
 
       {/* 8. TESTIMONIALS - Carousel */}
       <section className="py-16 lg:py-28 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-14 space-y-3">
+          <Reveal className="text-center max-w-2xl mx-auto mb-8 sm:mb-14 space-y-3">
             <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-gold flex items-center justify-center gap-2">
               <Star className="w-3.5 h-3.5" /> Guest Reflections
             </span>
             <h2 className="font-editorial text-3xl sm:text-5xl font-bold text-brand-dark tracking-tight">
               Words From Our <span className="font-hand text-shimmer text-[1.1em]">Travelers</span>
             </h2>
-          </div>
+          </Reveal>
         </div>
         <Carousel itemClassName="w-[320px] sm:w-[380px] lg:w-[420px]">
           {testimonials.map((t) => (
@@ -343,16 +362,18 @@ export default async function HomePage() {
       {/* 10. ENQUIRY - Clean, Light */}
       <section className="py-16 lg:py-28 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10 space-y-2">
+          <Reveal className="text-center mb-10 space-y-2">
             <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-turquoise">Direct Himalayan Concierge</span>
             <h2 className="font-editorial text-3xl sm:text-5xl font-bold text-brand-dark">
               Begin Your Travel <span className="font-hand text-shimmer text-[1.1em]">Story</span>
             </h2>
             <p className="text-xs sm:text-sm text-brand-taupe max-w-md mx-auto">Share your travel aspirations. Our planners in Kasumpti, Shimla craft each journey individually.</p>
-          </div>
-          <div className="bg-brand-cream border border-brand-turquoise/5 p-6 sm:p-10 rounded-card-2xl shadow-luxury">
-            <EnquiryForm />
-          </div>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <div className="bg-brand-cream border border-brand-turquoise/5 p-6 sm:p-10 rounded-card-2xl shadow-luxury">
+              <EnquiryForm />
+            </div>
+          </Reveal>
         </div>
       </section>
     </div>

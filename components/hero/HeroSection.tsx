@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { FloatingCompass } from "./FloatingCompass";
 
@@ -26,10 +26,21 @@ export const HeroSection: React.FC = () => {
     return () => clearInterval(timer);
   }, [next]);
 
+  // Subtle scroll parallax: background drifts slower than the page, content lifts and fades.
+  const reduceMotion = useReducedMotion();
+  const { scrollY } = useScroll();
+  const bgY = useTransform(scrollY, [0, 600], [0, 140]);
+  const bgScale = useTransform(scrollY, [0, 600], [1, 1.08]);
+  const contentY = useTransform(scrollY, [0, 400], [0, 60]);
+  const contentOpacity = useTransform(scrollY, [0, 400], [1, 0]);
+
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Background Image Carousel - Crossfade */}
-      <div className="absolute inset-0">
+      {/* Background Image Carousel - Crossfade + Parallax */}
+      <motion.div
+        className="absolute inset-0"
+        style={reduceMotion ? undefined : { y: bgY, scale: bgScale }}
+      >
         {heroSlides.map((slide, idx) => (
           <motion.img
             key={idx}
@@ -47,7 +58,7 @@ export const HeroSection: React.FC = () => {
         {/* Cinematic Overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-brand-dark/85 via-brand-dark/40 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/60 via-transparent to-brand-dark/20" />
-      </div>
+      </motion.div>
 
       {/* Slide Indicators */}
       <div className="absolute bottom-20 left-4 sm:left-8 z-20 flex items-center gap-2">
@@ -93,7 +104,10 @@ export const HeroSection: React.FC = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-20 w-full">
+      <motion.div
+        className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-20 w-full"
+        style={reduceMotion ? undefined : { y: contentY, opacity: contentOpacity }}
+      >
         <div className="max-w-3xl">
           {/* Micro Label */}
           <motion.div
@@ -154,7 +168,7 @@ export const HeroSection: React.FC = () => {
             </Link>
           </motion.div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Scroll Indicator */}
       <motion.div

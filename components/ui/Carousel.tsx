@@ -75,7 +75,19 @@ export const Carousel: React.FC<CarouselProps> = ({
         </button>
       )}
 
-      <div ref={scrollRef} className="flex overflow-x-auto snap-scroll scrollbar-hide px-4 sm:px-0" style={{ gap: `${gap}px`, scrollbarWidth: "none", msOverflowStyle: "none" }}>
+      <div
+        ref={scrollRef}
+        className="flex overflow-x-auto snap-scroll scrollbar-hide px-4 sm:px-0"
+        style={{ gap: `${gap}px`, scrollbarWidth: "none", msOverflowStyle: "none" }}
+        tabIndex={0}
+        role="region"
+        aria-roledescription="carousel"
+        aria-label="Scrollable carousel. Use left and right arrow keys to browse."
+        onKeyDown={(e) => {
+          if (e.key === "ArrowLeft") { e.preventDefault(); scroll("left"); }
+          if (e.key === "ArrowRight") { e.preventDefault(); scroll("right"); }
+        }}
+      >
         {children.map((child, idx) => (
           <div key={idx} className={cn("flex-shrink-0 snap-start", itemClassName)}>
             {child}
