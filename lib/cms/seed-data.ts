@@ -436,163 +436,286 @@ export const initialPackages: Package[] = [
 
 export const initialTreks: Trek[] = [
   {
-    id: "trek-chopta-chandrashila",
-    name: "Chopta Chandrashila & Deoriatal Trek",
-    slug: "chopta-chandrashila-trek",
-    region: "Garhwal, Uttarakhand",
-    duration: "4 Days / 3 Nights",
-    difficulty: "Moderate",
-    altitude: "13,123 ft (4,000 m)",
-    bestSeason: "April to June & September to December",
-    shortDescription: "Climb through rhododendron forests to the highest Shiva shrine at Tungnath and summit Chandrashila for 360-degree Himalayan peaks.",
-    overview: "Known as the 'Switzerland of India', Chopta offers emerald alpine meadows framed by towering deodar forests. Ascending beyond the ancient 1000-year-old Tungnath Temple brings you to the summit of Chandrashila, offering staggering vistas of Nanda Devi, Trishul, Kedar Dome, and Chaukhamba.",
-    itinerary: [
-      { day: 1, title: "Rishikesh to Sari Village & Trek to Deoriatal", description: "Scenic drive alongside the Alaknanda and Mandakini rivers to Sari village. A gentle 2.5 km ascent brings you to the mirror lake of Deoriatal reflecting Mount Chaukhamba.", distance: "2.5 km", altitudeGain: "+1,200 ft" },
-      { day: 2, title: "Deoriatal to Chopta through Rhododendron Forests", description: "Trek along the scenic ridge trail traversing thick oak and rhododendron canopies with continuous mountain views.", distance: "14 km", altitudeGain: "+800 ft" },
-      { day: 3, title: "Chopta to Tungnath & Chandrashila Summit (13,123 ft)", description: "Pre-dawn start. Ascend stone-paved trail to Tungnath Temple. Continue up the rocky ridge to Chandrashila summit for an unforgettable sunrise.", distance: "8 km round-trip", altitudeGain: "+3,200 ft" },
-      { day: 4, title: "Chopta to Rishikesh Return", description: "Post breakfast, descend to base and drive back along Devprayag confluence to Rishikesh for departure.", distance: "Drive" },
-    ],
-    inclusions: [
-      "All trekking permits, forest entry fees, and camping charges",
-      "Certified Wilderness First Aid & mountaineering lead guide",
-      "All meals on trek (wholesome vegetarian high-energy mountain food)",
-      "High-altitude 4-season alpine tents, sleeping bags, and insulated mats",
-      "Safety gear: Oxygen cylinder, first aid kit, oximeter, and walkie-talkies"
-    ],
-    exclusions: [
-      "Transport from Delhi to Rishikesh",
-      "Backpack offloading charges (INR 1,200 for full trek if needed)",
-      "Personal trekking gear (boots, thermal wear, trekking poles)"
-    ],
-    requirements: [
-      "Good cardiovascular fitness (ability to jog 4 km comfortably)",
-      "Waterproof trekking shoes with deep lug sole",
-      "Warm layered clothing: 2 thermal layers, 1 fleece, 1 down jacket"
-    ],
-    faqs: [
-      { question: "Can beginners do the Chandrashila trek?", answer: "Yes! Chopta Chandrashila is one of the best treks for fit beginners looking to experience high-altitude summits without technical climbing." }
-    ],
-    featured: true,
-    seoTitle: "Chopta Chandrashila Trek 4 Days | Tungnath Summit Uttarakhand",
-    seoDescription: "Join Rucksack Adventures for Chopta Chandrashila & Deoriatal trek. Experienced Himalayan guides, premium alpine camping, and safety standards.",
-  },
-  {
-    id: "trek-bhaba-pass",
-    name: "Bhaba Pass Trek — Kinnaur to Spiti",
-    slug: "bhaba-pass-trek",
-    region: "Himachal Pradesh",
-    duration: "8 Days / 7 Nights",
-    difficulty: "Challenging",
-    altitude: "16,105 ft (4,910 m)",
-    bestSeason: "July to September",
-    shortDescription: "A dramatic crossover trek transitioning from the emerald pine valleys of Kinnaur to the stark trans-Himalayan desert of Spiti.",
-    overview: "Few Himalayan routes offer such a startling geographical transition. Starting in Kafnu amidst the lush apple groves and cedar forests of Kinnaur, you climb alongside roaring glacial rivers, cross the 16,105 ft Bhaba Pass, and emerge into the Martian landscape of Spiti Valley at Mudh.",
-    itinerary: [
-      { day: 1, title: "Shimla to Kafnu via Rampur (Drive)", description: "Meet our expedition team in Shimla. Drive along Hindustan-Tibet road into Kinnaur to reach Kafnu basecamp (7,874 ft).", distance: "200 km drive" },
-      { day: 2, title: "Kafnu to Mulling Meadows", description: "Begin trekking through fragrant silver birch and pine forests alongside Bhaba river to reach the picturesque meadow campsite of Mulling.", distance: "11 km", altitudeGain: "+2,750 ft" },
-      { day: 3, title: "Mulling to Kara Meadow", description: "Cross glacial streams and ascend over a natural rock bridge. Camp at Kara, a wide valley where Kinnauri horses graze peacefully.", distance: "6 km", altitudeGain: "+1,900 ft" },
-      { day: 4, title: "Kara to Phutsirang (Pass Base Camp)", description: "Gradual ascent toward the high moraine. Camp at Phutsirang at the base of Bhaba Pass, surrounded by glaciers.", distance: "5 km", altitudeGain: "+1,800 ft" },
-      { day: 5, title: "Phutsirang across Bhaba Pass (16,105 ft) to Baldar", description: "Summit day. Steep push over snowfields and scree to the prayer-flag adorned Bhaba Pass. Dramatic entry into Spiti's Pin Valley.", distance: "12 km", altitudeGain: "+2,000 ft / -3,100 ft" },
-      { day: 6, title: "Baldar to Mudh Village & Drive to Kaza", description: "Gentle descent into the scenic mud-brick hamlet of Mudh in Pin Valley. Drive to Kaza for hot showers and comfortable beds.", distance: "6 km trek + 50 km drive" },
-      { day: 7, title: "Kaza Local Exploration (Key & Kibber)", description: "Rest and exploration in Spiti. Visit Key Monastery and scenic high-altitude villages.", distance: "Day tour" },
-      { day: 8, title: "Kaza to Manali / Shimla Departure", description: "Cross high Kunzum and Rohtang/Atal Tunnel to conclude this epic crossover.", distance: "Drive" },
-    ],
-    inclusions: [
-      "Transport from Shimla to Kafnu and Kaza to Manali",
-      "Full alpine camp crew: Mountain Guide, High-altitude Cook, Porters/Mules",
-      "All camping gear, dining tent, toilet tents, and sleeping bags",
-      "All meals from Day 1 dinner to Day 8 breakfast",
-      "Wildlife entry permits and environmental fees"
-    ],
-    exclusions: [
-      "Travel insurance covering high-altitude trekking up to 5,000m",
-      "Personal porter for backpack (available at INR 1,500/day)"
-    ],
-    requirements: [
-      "Prior trekking experience above 12,000 ft recommended",
-      "High level of physical fitness and endurance",
-      "Trekking boots with ankle support and water resistance"
-    ],
-    faqs: [
-      { question: "How difficult is the Bhaba Pass crossover?", answer: "Rated challenging due to crossing a 16,105 ft pass with snow and boulder sections. Pacing and hydration are critical, and our team maintains a 1:4 guide-to-trekker ratio for safety." }
-    ],
-    featured: true,
-    seoTitle: "Bhaba Pass Trek Himachal Pradesh | Kinnaur to Spiti Crossover",
-    seoDescription: "Book the Bhaba Pass crossover trek with Shimla's local mountain specialists. Premium gear, experienced local Pahari guides, and safety protocols.",
-  },
-  {
-    id: "trek-indrahar-pass",
-    name: "Indrahar Pass Trek — Dhauladhar Crest",
-    slug: "indrahar-pass-trek",
-    region: "Kangra, Himachal Pradesh",
-    duration: "5 Days / 4 Nights",
-    difficulty: "Challenging",
-    altitude: "14,245 ft (4,342 m)",
-    bestSeason: "May to June & September to November",
-    shortDescription: "Ascend past Triund and Snowline Cafe over the jagged granite ridgeline of Dhauladhar into the ancient Chamba valley.",
-    overview: "Rising dramatically above the Tibetan town of McLeod Ganj, Indrahar Pass is an ancient shepherd trail cutting across the sheer rock face of the Dhauladhar range. At the pass, gaze down onto the lush Kangra Valley on one side and the dramatic Pir Panjal and Mani Mahesh Kailash on the other.",
-    itinerary: [
-      { day: 1, title: "McLeod Ganj to Triund (9,350 ft)", description: "Start from Bhagsu Nag. Trek through rhododendron and deodar forests to the famous grassy meadow of Triund overlooking Kangra valley.", distance: "9 km", altitudeGain: "+3,200 ft" },
-      { day: 2, title: "Triund to Laka Got / Snowline", description: "Ascend toward the snowline ridge. Camp at Laka Got under the towering granite walls of Moon Peak.", distance: "6 km", altitudeGain: "+1,800 ft" },
-      { day: 3, title: "Laka Got across Indrahar Pass (14,245 ft) & Return", description: "Alpine pre-dawn push across boulder fields and steep rock gullies to Indrahar Pass. Panoramic summit views before returning to Laka Got.", distance: "11 km round-trip", altitudeGain: "+3,100 ft" },
-      { day: 4, title: "Laka Got to Triund / Bhagsu Nag", description: "Descend leisurely through oak forests back toward McLeod Ganj.", distance: "12 km", altitudeGain: "-4,000 ft" },
-      { day: 5, title: "Rest Day & McLeod Ganj Departure", description: "Visit Dalai Lama Temple complex and Norbulingka Institute before departure.", distance: "Local" },
-    ],
-    inclusions: [
-      "Experienced certified mountain guide from Dharamshala",
-      "High altitude alpine tents, warm sleeping bags, and crampons (if needed for snow)",
-      "Freshly prepared meals on trek",
-      "Permits and medical safety support"
-    ],
-    exclusions: [
-      "Transport to/from McLeod Ganj",
-      "Personal porter services"
-    ],
-    requirements: [
-      "Good leg strength and balance over rocky boulder terrain",
-      "Sturdy high-ankle trekking shoes"
-    ],
-    faqs: [
-      { question: "Is there snow on Indrahar Pass?", answer: "Snow remains on the pass until early June. Autumn (September-November) offers crisp clear weather with dry rock scrambling." }
-    ],
-    featured: true,
-    seoTitle: "Indrahar Pass Trek | McLeod Ganj Dhauladhar Range",
-    seoDescription: "Challenging Dhauladhar mountain trek from McLeod Ganj to Indrahar Pass. Expert local guides and small-group safety standards.",
-  },
-  {
-    id: "trek-triund",
-    name: "Triund Panoramic Ridge Trek",
-    slug: "triund-trek",
-    region: "Dharamshala, Himachal Pradesh",
-    duration: "2 Days / 1 Night",
+    id: "trek-giriganga-kuppar",
+    name: "Giriganga Trek / Kuppar Peak",
+    slug: "giriganga-trek-kuppar-peak",
+    region: "Shimla, Himachal Pradesh",
+    duration: "1–2 Days",
     difficulty: "Easy",
-    altitude: "9,350 ft (2,850 m)",
-    bestSeason: "March to December (Except peak monsoon July-August)",
-    shortDescription: "The crown jewel trek of Dharamshala. Perfect weekend escape offering front-row seats to the sheer granite Dhauladhar cliffs.",
-    overview: "If you have just a weekend in Himachal, the Triund trek delivers unmatched mountain drama in short time. Climb through serene rhododendron woodlands to camp atop a grassy ridge where the snow peaks feel close enough to touch.",
+    altitude: "Mid-altitude forest trail",
+    bestSeason: "April to October",
+    shortDescription: "A memorable trekking experience through undisturbed pine forests close to Shimla, leading toward Kuppar Peak.",
+    overview: "Among the undisturbed pine forests lies the adventurous trail to Giriganga Trek, offering a memorable trekking experience close to Shimla. The route provides beautiful views of the surrounding Himalayan landscape and snow-covered peaks. The trek leads toward Kuppar Peak, associated with the origin of the Giri or Giri Ganga River. Located near Kuppar Peak and the Giri Ganga is the captivating Giri Ganga Temple. Away from modern habitation, the area offers a peaceful and tranquil mountain experience.",
     itinerary: [
-      { day: 1, title: "Bhagsu Nag to Triund Ridge", description: "Start from McLeod Ganj. Ascend through oak and deodar canopy with panoramic views of Kangra valley below. Sunset camping on Triund top.", distance: "9 km", altitudeGain: "+3,200 ft" },
-      { day: 2, title: "Triund Sunrise & Descent to McLeod Ganj", description: "Witness morning sunlight illumination of Moon Peak. Descend back to McLeod Ganj by early afternoon.", distance: "9 km", altitudeGain: "-3,200 ft" },
+      { day: 1, title: "Drive from Shimla & forest walk to Giriganga", description: "Drive from Shimla to the trailhead, then walk through undisturbed pine forests to Giriganga. Visit the captivating Giri Ganga Temple and settle into a peaceful mountain camp." },
+      { day: 2, title: "Ridge walk toward Kuppar Peak & descent", description: "Morning ridge walk toward Kuppar Peak for Himalayan and snow-covered peak views, followed by a gentle descent and drive back." },
     ],
-    inclusions: [
-      "Alpine dome tent on twin sharing with sleeping bag and mat on Triund ridge",
-      "Warm dinner on Day 1 and mountain breakfast on Day 2",
-      "Local licensed guide from Dharamshala",
-      "Forest department camping permits"
-    ],
-    exclusions: [
-      "Bottled water or soft drinks purchased along the trail cafes",
-      "Transport to the starting point in Dharamshala"
-    ],
-    requirements: [
-      "Basic physical fitness; comfortable sneakers or light trail shoes"
-    ],
+    inclusions: ["Experienced local trek leader", "Freshly prepared meals on trail days", "Quality camping equipment (tents, sleeping bags, mats)", "First-aid support and safety equipment"],
+    exclusions: ["Transport to the trailhead unless specified", "Personal trekking gear and clothing", "Personal expenses"],
+    requirements: ["Basic fitness suitable for forest trail walking", "Comfortable walking shoes with good grip", "Warm layers for mountain weather"],
     faqs: [
-      { question: "Is Triund open in winter?", answer: "Yes, Triund is accessible in winter and receives snow in January and February. We provide sub-zero sleeping bags and gaiters for snow conditions." }
+      { question: "Is the Giriganga trek suitable for beginners?", answer: "Yes, the trail through pine forests with a temple visit makes it a rewarding outing for fit beginners with basic preparation." }
     ],
     featured: true,
-    seoTitle: "Triund Trek Dharamshala | Weekend Camping Package",
-    seoDescription: "Experience the famous Triund trek in McLeod Ganj with Rucksack Adventures. Tents, meals, and mountain guide included.",
+    seoTitle: "Giriganga Trek & Kuppar Peak | Day Trek Near Shimla",
+    seoDescription: "Trek to Giriganga and Kuppar Peak near Shimla with Rucksack Adventures. Pine forests, Giri Ganga Temple and Himalayan views.",
+  },
+  {
+    id: "trek-churdhar",
+    name: "Churdhar",
+    slug: "churdhar",
+    region: "Sirmour, Himachal Pradesh",
+    duration: "2–3 Days",
+    difficulty: "Challenging",
+    altitude: "High-altitude summit trail",
+    bestSeason: "May to October",
+    shortDescription: "A spectacular high-altitude trekking destination in Sirmour for experienced mountain trekkers.",
+    overview: "Churdhar is a spectacular high-altitude trekking destination in the Sirmour region of Himachal Pradesh. The peak is visible from areas including Shimla, Kasauli, Solan and Kufri. The most popular trekking route begins from Nauradhar, while other approaches offer different trekking experiences. The surrounding forest landscape adds another dimension to the adventure, making Churdhar an excellent destination for experienced mountain trekkers.",
+    itinerary: [
+      { day: 1, title: "Drive to Nauradhar & trailhead start", description: "Drive to Nauradhar, the most popular starting point, and begin the ascent through the surrounding forest landscape." },
+      { day: 2, title: "Forest ascent toward the summit zone", description: "A full trekking day climbing through forests toward the high camp below the peak." },
+      { day: 3, title: "Summit time & descent", description: "Morning at altitude with sweeping views across Shimla, Kasauli, Solan and Kufri regions, followed by descent and drive back." },
+    ],
+    inclusions: ["Experienced mountain trek leader and support crew", "All required permits and entry fees", "Freshly prepared meals on trail days", "Quality camping equipment and safety gear"],
+    exclusions: ["Transport to Nauradhar unless specified", "Personal trekking gear and clothing", "Travel insurance"],
+    requirements: ["Excellent fitness suited to steep high-altitude trails", "Prior experience on demanding mountain treks recommended", "Sturdy high-ankle trekking shoes and warm layered clothing"],
+    faqs: [
+      { question: "Who is the Churdhar trek best suited for?", answer: "Churdhar suits experienced mountain trekkers comfortable with sustained ascents and forest-to-alpine terrain." }
+    ],
+    featured: true,
+    seoTitle: "Churdhar Trek Sirmour | High-Altitude Summit Expedition",
+    seoDescription: "Trek to Churdhar peak in Sirmour with Rucksack Adventures. Forest trails, summit views and guided high-altitude expedition support.",
+  },
+  {
+    id: "trek-chanshal-valley",
+    name: "Chanshal Valley",
+    slug: "chanshal-valley",
+    region: "Rohru, Himachal Pradesh",
+    duration: "3–4 Days",
+    difficulty: "Moderate",
+    altitude: "High Himalayan valley",
+    bestSeason: "May to October",
+    shortDescription: "Less-crowded mountain trails through dramatic open valleys near Rohru.",
+    overview: "Chanshal Valley lies around Chanshal Peak, one of the prominent high points of Shimla district. Located near Rohru, the region is known for dramatic mountain landscapes, open valleys and peaceful surroundings. The trek through this region offers an immersive Himalayan experience for adventure enthusiasts looking for less-crowded mountain trails.",
+    itinerary: [
+      { day: 1, title: "Arrival near Rohru & valley orientation", description: "Arrive in the Rohru region, meet the trek team and take an easy orientation walk through the valley surroundings." },
+      { day: 2, title: "Valley trail through open landscapes", description: "Trek through open valleys and peaceful surroundings with dramatic mountain landscapes all around." },
+      { day: 3, title: "High-point walk & return", description: "A high-point walk for panoramic valley views, then descend and drive back." },
+    ],
+    inclusions: ["Experienced local trek leader", "All required permits and entry fees", "Freshly prepared meals on trail days", "Quality camping equipment and safety gear"],
+    exclusions: ["Transport to Rohru unless specified", "Personal trekking gear and clothing", "Personal expenses"],
+    requirements: ["Good fitness for multi-day valley trails", "Trekking shoes with good grip", "Warm layers for changing mountain weather"],
+    faqs: [
+      { question: "Is Chanshal Valley crowded?", answer: "Chanshal is known for less-crowded mountain trails, ideal for travelers seeking peaceful surroundings." }
+    ],
+    featured: true,
+    seoTitle: "Chanshal Valley Trek Near Rohru | Offbeat Himalayan Trails",
+    seoDescription: "Explore Chanshal Valley near Rohru with Rucksack Adventures. Open valleys, peaceful trails and immersive Himalayan trekking.",
+  },
+  {
+    id: "trek-bashal-peak",
+    name: "Bashal Peak",
+    slug: "bashal-peak",
+    region: "Shimla, Himachal Pradesh",
+    duration: "2–3 Days",
+    difficulty: "Moderate",
+    altitude: "High-altitude summit trail",
+    bestSeason: "May to October",
+    shortDescription: "A lesser-known summit with panoramic mountain views, meadows and photography trails.",
+    overview: "Bashal Peak is a lesser-known Himalayan destination offering panoramic views of the surrounding mountains and valleys. The route provides beautiful scenery with partially snow-covered peaks, green grasslands and expansive Himalayan landscapes. The journey toward the peak offers plenty of scenic locations for photography and nature exploration.",
+    itinerary: [
+      { day: 1, title: "Base arrival & meadow walk", description: "Arrive at the trailhead region and take an easy walk through green grasslands to the first camp." },
+      { day: 2, title: "Summit trail & panoramic views", description: "Ascend toward Bashal Peak through expansive Himalayan landscapes with photography stops along snow-dusted ridgelines." },
+      { day: 3, title: "Descent & departure", description: "Gentle descent through meadows and drive back." },
+    ],
+    inclusions: ["Experienced local trek leader", "Freshly prepared meals on trail days", "Quality camping equipment and safety gear", "All required permits and entry fees"],
+    exclusions: ["Transport to the trailhead unless specified", "Personal trekking gear and clothing", "Personal expenses"],
+    requirements: ["Good fitness for summit-day ascents", "Trekking shoes with ankle support", "Warm layers and sun protection"],
+    faqs: [
+      { question: "What makes Bashal Peak special?", answer: "Bashal is a lesser-known summit, so trails stay quiet while offering panoramic views, meadows and excellent photography locations." }
+    ],
+    featured: true,
+    seoTitle: "Bashal Peak Trek | Offbeat Summit with Panoramic Views",
+    seoDescription: "Trek to Bashal Peak with Rucksack Adventures. Quiet trails, green grasslands and panoramic Himalayan photography.",
+  },
+  {
+    id: "trek-hampta-pass",
+    name: "Hampta Pass",
+    slug: "hampta-pass",
+    region: "Manali, Kullu",
+    duration: "4–5 Days",
+    difficulty: "Moderate",
+    altitude: "High mountain pass crossing",
+    bestSeason: "June to September",
+    shortDescription: "A dream-to-reality crossing from Manali's green valleys to the stark landscapes of Lahaul-Spiti.",
+    overview: "Hampta Pass lies in the Manali and Lahaul-Spiti region and is one of Himachal Pradesh's well-known high-altitude trekking routes. The trek takes travelers through dramatically changing landscapes, including green pastures, mountain valleys, rocky terrain and glacial landscapes. The standard trek generally takes around four days, while an additional day can be included for a visit to Chandratal depending on the itinerary and conditions. The route is popular because of its varied landscapes and accessibility compared with some more demanding Himalayan crossings, but appropriate preparation and guidance are still essential.",
+    itinerary: [
+      { day: 1, title: "Manali to trailhead & valley walk", description: "Drive from Manali to the trailhead and walk through green pastures into the mountain valley for the first camp." },
+      { day: 2, title: "Valley ascent toward the pass", description: "Climb through changing terrain from meadows toward rocky high camps beneath the pass." },
+      { day: 3, title: "Hampta Pass crossing to the Lahaul side", description: "Cross Hampta Pass from green Kullu landscapes into the stark glacial terrain of the Lahaul-Spiti side and descend to camp." },
+      { day: 4, title: "Descent & drive out", description: "Descend to the roadhead and drive back toward Manali." },
+      { day: 5, title: "Optional Chandratal excursion", description: "An additional day can be included for a visit to Chandratal depending on the itinerary and conditions." },
+    ],
+    inclusions: ["Experienced mountain trek leader and support crew", "All required permits and entry fees", "Freshly prepared meals on trail days", "Quality camping equipment, safety gear and medical support"],
+    exclusions: ["Transport to Manali", "Personal trekking gear and clothing", "Travel insurance"],
+    requirements: ["Good fitness for consecutive trekking days at altitude", "Trekking shoes with ankle support and weather protection", "Willingness to follow guide instructions on pass-crossing day"],
+    faqs: [
+      { question: "How long is the Hampta Pass trek?", answer: "The standard trek generally takes around four days, with an optional extra day for Chandratal depending on conditions." },
+      { question: "Is Hampta Pass suitable for first-time Himalayan trekkers?", answer: "The route is popular for its varied landscapes and accessibility compared with more demanding crossings, but appropriate preparation and guidance are still essential." }
+    ],
+    featured: true,
+    seoTitle: "Hampta Pass Trek Manali | 4-Day Valley to Lahaul Crossing",
+    seoDescription: "Cross Hampta Pass from Manali to Lahaul-Spiti with Rucksack Adventures. Valley trails, pass crossing and optional Chandratal extension.",
+  },
+  {
+    id: "trek-jalori-pass",
+    name: "Jalori Pass",
+    slug: "jalori-pass",
+    region: "Kullu, Himachal Pradesh",
+    duration: "1–2 Days",
+    difficulty: "Easy",
+    altitude: "High mountain pass trail",
+    bestSeason: "April to October",
+    shortDescription: "Forest trails, temples and access to Serolsar Lake on the Kullu–Shimla divide.",
+    overview: "Jalori Pass is a high mountain pass in Himachal Pradesh connecting the Kullu region with areas toward Shimla district. The surrounding region offers beautiful forest trails, mountain scenery, temples and access to destinations such as Serolsar Lake. Nearby places of interest include Jalori Mata Temple, Mahakali Temple, Serolsar Lake, the Great Himalayan National Park region and the Bashleo area.",
+    itinerary: [
+      { day: 1, title: "Arrival at Jalori Pass & forest trails", description: "Arrive at Jalori Pass, visit Jalori Mata Temple and walk the surrounding forest trails with mountain scenery." },
+      { day: 2, title: "Serolsar Lake excursion & return", description: "Trek through forests to Serolsar Lake, with an optional stop at Mahakali Temple, before returning." },
+    ],
+    inclusions: ["Experienced local trek leader", "Freshly prepared meals on trail days", "All required permits and entry fees", "First-aid support"],
+    exclusions: ["Transport to Jalori Pass unless specified", "Personal trekking gear and clothing", "Personal expenses"],
+    requirements: ["Basic fitness suitable for forest trail walking", "Comfortable walking shoes with good grip", "Warm layers for pass weather"],
+    faqs: [
+      { question: "What can I combine with Jalori Pass?", answer: "The Serolsar Lake trek, Jalori Mata and Mahakali temples, and excursions toward the Great Himalayan National Park region and Bashleo area." }
+    ],
+    featured: true,
+    seoTitle: "Jalori Pass Trek | Forest Trails, Temples & Serolsar Lake",
+    seoDescription: "Explore Jalori Pass with Rucksack Adventures. Forest trails, Himalayan temples and the Serolsar Lake excursion.",
+  },
+  {
+    id: "trek-prashar-lake",
+    name: "Prashar Lake",
+    slug: "prashar-lake",
+    region: "Mandi, Himachal Pradesh",
+    duration: "1–2 Days",
+    difficulty: "Easy",
+    altitude: "High-altitude lake trail",
+    bestSeason: "April to October",
+    shortDescription: "A scenic high-altitude lake and historic temple in Mandi district.",
+    overview: "Surrounded by Himalayan mountains, Prashar Lake is a scenic high-altitude lake in Mandi district. The lake is located near the historic Prashar Rishi Temple, which reflects traditional Himachali architecture. The surrounding landscape makes Prashar Lake a beautiful trekking and nature destination. The lake is known for its distinctive floating island-like patch of vegetation, whose position changes over time.",
+    itinerary: [
+      { day: 1, title: "Drive toward Mandi trailhead & forest ascent", description: "Drive toward the trailhead and ascend through forests to Prashar Lake. Visit the historic Prashar Rishi Temple and camp by the lake." },
+      { day: 2, title: "Lakeside morning & descent", description: "Morning by the lake and its floating vegetation patch, then descend and drive back." },
+    ],
+    inclusions: ["Experienced local trek leader", "Freshly prepared meals on trail days", "Quality camping equipment", "First-aid support"],
+    exclusions: ["Transport to the trailhead unless specified", "Personal trekking gear and clothing", "Personal expenses"],
+    requirements: ["Basic fitness suitable for a short ascent", "Comfortable walking shoes with good grip", "Warm layers for lakeside evenings"],
+    faqs: [
+      { question: "What is special about Prashar Lake?", answer: "The lake is known for its distinctive floating island-like patch of vegetation, whose position changes over time, alongside the historic lakeside temple." }
+    ],
+    featured: true,
+    seoTitle: "Prashar Lake Trek Mandi | Temple, Meadows & Floating Island",
+    seoDescription: "Trek to Prashar Lake in Mandi with Rucksack Adventures. Historic temple, Himalayan views and peaceful lakeside camping.",
+  },
+  {
+    id: "trek-serolsar-lake",
+    name: "Serolsar Lake",
+    slug: "serolsar-lake",
+    region: "Kullu, Himachal Pradesh",
+    duration: "1–2 Days",
+    difficulty: "Easy",
+    altitude: "High-altitude lake trail",
+    bestSeason: "April to October",
+    shortDescription: "A peaceful forest-fringed alpine lake reached from Jalori Pass.",
+    overview: "Serolsar Lake is a peaceful alpine lake surrounded by forests in the Kullu region. The lake can be reached through a trek from Jalori Pass and offers a rewarding combination of forest trails, mountain scenery and a tranquil high-altitude environment. The lake is associated with the local goddess Buddhi Nagin and is an important cultural site for the surrounding region.",
+    itinerary: [
+      { day: 1, title: "Jalori Pass arrival & forest trail", description: "Arrive at Jalori Pass and walk the forest trail toward the lake region for an overnight camp." },
+      { day: 2, title: "Serolsar Lake & return", description: "Spend time at tranquil Serolsar Lake, associated with goddess Buddhi Nagin, then trek back and drive out." },
+    ],
+    inclusions: ["Experienced local trek leader", "Freshly prepared meals on trail days", "Quality camping equipment", "First-aid support"],
+    exclusions: ["Transport to Jalori Pass unless specified", "Personal trekking gear and clothing", "Personal expenses"],
+    requirements: ["Basic fitness suitable for forest trail walking", "Comfortable walking shoes with good grip", "Respectful conduct at the cultural site"],
+    faqs: [
+      { question: "How do I reach Serolsar Lake?", answer: "The lake is reached through a forest trek from Jalori Pass, combining mountain scenery with a tranquil high-altitude environment." }
+    ],
+    featured: true,
+    seoTitle: "Serolsar Lake Trek | Alpine Lake from Jalori Pass",
+    seoDescription: "Trek to Serolsar Lake from Jalori Pass with Rucksack Adventures. Forest trails, mountain scenery and a sacred alpine lake.",
+  },
+  {
+    id: "trek-shirai-koti",
+    name: "Shirai Koti Temple",
+    slug: "shirai-koti-temple",
+    region: "Shimla, Himachal Pradesh",
+    duration: "1 Day",
+    difficulty: "Easy",
+    altitude: "Hill temple trail",
+    bestSeason: "March to October",
+    shortDescription: "A peaceful mountain temple walk through apple orchards, forests and valleys.",
+    overview: "Standing high above the surrounding landscape, Shirai Koti Temple offers a peaceful mountain experience surrounded by Himalayan scenery. The route provides beautiful views of apple orchards, forests and surrounding valleys, making the journey as rewarding as the destination itself.",
+    itinerary: [
+      { day: 1, title: "Orchard & forest trail to Shirai Koti Temple", description: "Walk through apple orchards and forests with valley views to reach Shirai Koti Temple, spend peaceful time at the temple, and return by the same scenic route." },
+    ],
+    inclusions: ["Experienced local trek leader", "Packed trail refreshments", "First-aid support"],
+    exclusions: ["Transport to the trailhead unless specified", "Personal trekking gear and clothing", "Personal expenses"],
+    requirements: ["Basic fitness suitable for a day walk", "Comfortable walking shoes", "Respectful conduct at the temple site"],
+    faqs: [
+      { question: "How long is the Shirai Koti walk?", answer: "It is a peaceful day outing through orchards and forests, ideal for travelers seeking mountain scenery without a strenuous climb." }
+    ],
+    featured: true,
+    seoTitle: "Shirai Koti Temple Walk | Orchards, Forests & Valley Views",
+    seoDescription: "Walk to Shirai Koti Temple with Rucksack Adventures. Apple orchards, forests and a peaceful Himalayan temple experience.",
+  },
+  {
+    id: "trek-tanujubbar",
+    name: "Tanujubbar",
+    slug: "tanujubbar",
+    region: "Thanedhar, Himachal Pradesh",
+    duration: "1 Day",
+    difficulty: "Easy",
+    altitude: "Forest lake trail",
+    bestSeason: "March to October",
+    shortDescription: "A relaxed deodar-forest lake outing near Thanedhar and Kotgarh.",
+    overview: "Surrounded by beautiful deodar trees, Tanujubbar is a peaceful lake destination near Thanedhar and Kotgarh. The area is also known for the Nag Devta Temple and is suitable for a relaxed nature outing. Nearby Thanedhar is known for its apple-growing heritage and scenic Himalayan surroundings.",
+    itinerary: [
+      { day: 1, title: "Deodar forest walk to Tanujubbar Lake", description: "An easy walk through beautiful deodar trees to Tanujubbar Lake near Thanedhar and Kotgarh, with a visit to Nag Devta Temple and time to enjoy the apple-country scenery." },
+    ],
+    inclusions: ["Experienced local trek leader", "Packed trail refreshments", "First-aid support"],
+    exclusions: ["Transport to Thanedhar unless specified", "Personal walking gear", "Personal expenses"],
+    requirements: ["Basic fitness suitable for a relaxed nature walk", "Comfortable walking shoes", "Warm layer for forest shade"],
+    faqs: [
+      { question: "Is Tanujubbar suitable for families?", answer: "Yes, the relaxed lakeside outing through deodar forests suits families and travelers seeking gentle nature time." }
+    ],
+    featured: true,
+    seoTitle: "Tanujubbar Lake Walk | Deodar Forests Near Thanedhar",
+    seoDescription: "Visit Tanujubbar Lake near Thanedhar and Kotgarh with Rucksack Adventures. Deodar forests, Nag Devta Temple and apple-country scenery.",
+  },
+  {
+    id: "trek-yula-lake",
+    name: "Yula Lake",
+    slug: "yula-lake",
+    region: "Kinnaur, Himachal Pradesh",
+    duration: "3–4 Days",
+    difficulty: "Challenging",
+    altitude: "Remote high-altitude lake trail",
+    bestSeason: "June to September",
+    shortDescription: "A remote high-altitude lake expedition around Yula Kanda for quiet, challenging exploration.",
+    overview: "Yula Lake lies in the peaceful Himalayan landscape around Yula Kanda and is surrounded by high mountain peaks. The lake offers a remote trekking experience for travelers looking for quiet mountain landscapes and challenging high-altitude exploration. A Krishna Temple near the lake adds cultural significance to the journey. The route involves a trek from the nearest road-access point and should be undertaken with appropriate preparation and local guidance.",
+    itinerary: [
+      { day: 1, title: "Drive to the roadhead in Kinnaur", description: "Drive deep into Kinnaur to the nearest road-access point, meet the local support team and prepare for the trail." },
+      { day: 2, title: "Forest ascent toward Yula Kanda", description: "Climb through forests toward the high country around Yula Kanda with mountain peaks opening up." },
+      { day: 3, title: "Yula Lake & Krishna Temple", description: "Reach remote Yula Lake beneath high mountain peaks and visit the Krishna Temple near the lake." },
+      { day: 4, title: "Descent & drive out", description: "Descend to the roadhead and drive back." },
+    ],
+    inclusions: ["Experienced mountain trek leader and local guides", "All required permits and entry fees", "Freshly prepared meals on trail days", "Quality camping equipment, safety gear and medical support"],
+    exclusions: ["Transport to Kinnaur", "Personal trekking gear and clothing", "Travel insurance"],
+    requirements: ["Excellent fitness for remote high-altitude terrain", "Prior multi-day trekking experience recommended", "Full trekking kit with warm layers and sturdy boots"],
+    faqs: [
+      { question: "How remote is the Yula Lake trek?", answer: "Very remote — the route involves a trek from the nearest road-access point and should be undertaken with appropriate preparation and local guidance." }
+    ],
+    featured: true,
+    seoTitle: "Yula Lake Trek Kinnaur | Remote High-Altitude Expedition",
+    seoDescription: "Trek to Yula Lake around Yula Kanda with Rucksack Adventures. Remote peaks, Krishna Temple and quiet high-altitude exploration.",
   }
 ];
 

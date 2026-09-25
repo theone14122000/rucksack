@@ -33,6 +33,17 @@ const trekImageMap: Record<string, string> = {
   "bhaba-pass-trek": "/images/gallery/kinnaur-1.jpg",
   "indrahar-pass-trek": "/images/gallery/himachal-2.jpg",
   "triund-trek": "/images/gallery/himachal-3.jpg",
+  "giriganga-trek-kuppar-peak": "/images/gallery/himachal-1.jpg",
+  "churdhar": "/images/gallery/himachal-2.jpg",
+  "chanshal-valley": "/images/gallery/himachal-3.jpg",
+  "bashal-peak": "/images/gallery/kinnaur-1.jpg",
+  "hampta-pass": "/images/gallery/leh-1.jpg",
+  "jalori-pass": "/images/gallery/uttarakhand-1.jpg",
+  "prashar-lake": "/images/gallery/uttarakhand-2.jpg",
+  "serolsar-lake": "/images/gallery/uttarakhand-3.jpg",
+  "shirai-koti-temple": "/images/gallery/kashmir-1.jpg",
+  "tanujubbar": "/images/gallery/kashmir-2.jpg",
+  "yula-lake": "/images/gallery/leh-2.jpg",
 };
 
 export function getDestinationImage(slug: string): string {

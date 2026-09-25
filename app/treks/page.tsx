@@ -7,9 +7,9 @@ import { TopographicContour3D } from "@/components/sections/TopographicContour3D
 import { getTreks } from "@/lib/cms/store";
 
 export const metadata: Metadata = {
-  title: "Himalayan Treks | Chopta, Bhaba Pass, Indrahar & Triund",
+  title: "Himachal Pradesh Treks | Rucksack Adventures",
   description:
-    "Curated Himalayan trekking expeditions led by certified wilderness guides. High altitude pass crossings and alpine ridge treks in Himachal Pradesh and Uttarakhand.",
+    "Explore trekking experiences across Himachal Pradesh including Churdhar, Hampta Pass, Jalori Pass, Prashar Lake, Serolsar Lake, Chanshal Valley and other Himalayan trails with Rucksack Adventures.",
 };
 
 export const revalidate = 0;
@@ -66,7 +66,7 @@ export default async function TreksPage({
                   : "bg-brand-dark/80 text-brand-cream border-brand-turquoise/30 hover:border-brand-turquoise"
               }`}
             >
-              Easy (Triund)
+              Easy (Lakes & Day Trails)
             </a>
             <a
               href="/treks?difficulty=moderate"
@@ -76,7 +76,7 @@ export default async function TreksPage({
                   : "bg-brand-dark/80 text-brand-cream border-brand-turquoise/30 hover:border-brand-turquoise"
               }`}
             >
-              Moderate (Chopta Chandrashila)
+              Moderate (Passes & Valleys)
             </a>
             <a
               href="/treks?difficulty=challenging"
@@ -86,7 +86,7 @@ export default async function TreksPage({
                   : "bg-brand-dark/80 text-brand-cream border-brand-turquoise/30 hover:border-brand-turquoise"
               }`}
             >
-              Challenging (Bhaba Pass & Indrahar)
+              Challenging (High Summits)
             </a>
           </div>
         </div>
@@ -96,11 +96,40 @@ export default async function TreksPage({
           <TopographicContour3D />
         </div>
 
+        {/* Shadows of Himachal Intro */}
+        <div className="mb-10 text-center max-w-3xl mx-auto space-y-3">
+          <h2 className="font-editorial text-2xl sm:text-4xl font-bold text-brand-cream tracking-tight">
+            Shadows of <span className="font-hand text-shimmer">Himachal</span>
+          </h2>
+          <p className="text-sm sm:text-base text-brand-cream/75 leading-relaxed">
+            Discover the quieter side of Himachal Pradesh through lesser-known
+            trails, peaceful mountain villages and unforgettable journeys away
+            from the usual tourist routes.
+          </p>
+          <p className="text-xs sm:text-sm text-brand-cream/60 leading-relaxed">
+            Choose the less-beaten path and experience Himachal through its
+            landscapes, culture and hidden mountain trails.
+          </p>
+        </div>
+
         {/* Treks Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {filtered.map((trek) => (
             <TrekCard key={trek.id} trek={trek} />
           ))}
+        </div>
+
+        {/* Trek Responsibly Note */}
+        <div className="mt-14 max-w-3xl mx-auto p-6 sm:p-8 bg-brand-dark/70 border border-brand-turquoise/30 rounded-card text-center space-y-2">
+          <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-turquoise-light">
+            Trek Responsibly
+          </p>
+          <p className="text-xs sm:text-sm text-brand-cream/70 leading-relaxed">
+            Mountain trails are fragile environments. Respect local
+            communities, avoid littering, follow marked routes and local
+            regulations, respect temples and cultural sites, and follow the
+            instructions of experienced guides where required.
+          </p>
         </div>
       </div>
     </div>
