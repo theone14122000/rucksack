@@ -27,10 +27,14 @@ export const Navbar: React.FC = () => {
 
   const navItems = [
     { href: "/", label: "Home" },
+    { href: "/about", label: "About Us" },
     { href: "/destinations", label: "Destinations" },
-    { href: "/packages", label: "Adventures" },
+    { href: "/packages", label: "Packages" },
+    { href: "/activities", label: "Activities" },
     { href: "/treks", label: "Treks" },
     { href: "/experiences", label: "Experiences" },
+    { href: "/#moments", label: "Gallery" },
+    { href: "/contact", label: "Contact" },
   ];
 
   const services = [
@@ -75,7 +79,7 @@ export const Navbar: React.FC = () => {
             </div>
           </Link>
 
-          <nav className="hidden lg:flex items-center gap-1 text-[13px] font-medium">
+          <nav className="hidden xl:flex items-center gap-0.5 text-[13px] font-medium">
             {navItems.map((item) => {
               const active = pathname === item.href;
               return (
@@ -83,7 +87,7 @@ export const Navbar: React.FC = () => {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    "transition-all duration-300 relative px-3 py-2 rounded-card",
+                    "transition-all duration-300 relative px-2 py-2 rounded-card",
                     active
                       ? scrolled ? "text-brand-turquoise font-semibold" : "text-white font-semibold"
                       : scrolled ? "text-brand-dark/60 hover:text-brand-dark" : "text-white/65 hover:text-white"
@@ -103,7 +107,7 @@ export const Navbar: React.FC = () => {
 
             <div className="relative" onMouseEnter={() => setServicesDropdown(true)} onMouseLeave={() => setServicesDropdown(false)}>
               <button className={cn(
-                "flex items-center gap-1 transition-all duration-300 px-3 py-2 rounded-card",
+                "flex items-center gap-1 transition-all duration-300 px-2 py-2 rounded-card",
                 pathname.includes("services") || pathname.includes("booking") || pathname.includes("pilgrimage") || pathname.includes("custom-package")
                   ? scrolled ? "text-brand-turquoise font-semibold" : "text-white font-semibold"
                   : scrolled ? "text-brand-dark/60 hover:text-brand-dark" : "text-white/65 hover:text-white"
@@ -137,11 +141,9 @@ export const Navbar: React.FC = () => {
               </AnimatePresence>
             </div>
 
-            <Link href="/about" className={cn("transition-all duration-300 px-3 py-2 rounded-card", pathname === "/about" ? scrolled ? "text-brand-turquoise font-semibold" : "text-white font-semibold" : scrolled ? "text-brand-dark/60 hover:text-brand-dark" : "text-white/65 hover:text-white")}>About</Link>
-            <Link href="/contact" className={cn("transition-all duration-300 px-3 py-2 rounded-card", pathname === "/contact" ? scrolled ? "text-brand-turquoise font-semibold" : "text-white font-semibold" : scrolled ? "text-brand-dark/60 hover:text-brand-dark" : "text-white/65 hover:text-white")}>Contact</Link>
           </nav>
 
-          <div className="hidden lg:flex items-center gap-3">
+          <div className="hidden xl:flex items-center gap-3">
             <a href="tel:+917018678064" className={cn("flex items-center gap-2 text-[11px] font-semibold tracking-wider uppercase transition-all py-1.5 px-3 rounded-card border", scrolled ? "text-brand-dark/60 border-brand-turquoise/10 hover:border-brand-turquoise/20 hover:text-brand-dark" : "text-white/70 border-white/15 hover:border-white/25 hover:text-white")}>
               <Phone className="w-3.5 h-3.5" />
               7018678064
@@ -151,7 +153,7 @@ export const Navbar: React.FC = () => {
             </Button>
           </div>
 
-          <div className="flex items-center gap-2 lg:hidden">
+          <div className="flex items-center gap-2 xl:hidden">
             <a href="tel:+917018678064" className={cn("p-2 rounded-card border transition-all", scrolled ? "border-brand-turquoise/10 text-brand-dark hover:bg-brand-turquoise/5" : "border-white/15 text-white hover:bg-white/10")} aria-label="Call Rucksack Adventures">
               <Phone className="w-4 h-4" />
             </a>

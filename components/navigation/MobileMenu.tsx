@@ -14,16 +14,19 @@ interface MobileMenuProps {
 
 const navLinks = [
   { href: "/", label: "Home" },
+  { href: "/about", label: "About Us" },
   { href: "/destinations", label: "Destinations" },
-  { href: "/packages", label: "Adventures" },
+  { href: "/packages", label: "Packages" },
+  { href: "/activities", label: "Activities" },
+  { href: "/#moments", label: "Gallery" },
   { href: "/treks", label: "Himalayan Treks" },
   { href: "/experiences", label: "Experiences" },
   { href: "/custom-package", label: "Custom Package" },
+  { href: "/custom-destination", label: "Custom Destination" },
   { href: "/taxi-services", label: "Shimla Cab Services" },
   { href: "/pilgrimage-tour", label: "Pilgrimage Tour" },
   { href: "/bus-booking", label: "Bus Booking" },
   { href: "/railway-booking", label: "Railway Booking" },
-  { href: "/about", label: "Our Story" },
   { href: "/contact", label: "Contact Us" },
 ];
 

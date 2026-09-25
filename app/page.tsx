@@ -12,6 +12,9 @@ import { EnquiryForm } from "@/components/ui/EnquiryForm";
 import { Button } from "@/components/ui/Button";
 import { FAQSection } from "@/components/sections/FAQSection";
 import { ClientMoments } from "@/components/sections/ClientMoments";
+import { HomeActivities } from "@/components/sections/HomeActivities";
+import { WhyChooseUs } from "@/components/sections/WhyChooseUs";
+import { CommunityCTA } from "@/components/sections/CommunityCTA";
 import { InternationalCarousel } from "@/components/sections/InternationalCarousel";
 import { getDestinations, getPackages, getTreks, getExperiences, getTestimonials, getFAQs } from "@/lib/cms/store";
 
@@ -225,6 +228,9 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* 5b. ACTIVITIES - Adventure Levels */}
+      <HomeActivities />
+
       {/* 6. TREKS - Light Section with Timeline Feel */}
       <section className="py-16 lg:py-28 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -312,6 +318,20 @@ export default async function HomePage() {
 
       {/* 8b. CLIENT MOMENTS - Auto-Playing Gallery */}
       <ClientMoments />
+
+      {/* 8c. WHY CHOOSE US */}
+      <section className="py-16 lg:py-28 bg-brand-cream">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <WhyChooseUs />
+        </div>
+      </section>
+
+      {/* 8d. COMMUNITY */}
+      <section className="py-16 lg:py-28 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <CommunityCTA />
+        </div>
+      </section>
 
       {/* 9. FAQ - Dynamic Section */}
       {faqs.length > 0 && (

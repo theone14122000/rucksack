@@ -84,8 +84,11 @@ export const Footer: React.FC = () => {
               </h4>
               <ul className="space-y-2.5 text-xs sm:text-sm text-white/45">
                 {[
+                  { href: "/about", label: "About Us" },
                   { href: "/destinations", label: "All Destinations" },
                   { href: "/packages", label: "Curated Adventures" },
+                  { href: "/activities", label: "Adventure Activities" },
+                  { href: "/custom-package", label: "Custom Package" },
                   { href: "/treks", label: "Himalayan Treks" },
                   { href: "/experiences", label: "Signature Experiences" },
                   { href: "/destinations/himachal-pradesh", label: "Himachal Pradesh" },
