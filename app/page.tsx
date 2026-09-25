@@ -34,6 +34,23 @@ export default async function HomePage() {
   const domesticDestinations = destinations.filter((d) => d.isDomestic);
   const internationalDestinations = destinations.filter((d) => !d.isDomestic);
 
+  // Fallback showcase keeps the auto-toggle image carousel alive when no
+  // international CMS destinations exist. Slides link to the custom flow.
+  interface IntlShowcaseItem {
+    id: string;
+    slug: string;
+    name: string;
+    href?: string;
+  }
+  const intlShowcase: IntlShowcaseItem[] =
+    internationalDestinations.length > 0
+      ? internationalDestinations
+      : [
+          { id: "showcase-bali", slug: "bali", name: "Bali", href: "/custom-destination" },
+          { id: "showcase-dubai", slug: "dubai", name: "Dubai", href: "/custom-destination" },
+          { id: "showcase-thailand", slug: "thailand", name: "Thailand", href: "/custom-destination" },
+        ];
+
   const editorialImageMap: Record<string, string> = {
     "himachal-pradesh": "/images/editorial/philosophy.jpg",
     "kashmir": "/images/editorial/international.jpg",
@@ -150,7 +167,7 @@ export default async function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-16 items-center">
             {/* Auto-Toggle Image Carousel */}
             <div className="relative order-2 lg:order-1">
-              <InternationalCarousel destinations={internationalDestinations} />
+              <InternationalCarousel destinations={intlShowcase} />
             </div>
 
             {/* Text + Links */}
@@ -166,8 +183,8 @@ export default async function HomePage() {
                 Boutique international getaways featuring private villas, secluded island shores, and desert luxury with complete visa and concierge support.
               </p>
               <div className="space-y-3">
-                {internationalDestinations.slice(0, 4).map((dest) => (
-                  <Link key={dest.id} href={`/destinations/${dest.slug}`} className="flex items-center justify-between p-4 rounded-card-lg hover:bg-brand-turquoise-50 transition-all group border border-transparent hover:border-brand-turquoise/10">
+                {intlShowcase.slice(0, 4).map((dest) => (
+                  <Link key={dest.id} href={dest.href ?? `/destinations/${dest.slug}`} className="flex items-center justify-between p-4 rounded-card-lg hover:bg-brand-turquoise-50 transition-all group border border-transparent hover:border-brand-turquoise/10">
                     <div className="flex items-center gap-3">
                       <MapPin className="w-4 h-4 text-brand-turquoise" />
                       <span className="text-sm font-semibold text-brand-dark group-hover:text-brand-turquoise transition-colors">{dest.name}</span>
@@ -176,9 +193,15 @@ export default async function HomePage() {
                   </Link>
                 ))}
               </div>
-              <Link href="/destinations?region=international" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-brand-turquoise hover:text-brand-turquoise-light transition-colors pt-2">
-                Explore All Global <ArrowRight className="w-4 h-4" />
-              </Link>
+              {internationalDestinations.length > 0 ? (
+                <Link href="/destinations?region=international" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-brand-turquoise hover:text-brand-turquoise-light transition-colors pt-2">
+                  Explore All Global <ArrowRight className="w-4 h-4" />
+                </Link>
+              ) : (
+                <Link href="/custom-destination" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-brand-turquoise hover:text-brand-turquoise-light transition-colors pt-2">
+                  Plan an International Getaway <ArrowRight className="w-4 h-4" />
+                </Link>
+              )}
             </Reveal>
           </div>
         </div>

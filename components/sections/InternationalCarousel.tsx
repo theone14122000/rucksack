@@ -20,6 +20,8 @@ interface InternationalDestination {
   slug: string;
   name: string;
   tagline?: string;
+  /** Optional link override. Defaults to the destination detail page. */
+  href?: string;
 }
 
 interface InternationalCarouselProps {
@@ -96,7 +98,7 @@ export const InternationalCarousel: React.FC<InternationalCarouselProps> = ({ de
                 {currentDest.name}
               </h3>
               <Link
-                href={`/destinations/${currentDest.slug}`}
+                href={currentDest.href ?? `/destinations/${currentDest.slug}`}
                 className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-brand-turquoise-light hover:text-white transition-colors"
               >
                 Explore <ArrowRight className="w-3 h-3" />
