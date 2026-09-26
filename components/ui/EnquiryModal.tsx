@@ -20,7 +20,7 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({
   defaultDestination = "",
   defaultTravelType = "Domestic",
   title = "Plan Your Curated Journey",
-  subtitle = "Directly designed by our mountain specialists in Kasumpti, Shimla",
+  subtitle = "Directly designed by our experienced travel expert at Rucksack Adventures",
 }) => {
   return (
     <AnimatePresence>
