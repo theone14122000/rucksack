@@ -25,7 +25,7 @@ export const CommunityCTA: React.FC = () => {
         discovery. Follow us on social media, and stay updated on upcoming
         trips, travel tips, and inspiring stories from fellow travelers.
       </p>
-      <div className="flex items-center justify-center gap-3 pt-2">
+      <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
         {socials.map((social) => (
           <a
             key={social.href}

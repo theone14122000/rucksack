@@ -18,7 +18,7 @@ const navLinks = [
   { href: "/destinations", label: "Destinations" },
   { href: "/packages", label: "Packages" },
   { href: "/activities", label: "Activities" },
-  { href: "/#moments", label: "Gallery" },
+  { href: "/gallery", label: "Gallery" },
   { href: "/treks", label: "Himalayan Treks" },
   { href: "/experiences", label: "Experiences" },
   { href: "/custom-package", label: "Custom Package" },
