@@ -20,6 +20,14 @@ const MOMENT_IMAGES = [
 
 const TRANSITION_MS = 700;
 const AUTOPLAY_MS = 3500;
+const RESUME_MS = 6000;
+
+// Subtle alternating photo rotations (desktop only — none on mobile).
+const ROTATIONS = [
+  "sm:-rotate-1 sm:hover:rotate-0",
+  "sm:rotate-[0.5deg] sm:hover:rotate-0",
+  "sm:-rotate-[0.5deg] sm:hover:rotate-0",
+];
 
 function getVisibleCount(): number {
   if (typeof window === "undefined") return 1;
@@ -30,41 +38,45 @@ function getVisibleCount(): number {
 }
 
 export const ClientMoments: React.FC = () => {
+  const total = MOMENT_IMAGES.length;
   const [visible, setVisible] = useState(1);
   const [index, setIndex] = useState(0);
   const [instant, setInstant] = useState(false);
-  const [paused, setPaused] = useState(false);
+  const [hoverPaused, setHoverPaused] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
+
   const indexRef = useRef(0);
   indexRef.current = index;
-  const resumeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const hoverPausedRef = useRef(false);
+  const lastInteractRef = useRef(0);
   const touchStartX = useRef<number | null>(null);
 
-  // Manual interaction pauses autoplay briefly, then resumes it.
-  const manual = useCallback((action: () => void) => {
-    action();
-    setPaused(true);
-    if (resumeTimer.current) clearTimeout(resumeTimer.current);
-    resumeTimer.current = setTimeout(() => setPaused(false), 6000);
-  }, []);
-
-  useEffect(() => {
-    return () => {
-      if (resumeTimer.current) clearTimeout(resumeTimer.current);
-    };
-  }, []);
-
+  // Mount-once setup: env detection, resize listener, and ONE autoplay timer
+  // that lives for the component lifetime. Timer is cleaned up on unmount.
   useEffect(() => {
     setVisible(getVisibleCount());
-    setReducedMotion(
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    );
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    setReducedMotion(reduce);
+
     const onResize = () => setVisible(getVisibleCount());
     window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, []);
 
-  const total = MOMENT_IMAGES.length;
+    if (reduce) {
+      return () => window.removeEventListener("resize", onResize);
+    }
+
+    const timer = setInterval(() => {
+      if (document.hidden) return;
+      if (hoverPausedRef.current) return;
+      if (Date.now() - lastInteractRef.current < RESUME_MS) return;
+      setIndex((i) => (i >= total ? total : i + 1));
+    }, AUTOPLAY_MS);
+
+    return () => {
+      clearInterval(timer);
+      window.removeEventListener("resize", onResize);
+    };
+  }, [total]);
 
   // Snap from the trailing clones back to the real first slide (no visual jump).
   useEffect(() => {
@@ -104,16 +116,19 @@ export const ClientMoments: React.FC = () => {
     setIndex(page);
   }, []);
 
-  useEffect(() => {
-    if (paused || reducedMotion) return;
-    const timer = setInterval(() => {
-      if (!document.hidden) goNext();
-    }, AUTOPLAY_MS);
-    return () => clearInterval(timer);
-  }, [paused, reducedMotion, goNext, index]);
+  // Manual interaction acts immediately and stamps the time so the single
+  // autoplay timer resumes on its own after a short delay — never stacked.
+  const manual = useCallback((action: () => void) => {
+    action();
+    lastInteractRef.current = Date.now();
+  }, []);
+
+  const setHover = useCallback((paused: boolean) => {
+    hoverPausedRef.current = paused;
+    setHoverPaused(paused);
+  }, []);
 
   const page = index % total;
-
   const slides = [...MOMENT_IMAGES, ...MOMENT_IMAGES.slice(0, visible)];
 
   return (
@@ -151,11 +166,11 @@ export const ClientMoments: React.FC = () => {
 
       <div
         className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
       >
         <div
-          className="overflow-hidden"
+          className="overflow-hidden py-2"
           role="region"
           aria-roledescription="carousel"
           aria-label="Happy client moments gallery"
@@ -172,7 +187,7 @@ export const ClientMoments: React.FC = () => {
         >
           <div
             className={cn(
-              "flex",
+              "flex items-stretch",
               !instant &&
                 "transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
             )}
@@ -188,26 +203,33 @@ export const ClientMoments: React.FC = () => {
                 aria-roledescription="slide"
                 aria-label={`${(idx % total) + 1} of ${total}`}
               >
-                <div className="group h-full bg-brand-cream rounded-card-xl border border-brand-turquoise/10 p-3 sm:p-4 shadow-soft hover:shadow-luxury hover:-translate-y-1 hover:border-brand-turquoise/25 transition-all duration-500">
-                  <div className="rounded-card overflow-hidden ring-1 ring-brand-dark/10">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={src}
-                      alt={`Happy client moment ${(idx % total) + 1} from Rucksack Adventures`}
-                      className="w-full aspect-[3/4] object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
-                      loading={idx < visible * 2 ? "eager" : "lazy"}
-                      draggable={false}
-                    />
-                  </div>
-                  <div className="pt-4 pb-1 px-1 text-center">
-                    <p className="font-editorial text-lg text-brand-dark leading-tight">
-                      Memory {String((idx % total) + 1).padStart(2, "0")}
-                    </p>
-                    <p className="mt-1.5 flex items-center justify-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-brand-turquoise">
-                      <span className="w-5 h-px bg-brand-turquoise/40" />
-                      Client Memories
-                      <span className="w-5 h-px bg-brand-turquoise/40" />
-                    </p>
+                <div
+                  className={cn(
+                    "group h-full transition-all duration-500 hover:-translate-y-1.5",
+                    ROTATIONS[idx % ROTATIONS.length]
+                  )}
+                >
+                  <div className="h-full bg-[#FAF5E9] rounded-[3px] border border-[#E7DCC2] p-4 sm:p-5 pb-5 sm:pb-6 shadow-[0_12px_32px_rgba(7,20,18,0.10)] hover:shadow-[0_20px_44px_rgba(7,20,18,0.16)] transition-shadow duration-500">
+                    <div className="overflow-hidden rounded-[2px] border-[5px] border-white shadow-[0_2px_10px_rgba(7,20,18,0.12)] ring-1 ring-brand-dark/10">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={src}
+                        alt={`Happy client moment ${(idx % total) + 1} from Rucksack Adventures`}
+                        className="w-full aspect-[3/4] object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+                        loading={idx < visible * 2 ? "eager" : "lazy"}
+                        draggable={false}
+                      />
+                    </div>
+                    <div className="pt-5 pb-1 text-center">
+                      <p className="font-editorial text-xl text-brand-dark leading-tight">
+                        Memory {String((idx % total) + 1).padStart(2, "0")}
+                      </p>
+                      <p className="mt-2 flex items-center justify-center gap-2.5 text-[10px] font-bold uppercase tracking-[0.22em] text-brand-turquoise">
+                        <span className="w-6 h-px bg-brand-turquoise/50" />
+                        Client Memories
+                        <span className="w-6 h-px bg-brand-turquoise/50" />
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -229,7 +251,7 @@ export const ClientMoments: React.FC = () => {
               }}
               aria-label={`Go to photo ${idx + 1}`}
             >
-              {idx === page && !reducedMotion && (
+              {idx === page && !reducedMotion && !hoverPaused && (
                 <motion.div
                   key={`progress-${page}`}
                   initial={{ scaleX: 0 }}
