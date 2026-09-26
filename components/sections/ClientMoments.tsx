@@ -18,15 +18,18 @@ const MOMENT_IMAGES = [
   "/gallery/galler10.jpg",
 ];
 
-const TRANSITION_MS = 700;
-const AUTOPLAY_MS = 3500;
-const RESUME_MS = 6000;
+const TOTAL = MOMENT_IMAGES.length;
+const AUTOPLAY_MS = 2000; // required: auto-advance exactly every 2 seconds
+const TRANSITION_MS = 550; // slide animation (must stay under AUTOPLAY_MS)
+const SNAP_MS = 40; // micro-delay used for seamless backward-loop jumps
 
-// Subtle alternating photo rotations (desktop only — none on mobile).
-const ROTATIONS = [
+// Very subtle editorial rotations — physical photos on a memory board.
+// No rotation on mobile; straightens gently on hover.
+const CARD_ROTATIONS = [
   "sm:-rotate-1 sm:hover:rotate-0",
-  "sm:rotate-[0.5deg] sm:hover:rotate-0",
+  "sm:rotate-[0.6deg] sm:hover:rotate-0",
   "sm:-rotate-[0.5deg] sm:hover:rotate-0",
+  "sm:rotate-1 sm:hover:rotate-0",
 ];
 
 function getVisibleCount(): number {
@@ -38,61 +41,62 @@ function getVisibleCount(): number {
 }
 
 export const ClientMoments: React.FC = () => {
-  const total = MOMENT_IMAGES.length;
   const [visible, setVisible] = useState(1);
   const [index, setIndex] = useState(0);
   const [instant, setInstant] = useState(false);
-  const [hoverPaused, setHoverPaused] = useState(false);
-  const [reducedMotion, setReducedMotion] = useState(false);
+  const [cycle, setCycle] = useState(0);
 
   const indexRef = useRef(0);
   indexRef.current = index;
-  const hoverPausedRef = useRef(false);
-  const lastInteractRef = useRef(0);
   const touchStartX = useRef<number | null>(null);
+  const timerRef = useRef<number | null>(null);
 
-  // Mount-once setup: env detection, resize listener, and ONE autoplay timer
-  // that lives for the component lifetime. Timer is cleaned up on unmount.
+  // Single autoplay timer for the component lifetime. Interval callback only
+  // bumps state via a functional update (no stale closure), so it never needs
+  // to be recreated — and therefore can never stack.
+  const stopAutoplay = useCallback(() => {
+    if (timerRef.current !== null) {
+      window.clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+  }, []);
+
+  const startAutoplay = useCallback(() => {
+    stopAutoplay();
+    timerRef.current = window.setInterval(() => {
+      if (typeof document !== "undefined" && document.hidden) return;
+      setIndex((i) => (i >= TOTAL ? TOTAL : i + 1));
+    }, AUTOPLAY_MS);
+  }, [stopAutoplay]);
+
+  // Mount: responsive listener + start the ONE autoplay timer.
+  // Unmount: clear it. Runs once (TOTAL is a stable module constant).
   useEffect(() => {
     setVisible(getVisibleCount());
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    setReducedMotion(reduce);
-
     const onResize = () => setVisible(getVisibleCount());
     window.addEventListener("resize", onResize);
-
-    if (reduce) {
-      return () => window.removeEventListener("resize", onResize);
-    }
-
-    const timer = setInterval(() => {
-      if (document.hidden) return;
-      if (hoverPausedRef.current) return;
-      if (Date.now() - lastInteractRef.current < RESUME_MS) return;
-      setIndex((i) => (i >= total ? total : i + 1));
-    }, AUTOPLAY_MS);
-
+    startAutoplay();
     return () => {
-      clearInterval(timer);
+      stopAutoplay();
       window.removeEventListener("resize", onResize);
     };
-  }, [total]);
+  }, [startAutoplay, stopAutoplay]);
 
   // Snap from the trailing clones back to the real first slide (no visual jump).
   useEffect(() => {
-    if (index !== total) return;
+    if (index !== TOTAL) return;
     const snap = setTimeout(() => {
       setInstant(true);
       setIndex(0);
-      setTimeout(() => setInstant(false), 40);
+      setTimeout(() => setInstant(false), SNAP_MS);
     }, TRANSITION_MS);
     return () => clearTimeout(snap);
-  }, [index, total]);
+  }, [index]);
 
   const goNext = useCallback(() => {
     setInstant(false);
-    setIndex((i) => (i >= total ? total : i + 1));
-  }, [total]);
+    setIndex((i) => (i >= TOTAL ? TOTAL : i + 1));
+  }, []);
 
   const goPrev = useCallback(() => {
     const current = indexRef.current;
@@ -100,77 +104,60 @@ export const ClientMoments: React.FC = () => {
       setInstant(false);
       setIndex(current - 1);
     } else {
-      // Seamless backward loop: jump (instantly) to the trailing clones,
-      // which look identical to the first slide, then step back animated.
+      // Seamless backward loop: jump (instantly) to the trailing clone of the
+      // first slide, then step back animated — visually Memory 10 slides in.
       setInstant(true);
-      setIndex(total);
+      setIndex(TOTAL);
       setTimeout(() => {
         setInstant(false);
-        setIndex(total - 1);
-      }, 40);
+        setIndex(TOTAL - 1);
+      }, SNAP_MS);
     }
-  }, [total]);
+  }, []);
 
   const goTo = useCallback((page: number) => {
     setInstant(false);
     setIndex(page);
   }, []);
 
-  // Manual interaction acts immediately and stamps the time so the single
-  // autoplay timer resumes on its own after a short delay — never stacked.
-  const manual = useCallback((action: () => void) => {
-    action();
-    lastInteractRef.current = Date.now();
-  }, []);
+  // Manual interaction acts immediately, then cleanly RESTARTS the 2s timer so
+  // the next auto-advance is a full 2 seconds away (no double transition,
+  // autoplay never stops permanently).
+  const manual = useCallback(
+    (action: () => void) => {
+      action();
+      setCycle((c) => c + 1);
+      startAutoplay();
+    },
+    [startAutoplay]
+  );
 
-  const setHover = useCallback((paused: boolean) => {
-    hoverPausedRef.current = paused;
-    setHoverPaused(paused);
-  }, []);
-
-  const page = index % total;
+  const page = index % TOTAL;
   const slides = [...MOMENT_IMAGES, ...MOMENT_IMAGES.slice(0, visible)];
 
   return (
-    <section id="moments" className="py-16 lg:py-28 bg-white overflow-hidden scroll-mt-24">
+    <section
+      id="moments"
+      className="py-16 lg:py-28 bg-white overflow-hidden scroll-mt-24"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 gap-4">
-          <div className="space-y-2 max-w-2xl">
-            <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-turquoise flex items-center gap-2">
-              <Camera className="w-3.5 h-3.5" /> Client Memories
-            </span>
-            <h2 className="font-editorial text-3xl sm:text-5xl font-bold text-brand-dark tracking-tight">
-              Our Precious and{" "}
-              <span className="font-hand text-shimmer text-[1.1em]">Happy Moments</span>{" "}
-              from Our Clients
-            </h2>
-          </div>
-          <div className="flex items-center gap-2 shrink-0">
-            <button
-              onClick={() => manual(goPrev)}
-              className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white shadow-elevated border border-brand-turquoise/10 flex items-center justify-center text-brand-dark hover:bg-brand-turquoise hover:text-white hover:border-brand-turquoise transition-all duration-300"
-              aria-label="Previous photos"
-            >
-              <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
-            </button>
-            <button
-              onClick={() => manual(goNext)}
-              className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white shadow-elevated border border-brand-turquoise/10 flex items-center justify-center text-brand-dark hover:bg-brand-turquoise hover:text-white hover:border-brand-turquoise transition-all duration-300"
-              aria-label="Next photos"
-            >
-              <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
-            </button>
-          </div>
+        <div className="mb-8 sm:mb-12 space-y-2 max-w-2xl">
+          <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-turquoise flex items-center gap-2">
+            <Camera className="w-3.5 h-3.5" /> Client Memories
+          </span>
+          <h2 className="font-editorial text-3xl sm:text-5xl font-bold text-brand-dark tracking-tight">
+            Our Precious and{" "}
+            <span className="font-hand text-shimmer text-[1.1em]">
+              Happy Moments
+            </span>{" "}
+            from Our Clients
+          </h2>
         </div>
       </div>
 
-      <div
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
-      >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div
-          className="overflow-hidden py-2"
+          className="overflow-hidden py-4"
           role="region"
           aria-roledescription="carousel"
           aria-label="Happy client moments gallery"
@@ -188,41 +175,43 @@ export const ClientMoments: React.FC = () => {
           <div
             className={cn(
               "flex items-stretch",
-              !instant &&
-                "transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
+              !instant && "transition-transform ease-[cubic-bezier(0.16,1,0.3,1)]"
             )}
-            style={{ transform: `translateX(-${index * (100 / visible)}%)` }}
+            style={{
+              transform: `translateX(-${index * (100 / visible)}%)`,
+              transitionDuration: `${TRANSITION_MS}ms`,
+            }}
           >
             {slides.map((src, idx) => (
               <div
                 key={`${src}-${idx}`}
                 className="shrink-0 px-2 sm:px-3"
                 style={{ width: `${100 / visible}%` }}
-                aria-hidden={idx >= total}
+                aria-hidden={idx >= TOTAL}
                 role="group"
                 aria-roledescription="slide"
-                aria-label={`${(idx % total) + 1} of ${total}`}
+                aria-label={`${(idx % TOTAL) + 1} of ${TOTAL}`}
               >
                 <div
                   className={cn(
-                    "group h-full transition-all duration-500 hover:-translate-y-1.5",
-                    ROTATIONS[idx % ROTATIONS.length]
+                    "group h-full transition-all duration-500 hover:-translate-y-1 hover:scale-[1.01]",
+                    CARD_ROTATIONS[idx % CARD_ROTATIONS.length]
                   )}
                 >
-                  <div className="h-full bg-[#FAF5E9] rounded-[3px] border border-[#E7DCC2] p-4 sm:p-5 pb-5 sm:pb-6 shadow-[0_12px_32px_rgba(7,20,18,0.10)] hover:shadow-[0_20px_44px_rgba(7,20,18,0.16)] transition-shadow duration-500">
-                    <div className="overflow-hidden rounded-[2px] border-[5px] border-white shadow-[0_2px_10px_rgba(7,20,18,0.12)] ring-1 ring-brand-dark/10">
+                  <div className="h-full bg-[#FAF5E9] rounded-[4px] border border-[#E7DCC2] p-4 pb-6 sm:p-5 sm:pb-7 shadow-[0_10px_30px_rgba(7,20,18,0.10)] group-hover:shadow-[0_20px_44px_rgba(7,20,18,0.16)] transition-shadow duration-500">
+                    <div className="overflow-hidden rounded-[2px] border-[6px] border-white ring-1 ring-brand-dark/10 shadow-[0_2px_10px_rgba(7,20,18,0.12)]">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={src}
-                        alt={`Happy client moment ${(idx % total) + 1} from Rucksack Adventures`}
-                        className="w-full aspect-[3/4] object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+                        alt={`Happy client moment ${(idx % TOTAL) + 1} from Rucksack Adventures`}
+                        className="w-full aspect-[3/4] object-cover object-center transition-transform duration-[600ms] ease-out group-hover:scale-105"
                         loading={idx < visible * 2 ? "eager" : "lazy"}
                         draggable={false}
                       />
                     </div>
-                    <div className="pt-5 pb-1 text-center">
+                    <div className="pt-4 pb-1 text-center">
                       <p className="font-editorial text-xl text-brand-dark leading-tight">
-                        Memory {String((idx % total) + 1).padStart(2, "0")}
+                        Memory {String((idx % TOTAL) + 1).padStart(2, "0")}
                       </p>
                       <p className="mt-2 flex items-center justify-center gap-2.5 text-[10px] font-bold uppercase tracking-[0.22em] text-brand-turquoise">
                         <span className="w-6 h-px bg-brand-turquoise/50" />
@@ -237,31 +226,52 @@ export const ClientMoments: React.FC = () => {
           </div>
         </div>
 
-        {/* Auto-toggle progress indicators */}
-        <div className="flex items-center justify-center gap-2 mt-6">
-          {MOMENT_IMAGES.map((src, idx) => (
-            <button
-              key={src}
-              onClick={() => manual(() => goTo(idx))}
-              className="relative h-2 rounded-full overflow-hidden transition-all duration-300"
-              style={{
-                width: idx === page ? 32 : 8,
-                background:
-                  idx === page ? "transparent" : "rgba(11,143,131,0.2)",
-              }}
-              aria-label={`Go to photo ${idx + 1}`}
-            >
-              {idx === page && !reducedMotion && !hoverPaused && (
-                <motion.div
-                  key={`progress-${page}`}
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: 1 }}
-                  transition={{ duration: AUTOPLAY_MS / 1000, ease: "linear" }}
-                  className="absolute inset-0 bg-gradient-to-r from-brand-turquoise to-brand-yellow origin-left rounded-full"
-                />
-              )}
-            </button>
-          ))}
+        {/* Manual controls + auto-advancing progress indicators */}
+        <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-5 items-center sm:grid-cols-[auto_1fr_auto]">
+          <button
+            onClick={() => manual(goPrev)}
+            className="justify-self-start inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-brand-turquoise/20 text-brand-dark text-[11px] font-bold uppercase tracking-[0.16em] hover:border-brand-turquoise hover:text-brand-turquoise transition-all duration-300 shadow-soft"
+            aria-label="Previous memories"
+          >
+            <ChevronLeft className="w-4 h-4" /> Previous
+          </button>
+
+          <div className="col-span-2 row-start-2 flex items-center justify-center gap-2 sm:col-span-1 sm:row-auto">
+            {MOMENT_IMAGES.map((src, idx) => (
+              <button
+                key={src}
+                onClick={() => manual(() => goTo(idx))}
+                className="relative h-2 rounded-full overflow-hidden transition-all duration-300"
+                style={{
+                  width: idx === page ? 32 : 8,
+                  background:
+                    idx === page ? "transparent" : "rgba(11,143,131,0.2)",
+                }}
+                aria-label={`Go to photo ${idx + 1}`}
+              >
+                {idx === page && (
+                  <motion.div
+                    key={`progress-${page}-${cycle}`}
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: 1 }}
+                    transition={{
+                      duration: AUTOPLAY_MS / 1000,
+                      ease: "linear",
+                    }}
+                    className="absolute inset-0 bg-gradient-to-r from-brand-turquoise to-brand-yellow origin-left rounded-full"
+                  />
+                )}
+              </button>
+            ))}
+          </div>
+
+          <button
+            onClick={() => manual(goNext)}
+            className="justify-self-end inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-brand-turquoise/20 text-brand-dark text-[11px] font-bold uppercase tracking-[0.16em] hover:border-brand-turquoise hover:text-brand-turquoise transition-all duration-300 shadow-soft"
+            aria-label="Next memories"
+          >
+            Next <ChevronRight className="w-4 h-4" />
+          </button>
         </div>
       </div>
     </section>
