@@ -53,9 +53,8 @@ export const Navbar: React.FC = () => {
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         className={cn(
           "fixed top-0 left-0 right-0 z-40 transition-all duration-500",
-          scrolled
-            ? "bg-white/80 backdrop-blur-2xl shadow-[0_1px_30px_rgba(7,20,18,0.04)] py-3 border-b border-brand-turquoise/5"
-            : "bg-transparent py-5"
+          "bg-white/80 backdrop-blur-2xl shadow-[0_1px_30px_rgba(7,20,18,0.04)] border-b border-brand-turquoise/5",
+          scrolled ? "py-3" : "py-4"
         )}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
@@ -64,16 +63,10 @@ export const Navbar: React.FC = () => {
               <img src="/images/logo.jpeg" alt="Rucksack Adventures logo" className="w-full h-full object-contain" />
             </div>
             <div>
-              <span className={cn(
-                "font-editorial text-lg sm:text-xl font-bold tracking-tight leading-none block transition-colors duration-500",
-                scrolled ? "text-brand-dark" : "text-white"
-              )}>
+              <span className="font-editorial text-lg sm:text-xl font-bold tracking-tight leading-none block text-brand-dark">
                 Rucksack Adventures
               </span>
-              <span className={cn(
-                "text-[8px] uppercase tracking-[0.22em] font-medium block mt-0.5 transition-colors duration-500",
-                scrolled ? "text-brand-taupe" : "text-white/50"
-              )}>
+              <span className="text-[8px] uppercase tracking-[0.22em] font-medium block mt-0.5 text-brand-taupe">
                 Shimla &bull; Est. 2018
               </span>
             </div>
@@ -89,8 +82,8 @@ export const Navbar: React.FC = () => {
                   className={cn(
                     "transition-all duration-300 relative px-2 py-2 rounded-card",
                     active
-                      ? scrolled ? "text-brand-turquoise font-semibold" : "text-white font-semibold"
-                      : scrolled ? "text-brand-dark/60 hover:text-brand-dark" : "text-white/65 hover:text-white"
+                      ? "text-brand-turquoise font-semibold"
+                      : "text-brand-dark/60 hover:text-brand-dark"
                   )}
                 >
                   {item.label}
@@ -109,8 +102,8 @@ export const Navbar: React.FC = () => {
               <button className={cn(
                 "flex items-center gap-1 transition-all duration-300 px-2 py-2 rounded-card",
                 pathname.includes("services") || pathname.includes("booking") || pathname.includes("pilgrimage") || pathname.includes("custom-package")
-                  ? scrolled ? "text-brand-turquoise font-semibold" : "text-white font-semibold"
-                  : scrolled ? "text-brand-dark/60 hover:text-brand-dark" : "text-white/65 hover:text-white"
+                  ? "text-brand-turquoise font-semibold"
+                  : "text-brand-dark/60 hover:text-brand-dark"
               )}>
                 Services
                 <ChevronDown className={cn("w-3.5 h-3.5 transition-transform duration-300", servicesDropdown && "rotate-180")} />
@@ -144,7 +137,7 @@ export const Navbar: React.FC = () => {
           </nav>
 
           <div className="hidden xl:flex items-center gap-3">
-            <a href="tel:+917018678064" className={cn("flex items-center gap-2 text-[11px] font-semibold tracking-wider uppercase transition-all py-1.5 px-3 rounded-card border", scrolled ? "text-brand-dark/60 border-brand-turquoise/10 hover:border-brand-turquoise/20 hover:text-brand-dark" : "text-white/70 border-white/15 hover:border-white/25 hover:text-white")}>
+            <a href="tel:+917018678064" className="flex items-center gap-2 text-[11px] font-semibold tracking-wider uppercase transition-all py-1.5 px-3 rounded-card border text-brand-dark/60 border-brand-turquoise/10 hover:border-brand-turquoise/20 hover:text-brand-dark">
               <Phone className="w-3.5 h-3.5" />
               7018678064
             </a>
@@ -154,10 +147,10 @@ export const Navbar: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-2 xl:hidden">
-            <a href="tel:+917018678064" className={cn("p-2 rounded-card border transition-all", scrolled ? "border-brand-turquoise/10 text-brand-dark hover:bg-brand-turquoise/5" : "border-white/15 text-white hover:bg-white/10")} aria-label="Call Rucksack Adventures">
+            <a href="tel:+917018678064" className="p-2 rounded-card border transition-all border-brand-turquoise/10 text-brand-dark hover:bg-brand-turquoise/5" aria-label="Call Rucksack Adventures">
               <Phone className="w-4 h-4" />
             </a>
-            <button onClick={() => setMobileMenuOpen(true)} className={cn("p-2 rounded-card transition-all border", scrolled ? "bg-brand-turquoise text-white border-brand-turquoise" : "bg-white/15 text-white border-white/10 hover:bg-white/25")} aria-label="Open Navigation Menu">
+            <button onClick={() => setMobileMenuOpen(true)} className="p-2 rounded-card transition-all border bg-brand-turquoise text-white border-brand-turquoise hover:bg-brand-turquoise-light" aria-label="Open Navigation Menu">
               <Menu className="w-5 h-5" />
             </button>
           </div>

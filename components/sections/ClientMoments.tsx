@@ -37,6 +37,22 @@ export const ClientMoments: React.FC = () => {
   const [reducedMotion, setReducedMotion] = useState(false);
   const indexRef = useRef(0);
   indexRef.current = index;
+  const resumeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const touchStartX = useRef<number | null>(null);
+
+  // Manual interaction pauses autoplay briefly, then resumes it.
+  const manual = useCallback((action: () => void) => {
+    action();
+    setPaused(true);
+    if (resumeTimer.current) clearTimeout(resumeTimer.current);
+    resumeTimer.current = setTimeout(() => setPaused(false), 6000);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (resumeTimer.current) clearTimeout(resumeTimer.current);
+    };
+  }, []);
 
   useEffect(() => {
     setVisible(getVisibleCount());
@@ -116,14 +132,14 @@ export const ClientMoments: React.FC = () => {
           </div>
           <div className="flex items-center gap-2 shrink-0">
             <button
-              onClick={goPrev}
+              onClick={() => manual(goPrev)}
               className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white shadow-elevated border border-brand-turquoise/10 flex items-center justify-center text-brand-dark hover:bg-brand-turquoise hover:text-white hover:border-brand-turquoise transition-all duration-300"
               aria-label="Previous photos"
             >
               <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
             <button
-              onClick={goNext}
+              onClick={() => manual(goNext)}
               className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white shadow-elevated border border-brand-turquoise/10 flex items-center justify-center text-brand-dark hover:bg-brand-turquoise hover:text-white hover:border-brand-turquoise transition-all duration-300"
               aria-label="Next photos"
             >
@@ -143,6 +159,16 @@ export const ClientMoments: React.FC = () => {
           role="region"
           aria-roledescription="carousel"
           aria-label="Happy client moments gallery"
+          onTouchStart={(e) => {
+            touchStartX.current = e.touches[0].clientX;
+          }}
+          onTouchEnd={(e) => {
+            if (touchStartX.current === null) return;
+            const delta = e.changedTouches[0].clientX - touchStartX.current;
+            touchStartX.current = null;
+            if (delta < -40) manual(goNext);
+            else if (delta > 40) manual(goPrev);
+          }}
         >
           <div
             className={cn(
@@ -162,15 +188,27 @@ export const ClientMoments: React.FC = () => {
                 aria-roledescription="slide"
                 aria-label={`${(idx % total) + 1} of ${total}`}
               >
-                <div className="group rounded-card-2xl overflow-hidden border border-brand-turquoise/5 hover:border-brand-turquoise/12 hover:shadow-luxury transition-all duration-500">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={src}
-                    alt={`Happy client moment ${(idx % total) + 1} from Rucksack Adventures`}
-                    className="w-full aspect-[4/3] object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                    loading={idx < visible * 2 ? "eager" : "lazy"}
-                    draggable={false}
-                  />
+                <div className="group h-full bg-brand-cream rounded-card-xl border border-brand-turquoise/10 p-3 sm:p-4 shadow-soft hover:shadow-luxury hover:-translate-y-1 hover:border-brand-turquoise/25 transition-all duration-500">
+                  <div className="rounded-card overflow-hidden ring-1 ring-brand-dark/10">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={src}
+                      alt={`Happy client moment ${(idx % total) + 1} from Rucksack Adventures`}
+                      className="w-full aspect-[3/4] object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+                      loading={idx < visible * 2 ? "eager" : "lazy"}
+                      draggable={false}
+                    />
+                  </div>
+                  <div className="pt-4 pb-1 px-1 text-center">
+                    <p className="font-editorial text-lg text-brand-dark leading-tight">
+                      Memory {String((idx % total) + 1).padStart(2, "0")}
+                    </p>
+                    <p className="mt-1.5 flex items-center justify-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-brand-turquoise">
+                      <span className="w-5 h-px bg-brand-turquoise/40" />
+                      Client Memories
+                      <span className="w-5 h-px bg-brand-turquoise/40" />
+                    </p>
+                  </div>
                 </div>
               </div>
             ))}
@@ -182,7 +220,7 @@ export const ClientMoments: React.FC = () => {
           {MOMENT_IMAGES.map((src, idx) => (
             <button
               key={src}
-              onClick={() => goTo(idx)}
+              onClick={() => manual(() => goTo(idx))}
               className="relative h-2 rounded-full overflow-hidden transition-all duration-300"
               style={{
                 width: idx === page ? 32 : 8,
