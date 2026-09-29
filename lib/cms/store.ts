@@ -152,7 +152,11 @@ async function saveDatabase(data: CMSDatabase) {
     }
     fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2), "utf-8");
   } catch (err) {
-    console.error("Failed persisting cms.json to disk", err);
+    console.error(
+      "Failed persisting cms.json to disk (read-only filesystem?). " +
+        "Set DATABASE_URL so CMS changes persist in MySQL.",
+      err
+    );
   }
   await saveState(data);
 }

@@ -1,8 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { NextRequest, NextResponse } from "next/server";
-
-const UPLOAD_DIR = path.join(process.cwd(), "public", "uploads");
+import { uploadDir } from "@/lib/uploads";
 
 const CONTENT_TYPES: Record<string, string> = {
   ".jpg": "image/jpeg",
@@ -13,7 +12,8 @@ const CONTENT_TYPES: Record<string, string> = {
 };
 
 // Public files are snapshotted at build time, so CMS uploads (written after
-// the build) are not served by the static handler — serve them from disk.
+// the build) are not served by the static handler — serve them from disk
+// (honours UPLOAD_DIR and falls back to a writable dir on read-only hosts).
 export async function GET(_req: NextRequest, { params }: { params: Promise<{ name: string }> }) {
   const { name } = await params;
   const fileName = path.basename(name);
@@ -23,7 +23,7 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ nam
     return NextResponse.json({ error: "Unsupported file type." }, { status: 400 });
   }
 
-  const filePath = path.join(UPLOAD_DIR, fileName);
+  const filePath = path.join(uploadDir(), fileName);
   if (!fs.existsSync(filePath)) {
     return NextResponse.json({ error: "File not found." }, { status: 404 });
   }

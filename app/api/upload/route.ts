@@ -3,8 +3,8 @@ import path from "path";
 import { NextRequest, NextResponse } from "next/server";
 import { verifyAdminSession } from "@/lib/auth";
 import { findMediaUsage } from "@/lib/cms/store";
+import { uploadDir } from "@/lib/uploads";
 
-const UPLOAD_DIR = path.join(process.cwd(), "public", "uploads");
 const ALLOWED_TYPES: Record<string, string> = {
   "image/jpeg": ".jpg",
   "image/png": ".png",
@@ -14,9 +14,7 @@ const ALLOWED_TYPES: Record<string, string> = {
 const MAX_BYTES = Number(process.env.MAX_UPLOAD_BYTES || 15 * 1024 * 1024);
 
 function ensureDir() {
-  if (!fs.existsSync(UPLOAD_DIR)) {
-    fs.mkdirSync(UPLOAD_DIR, { recursive: true });
-  }
+  uploadDir();
 }
 
 function sanitizeBaseName(name: string): string {
@@ -37,10 +35,10 @@ export async function GET() {
   try {
     ensureDir();
     const files = fs
-      .readdirSync(UPLOAD_DIR)
+      .readdirSync(uploadDir())
       .filter((name) => /\.(jpe?g|png|webp|avif)$/i.test(name))
       .map((name) => {
-        const stat = fs.statSync(path.join(UPLOAD_DIR, name));
+        const stat = fs.statSync(path.join(uploadDir(), name));
         return {
           name,
           url: `/uploads/${name}`,
@@ -93,11 +91,11 @@ export async function POST(req: NextRequest) {
       }
       const buffer = Buffer.from(await file.arrayBuffer());
       let fileName = `${Date.now()}-${saved.length}-${sanitizeBaseName(file.name)}${ext}`;
-      let finalPath = path.join(UPLOAD_DIR, fileName);
+      let finalPath = path.join(uploadDir(), fileName);
       let counter = 1;
       while (fs.existsSync(finalPath)) {
         fileName = `${Date.now()}-${saved.length}-${sanitizeBaseName(file.name)}-${counter}${ext}`;
-        finalPath = path.join(UPLOAD_DIR, fileName);
+        finalPath = path.join(uploadDir(), fileName);
         counter++;
       }
       fs.writeFileSync(finalPath, buffer);
@@ -123,7 +121,7 @@ export async function DELETE(req: NextRequest) {
       return NextResponse.json({ error: "Invalid media path." }, { status: 400 });
     }
     const fileName = path.basename(url);
-    const filePath = path.join(UPLOAD_DIR, fileName);
+    const filePath = path.join(uploadDir(), fileName);
     if (!fs.existsSync(filePath)) {
       return NextResponse.json({ error: "File not found." }, { status: 404 });
     }
