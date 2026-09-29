@@ -22,6 +22,9 @@ export async function cmsPost(
     if (!res.ok) {
       return { ok: false, error: data.error || "The request failed.", errors: data.errors };
     }
+    if (data.success === false) {
+      return { ok: false, error: data.error || "The change was not saved." };
+    }
     return { ok: true, item: data.item };
   } catch {
     return { ok: false, error: "Network error — please try again." };

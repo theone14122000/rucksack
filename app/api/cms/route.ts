@@ -160,7 +160,10 @@ export async function POST(req: NextRequest) {
       }
       if (action === "delete") {
         const res = await deleteEnquiry(payload.id);
-        return NextResponse.json({ success: res });
+        if (!res) {
+          return NextResponse.json({ error: "Item not found." }, { status: 404 });
+        }
+        return NextResponse.json({ success: true });
       }
       return NextResponse.json({ error: "Invalid action" }, { status: 400 });
     }
@@ -233,8 +236,11 @@ export async function POST(req: NextRequest) {
 
     if (action === "delete") {
       const res = await deleteForType(type as CollectionType, payload?.id);
+      if (!res) {
+        return NextResponse.json({ error: "Item not found." }, { status: 404 });
+      }
       revalidateFor(type, payload);
-      return NextResponse.json({ success: res });
+      return NextResponse.json({ success: true });
     }
 
     return NextResponse.json({ error: "Invalid action" }, { status: 400 });

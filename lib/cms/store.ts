@@ -1,4 +1,5 @@
 import fs from "fs";
+import os from "os";
 import path from "path";
 import {
   Destination,
@@ -42,8 +43,36 @@ interface CMSDatabase {
   content: ContentBlock[];
 }
 
-const DATA_DIR = path.join(process.cwd(), ".data");
+function probeDir(dir: string): string | null {
+  try {
+    fs.mkdirSync(dir, { recursive: true });
+    const probe = path.join(dir, `.probe-${process.pid}`);
+    fs.writeFileSync(probe, "ok");
+    fs.unlinkSync(probe);
+    return dir;
+  } catch {
+    return null;
+  }
+}
+
+// Prefer a writable directory: on serverless hosts the bundled .data folder
+// lives inside the read-only build output, so writes there fail silently and
+// CMS edits (including deletes) revert on the next request. Read from the
+// writable copy when present, otherwise fall back to the bundled seed file.
+const BUNDLED_DATA_FILE = path.join(process.cwd(), ".data", "cms.json");
+const DATA_DIR = probeDir(path.join(process.cwd(), ".data")) ?? probeDir(path.join(os.tmpdir(), "rucksack-data")) ?? path.join(process.cwd(), ".data");
 const DATA_FILE = path.join(DATA_DIR, "cms.json");
+
+function readDataFile(): string | null {
+  for (const file of DATA_FILE === BUNDLED_DATA_FILE ? [DATA_FILE] : [DATA_FILE, BUNDLED_DATA_FILE]) {
+    try {
+      if (fs.existsSync(file)) return fs.readFileSync(file, "utf-8");
+    } catch (err) {
+      console.error(`Failed reading ${file}, trying next source`, err);
+    }
+  }
+  return null;
+}
 
 export type StatusFilter = "published" | "all";
 
@@ -97,6 +126,17 @@ function getDefaultData(): CMSDatabase {
 }
 
 let memoryDb: CMSDatabase | null = null;
+let memoryLoadedAt = 0;
+/** true when the last successful refresh came straight from MySQL */
+let lastLoadedFromMysql = false;
+
+/**
+ * How long a process may serve the in-memory document before re-reading
+ * MySQL. Production runs several serverless instances that each hold their own
+ * copy; without a TTL an instance that booted before an edit keeps serving the
+ * stale copy forever, so deletes/upserts from other instances appear to vanish.
+ */
+const MEMORY_TTL_MS = 10_000;
 
 function migrate(data: Partial<CMSDatabase>): CMSDatabase {
   const full = { ...getDefaultData(), ...data } as CMSDatabase;
@@ -110,24 +150,36 @@ function migrate(data: Partial<CMSDatabase>): CMSDatabase {
 
 // Persistence order: MySQL (when DATABASE_URL/MYSQL_URL is set and reachable)
 // → .data/cms.json → bundled seed data. The document is cached in memory for
-// the process lifetime, matching the previous file-only behaviour.
-async function getDatabase(): Promise<CMSDatabase> {
-  if (memoryDb) return memoryDb;
+// MEMORY_TTL_MS, then re-read so every instance converges on MySQL.
+async function getDatabase(opts?: { forceReload?: boolean }): Promise<CMSDatabase> {
+  const fresh = !opts?.forceReload && memoryDb && Date.now() - memoryLoadedAt < MEMORY_TTL_MS;
+  if (fresh && memoryDb) return memoryDb;
 
   const remote = await loadState();
   if (remote.ok && remote.data) {
     try {
       memoryDb = migrate(remote.data as Partial<CMSDatabase>);
+      memoryLoadedAt = Date.now();
+      lastLoadedFromMysql = true;
       return memoryDb;
     } catch (err) {
       console.error("Invalid CMS document in MySQL, falling back to file", err);
     }
   }
 
+  // MySQL unreachable: keep serving the cached copy if we have one instead of
+  // regressing to seed data (which would wipe the user's edits on screen).
+  if (memoryDb) {
+    memoryLoadedAt = Date.now();
+    lastLoadedFromMysql = false;
+    return memoryDb;
+  }
+
   let fromFile: CMSDatabase | null = null;
   try {
-    if (fs.existsSync(DATA_FILE)) {
-      fromFile = migrate(JSON.parse(fs.readFileSync(DATA_FILE, "utf-8")));
+    const raw = readDataFile();
+    if (raw) {
+      fromFile = migrate(JSON.parse(raw));
     }
   } catch (err) {
     console.error("Failed reading cms.json from disk, falling back to defaults", err);
@@ -135,6 +187,7 @@ async function getDatabase(): Promise<CMSDatabase> {
 
   const data = fromFile ?? getDefaultData();
   memoryDb = data;
+  memoryLoadedAt = Date.now();
   // Push the snapshot to MySQL on first use of an empty row, and always seed
   // the file when there was none. If MySQL is unreachable this only writes the
   // file (or nothing, when a file already existed).
@@ -146,16 +199,29 @@ async function getDatabase(): Promise<CMSDatabase> {
 
 async function saveDatabase(data: CMSDatabase) {
   memoryDb = data;
-  try {
-    if (!fs.existsSync(DATA_DIR)) {
-      fs.mkdirSync(DATA_DIR, { recursive: true });
+  memoryLoadedAt = Date.now();
+  const json = JSON.stringify(data, null, 2);
+  const targets = [DATA_DIR, path.join(os.tmpdir(), "rucksack-data")];
+  let written = false;
+  for (const dir of targets) {
+    try {
+      if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+      }
+      fs.writeFileSync(path.join(dir, "cms.json"), json, "utf-8");
+      written = true;
+      break;
+    } catch (err) {
+      console.error(
+        `Failed persisting cms.json to ${dir} (read-only filesystem?). ` +
+          "Set DATABASE_URL so CMS changes persist in MySQL.",
+        err
+      );
     }
-    fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2), "utf-8");
-  } catch (err) {
+  }
+  if (!written) {
     console.error(
-      "Failed persisting cms.json to disk (read-only filesystem?). " +
-        "Set DATABASE_URL so CMS changes persist in MySQL.",
-      err
+      "[cms] No writable location for cms.json — changes exist only in memory and are lost on restart. Set DATABASE_URL."
     );
   }
   const ok = await saveState(data);
@@ -164,6 +230,26 @@ async function saveDatabase(data: CMSDatabase) {
       "[cms] MySQL save failed — changes are in memory + cms.json only and will fully resync to MySQL on the next save."
     );
   }
+}
+
+/** Drop the in-memory cache so the next read re-fetches MySQL. */
+export function invalidateCache(): void {
+  memoryLoadedAt = 0;
+}
+
+/**
+ * Runs a delete; if the id was missing, reloads from MySQL and retries.
+ *
+ * A missing id usually means this instance's cache predates the item (another
+ * instance wrote it) — reloading finds it. If MySQL is reachable and the id is
+ * STILL missing, the row is already gone, so the delete is treated as done
+ * (idempotent) rather than reporting a failure the user cannot act on.
+ */
+async function deleteWithReload(attempt: () => Promise<boolean>): Promise<boolean> {
+  if (await attempt()) return true;
+  invalidateCache();
+  if (await attempt()) return true;
+  return lastLoadedFromMysql;
 }
 
 // ============ VISIBILITY / ORDERING HELPERS ============
@@ -234,14 +320,16 @@ export async function upsertDestination(dest: Destination): Promise<Destination>
 }
 
 export async function deleteDestination(id: string): Promise<boolean> {
-  const db = await getDatabase();
-  const lenBefore = db.destinations.length;
-  db.destinations = db.destinations.filter((d) => d.id !== id);
-  if (db.destinations.length !== lenBefore) {
-    await saveDatabase(db);
-    return true;
-  }
-  return false;
+  return deleteWithReload(async () => {
+    const db = await getDatabase();
+    const lenBefore = db.destinations.length;
+    db.destinations = db.destinations.filter((d) => d.id !== id);
+    if (db.destinations.length !== lenBefore) {
+      await saveDatabase(db);
+      return true;
+    }
+    return false;
+  });
 }
 
 // ============ PACKAGES ============
@@ -286,14 +374,16 @@ export async function upsertPackage(pkg: Package): Promise<Package> {
 }
 
 export async function deletePackage(id: string): Promise<boolean> {
-  const db = await getDatabase();
-  const lenBefore = db.packages.length;
-  db.packages = db.packages.filter((p) => p.id !== id);
-  if (db.packages.length !== lenBefore) {
-    await saveDatabase(db);
-    return true;
-  }
-  return false;
+  return deleteWithReload(async () => {
+    const db = await getDatabase();
+    const lenBefore = db.packages.length;
+    db.packages = db.packages.filter((p) => p.id !== id);
+    if (db.packages.length !== lenBefore) {
+      await saveDatabase(db);
+      return true;
+    }
+    return false;
+  });
 }
 
 // ============ TREKS ============
@@ -335,14 +425,16 @@ export async function upsertTrek(trek: Trek): Promise<Trek> {
 }
 
 export async function deleteTrek(id: string): Promise<boolean> {
-  const db = await getDatabase();
-  const lenBefore = db.treks.length;
-  db.treks = db.treks.filter((t) => t.id !== id);
-  if (db.treks.length !== lenBefore) {
-    await saveDatabase(db);
-    return true;
-  }
-  return false;
+  return deleteWithReload(async () => {
+    const db = await getDatabase();
+    const lenBefore = db.treks.length;
+    db.treks = db.treks.filter((t) => t.id !== id);
+    if (db.treks.length !== lenBefore) {
+      await saveDatabase(db);
+      return true;
+    }
+    return false;
+  });
 }
 
 // ============ EXPERIENCES ============
@@ -375,14 +467,16 @@ export async function upsertExperience(exp: Experience): Promise<Experience> {
 }
 
 export async function deleteExperience(id: string): Promise<boolean> {
-  const db = await getDatabase();
-  const lenBefore = db.experiences.length;
-  db.experiences = db.experiences.filter((e) => e.id !== id);
-  if (db.experiences.length !== lenBefore) {
-    await saveDatabase(db);
-    return true;
-  }
-  return false;
+  return deleteWithReload(async () => {
+    const db = await getDatabase();
+    const lenBefore = db.experiences.length;
+    db.experiences = db.experiences.filter((e) => e.id !== id);
+    if (db.experiences.length !== lenBefore) {
+      await saveDatabase(db);
+      return true;
+    }
+    return false;
+  });
 }
 
 // ============ TESTIMONIALS ============
@@ -404,14 +498,16 @@ export async function upsertTestimonial(item: Testimonial): Promise<Testimonial>
 }
 
 export async function deleteTestimonial(id: string): Promise<boolean> {
-  const db = await getDatabase();
-  const lenBefore = db.testimonials.length;
-  db.testimonials = db.testimonials.filter((t) => t.id !== id);
-  if (db.testimonials.length !== lenBefore) {
-    await saveDatabase(db);
-    return true;
-  }
-  return false;
+  return deleteWithReload(async () => {
+    const db = await getDatabase();
+    const lenBefore = db.testimonials.length;
+    db.testimonials = db.testimonials.filter((t) => t.id !== id);
+    if (db.testimonials.length !== lenBefore) {
+      await saveDatabase(db);
+      return true;
+    }
+    return false;
+  });
 }
 
 // ============ FAQS ============
@@ -437,14 +533,16 @@ export async function upsertFAQ(item: FAQ): Promise<FAQ> {
 }
 
 export async function deleteFAQ(id: string): Promise<boolean> {
-  const db = await getDatabase();
-  const lenBefore = db.faqs.length;
-  db.faqs = db.faqs.filter((f) => f.id !== id);
-  if (db.faqs.length !== lenBefore) {
-    await saveDatabase(db);
-    return true;
-  }
-  return false;
+  return deleteWithReload(async () => {
+    const db = await getDatabase();
+    const lenBefore = db.faqs.length;
+    db.faqs = db.faqs.filter((f) => f.id !== id);
+    if (db.faqs.length !== lenBefore) {
+      await saveDatabase(db);
+      return true;
+    }
+    return false;
+  });
 }
 
 // ============ GALLERY ============
@@ -472,14 +570,16 @@ export async function upsertGalleryItem(item: GalleryItem): Promise<GalleryItem>
 }
 
 export async function deleteGalleryItem(id: string): Promise<boolean> {
-  const db = await getDatabase();
-  const lenBefore = db.gallery.length;
-  db.gallery = db.gallery.filter((g) => g.id !== id);
-  if (db.gallery.length !== lenBefore) {
-    await saveDatabase(db);
-    return true;
-  }
-  return false;
+  return deleteWithReload(async () => {
+    const db = await getDatabase();
+    const lenBefore = db.gallery.length;
+    db.gallery = db.gallery.filter((g) => g.id !== id);
+    if (db.gallery.length !== lenBefore) {
+      await saveDatabase(db);
+      return true;
+    }
+    return false;
+  });
 }
 
 // ============ SERVICES ============
@@ -501,14 +601,16 @@ export async function upsertService(item: Service): Promise<Service> {
 }
 
 export async function deleteService(id: string): Promise<boolean> {
-  const db = await getDatabase();
-  const lenBefore = db.services.length;
-  db.services = db.services.filter((s) => s.id !== id);
-  if (db.services.length !== lenBefore) {
-    await saveDatabase(db);
-    return true;
-  }
-  return false;
+  return deleteWithReload(async () => {
+    const db = await getDatabase();
+    const lenBefore = db.services.length;
+    db.services = db.services.filter((s) => s.id !== id);
+    if (db.services.length !== lenBefore) {
+      await saveDatabase(db);
+      return true;
+    }
+    return false;
+  });
 }
 
 // ============ CONTENT BLOCKS ============
@@ -576,14 +678,16 @@ export async function updateEnquiryStatus(id: string, status: Enquiry["status"])
 }
 
 export async function deleteEnquiry(id: string): Promise<boolean> {
-  const db = await getDatabase();
-  const lenBefore = db.enquiries.length;
-  db.enquiries = db.enquiries.filter((e) => e.id !== id);
-  if (db.enquiries.length !== lenBefore) {
-    await saveDatabase(db);
-    return true;
-  }
-  return false;
+  return deleteWithReload(async () => {
+    const db = await getDatabase();
+    const lenBefore = db.enquiries.length;
+    db.enquiries = db.enquiries.filter((e) => e.id !== id);
+    if (db.enquiries.length !== lenBefore) {
+      await saveDatabase(db);
+      return true;
+    }
+    return false;
+  });
 }
 
 // ============ ADMIN HELPERS ============
