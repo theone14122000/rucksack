@@ -8,111 +8,56 @@ import type { GalleryImage } from "@/lib/gallery-data";
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
-interface MemoryImageProps {
-  image: GalleryImage;
-  wrapperClassName?: string;
-  imgClassName?: string;
-  eager?: boolean;
+/**
+ * Editorial photo grid: responsive 2/3/4-column dense grid where CMS-featured
+ * photos get a 2x2 "anchor" treatment (spaced apart, first item as fallback).
+ * All cells are square so the layout is predictable at every breakpoint, rows
+ * never shift (aspect-ratio boxes), and mobile keeps two usable columns.
+ * Desktop hover reveals an elegant overlay + caption; touch devices get a
+ * fully functional grid with a swipeable, keyboard accessible lightbox.
+ */
+
+function largeSetFor(images: GalleryImage[]): Set<number> {
+  const out = new Set<number>();
+  if (images.length < 4) return out;
+  const maxLarge = Math.max(1, Math.floor(images.length / 5));
+  let last = -99;
+  images.forEach((img, i) => {
+    if (out.size < maxLarge && img.featured && i - last >= 5) {
+      out.add(i);
+      last = i;
+    }
+  });
+  if (out.size === 0) out.add(0);
+  return out;
 }
 
-/**
- * Shows the real gallery photo when it exists (resolved server-side).
- * Client-side safety net: .jpeg -> .jpg -> themed placeholder.
- * The native error listener also catches images that failed before
- * hydration (React's onError would miss those events).
- */
-const MemoryImage: React.FC<MemoryImageProps> = ({
-  image,
-  wrapperClassName,
-  imgClassName,
-  eager = false,
-}) => {
-  // src: "" means the server found no file — render the placeholder directly.
-  const [stage, setStage] = useState(image.src ? 0 : 2);
-  const imgRef = useRef<HTMLImageElement>(null);
+interface Props {
+  images: GalleryImage[];
+}
 
-  useEffect(() => {
-    if (stage >= 2) return;
-    const el = imgRef.current;
-    if (!el) return;
-    const onError = () => setStage((s) => Math.min(s + 1, 2));
-    el.addEventListener("error", onError);
-    // Image may have already failed before this effect attached.
-    if (el.complete && el.naturalWidth === 0) onError();
-    return () => el.removeEventListener("error", onError);
-  }, [stage]);
-
-  const src = stage === 0 ? image.src : image.src.replace(/\.jpeg$/, ".jpg");
-
-  return (
-    <div className={cn("relative overflow-hidden bg-brand-cream", wrapperClassName)}>
-      {stage >= 2 ? (
-        <div className="w-full aspect-[4/5] flex flex-col items-center justify-center gap-2.5 text-center px-4 bg-brand-cream/70 border border-dashed border-brand-turquoise/30">
-          <Camera className="w-7 h-7 text-brand-turquoise/60" />
-          <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-brand-turquoise/80">
-            Photo Placeholder
-          </span>
-          <span className="text-[11px] text-brand-taupe">
-            Gallery Image {pad(image.id)}
-          </span>
-        </div>
-      ) : (
-        /* eslint-disable-next-line @next/next/no-img-element */
-        <img
-          ref={imgRef}
-          src={src}
-          alt={image.alt}
-          loading={eager ? "eager" : "lazy"}
-          draggable={false}
-          className={cn("w-full object-cover object-center", imgClassName)}
-        />
-      )}
-    </div>
-  );
-};
-
-const MemoryCard: React.FC<{ image: GalleryImage; index: number; onOpen: () => void }> = ({
-  image,
-  index,
-  onOpen,
-}) => (
-  <button
-    type="button"
-    onClick={onOpen}
-    aria-label={`Open Gallery Image ${pad(image.id)} in lightbox`}
-    className="group h-full w-full text-left bg-[#FAF5E9] rounded-card-xl border border-[#E7DCC2] p-3 sm:p-4 pb-4 shadow-soft hover:shadow-luxury hover:-translate-y-1 transition-all duration-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-turquoise focus-visible:ring-offset-2"
-  >
-    <MemoryImage
-      image={image}
-      eager={index < 4}
-      wrapperClassName="rounded-card border-[5px] border-white ring-1 ring-brand-dark/10 shadow-[0_2px_10px_rgba(7,20,18,0.10)]"
-      imgClassName="aspect-[4/5] transition-transform duration-700 ease-out group-hover:scale-105"
-    />
-    <div className="pt-3.5 text-center">
-      <p className="font-editorial text-base sm:text-lg text-brand-dark leading-tight">
-        Gallery Image {pad(image.id)}
-      </p>
-      <p className="mt-1.5 flex items-center justify-center gap-2 text-[9px] font-bold uppercase tracking-[0.22em] text-brand-turquoise">
-        <span className="w-4 h-px bg-brand-turquoise/50" />
-        Gallery
-        <span className="w-4 h-px bg-brand-turquoise/50" />
-      </p>
-    </div>
-  </button>
-);
-
-export const GalleryGrid: React.FC<{ images: GalleryImage[] }> = ({ images }) => {
-  const total = images.length;
+export const GalleryGrid: React.FC<Props> = ({ images }) => {
   const [active, setActive] = useState<number | null>(null);
+  const [failed, setFailed] = useState<Set<number>>(() => new Set());
+  const large = React.useMemo(() => largeSetFor(images), [images]);
+  const touchX = useRef<number | null>(null);
+
+  const markFailed = (i: number) =>
+    setFailed((prev) => {
+      if (prev.has(i)) return prev;
+      const next = new Set(prev);
+      next.add(i);
+      return next;
+    });
 
   const close = useCallback(() => setActive(null), []);
   const goPrev = useCallback(
-    () => setActive((a) => (a === null ? a : (a - 1 + total) % total)),
-    [total]
+    () => setActive((a) => (a === null ? null : (a - 1 + images.length) % images.length)),
+    [images.length]
   );
   const goNext = useCallback(
-    () => setActive((a) => (a === null ? a : (a + 1) % total)),
-    [total]
+    () => setActive((a) => (a === null ? null : (a + 1) % images.length)),
+    [images.length]
   );
 
   useEffect(() => {
@@ -122,105 +67,149 @@ export const GalleryGrid: React.FC<{ images: GalleryImage[] }> = ({ images }) =>
       else if (e.key === "ArrowLeft") goPrev();
       else if (e.key === "ArrowRight") goNext();
     };
-    window.addEventListener("keydown", onKey);
+    document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
+    // Warm up neighbours so arrow navigation feels instant.
+    const preload = (i: number) => {
+      const img = images[(i + images.length) % images.length];
+      if (img?.src) {
+        const el = new Image();
+        el.src = img.src;
+      }
+    };
+    preload(active - 1);
+    preload(active + 1);
     return () => {
-      window.removeEventListener("keydown", onKey);
+      document.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
     };
-  }, [active, close, goPrev, goNext]);
+  }, [active, close, goPrev, goNext, images]);
+
+  const current = active !== null ? images[active] : null;
+  const captionFor = (img: GalleryImage) => img.caption?.trim() || img.alt;
 
   return (
     <>
-      <div className="grid grid-cols-1 min-[400px]:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 sm:gap-6 lg:gap-7">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 grid-flow-dense gap-2 sm:gap-3 lg:gap-4">
         {images.map((image, i) => (
-          <MemoryCard
-            key={image.id}
-            image={image}
-            index={i}
-            onOpen={() => setActive(i)}
-          />
+          <button
+            key={`${image.id}-${i}`}
+            type="button"
+            onClick={() => setActive(i)}
+            aria-label={`View photo: ${image.alt}`}
+            className={cn(
+              "group relative overflow-hidden rounded-card bg-brand-cream aspect-square focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-turquoise focus-visible:ring-offset-2",
+              large.has(i) && "col-span-2 row-span-2"
+            )}
+          >
+            {failed.has(i) ? (
+              <span className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-brand-cream text-brand-taupe text-center px-2">
+                <Camera className="w-6 h-6 text-brand-turquoise" aria-hidden="true" />
+                <span className="text-[9px] font-bold uppercase tracking-[0.25em]">
+                  Image unavailable
+                </span>
+              </span>
+            ) : (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={image.src}
+                alt={image.alt}
+                loading={i < 4 ? "eager" : "lazy"}
+                decoding="async"
+                onError={() => markFailed(i)}
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.06]"
+              />
+            )}
+            <span
+              aria-hidden="true"
+              className="absolute inset-0 hidden sm:block bg-gradient-to-t from-brand-dark/75 via-brand-dark/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+            />
+            <span className="absolute inset-x-0 bottom-0 hidden sm:block px-3 pb-3 pt-8 translate-y-1 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+              <span className="block truncate text-xs font-semibold text-brand-cream drop-shadow">
+                {captionFor(image)}
+              </span>
+            </span>
+          </button>
         ))}
       </div>
 
       <AnimatePresence>
-        {active !== null && (
+        {active !== null && current && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
+            transition={{ duration: 0.2 }}
             role="dialog"
             aria-modal="true"
-            aria-label="Gallery image viewer"
-            className="fixed inset-0 z-[60] bg-brand-dark/90 backdrop-blur-sm flex items-center justify-center p-4 sm:p-8"
+            aria-label={`Photo viewer: ${current.alt}`}
+            className="fixed inset-0 z-[80] bg-brand-dark/95 backdrop-blur-sm flex flex-col items-center justify-center p-3 sm:p-6 overflow-y-auto"
             onClick={close}
+            onTouchStart={(e) => {
+              touchX.current = e.touches[0].clientX;
+            }}
+            onTouchEnd={(e) => {
+              if (touchX.current === null) return;
+              const dx = e.changedTouches[0].clientX - touchX.current;
+              touchX.current = null;
+              if (dx > 50) goPrev();
+              else if (dx < -50) goNext();
+            }}
           >
-            {/* Close */}
             <button
               type="button"
               onClick={close}
-              aria-label="Close gallery"
-              className="absolute top-4 right-4 sm:top-6 sm:right-6 w-11 h-11 rounded-full bg-white/10 border border-white/20 text-brand-cream flex items-center justify-center hover:bg-white hover:text-brand-dark transition-colors duration-300"
+              aria-label="Close photo viewer"
+              className="absolute top-3 right-3 sm:top-5 sm:right-5 z-10 w-11 h-11 rounded-full bg-white/10 border border-white/20 text-brand-cream flex items-center justify-center hover:bg-white/25 transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
 
-            {/* Previous */}
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                goPrev();
-              }}
-              aria-label="Previous image"
-              className="absolute left-2 sm:left-6 w-11 h-11 rounded-full bg-white/10 border border-white/20 text-brand-cream flex items-center justify-center hover:bg-white hover:text-brand-dark transition-colors duration-300"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-
-            {/* Next */}
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                goNext();
-              }}
-              aria-label="Next image"
-              className="absolute right-2 sm:right-6 w-11 h-11 rounded-full bg-white/10 border border-white/20 text-brand-cream flex items-center justify-center hover:bg-white hover:text-brand-dark transition-colors duration-300"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
-
             <motion.figure
-              initial={{ scale: 0.96, opacity: 0 }}
+              key={current.id}
+              initial={{ scale: 0.97, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.96, opacity: 0 }}
-              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              exit={{ scale: 0.97, opacity: 0 }}
+              transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              className="max-w-5xl w-full my-auto"
               onClick={(e) => e.stopPropagation()}
-              className="max-w-3xl w-full"
             >
-              <div className="bg-[#FAF5E9] rounded-card-xl border border-[#E7DCC2] p-3 sm:p-4 pb-5 shadow-luxury">
-                <MemoryImage
-                  image={images[active]}
-                  wrapperClassName="rounded-card border-[6px] border-white ring-1 ring-brand-dark/10 flex items-center justify-center bg-white"
-                  imgClassName="max-h-[62vh] object-contain"
-                  eager
+              <div className="flex items-center justify-center">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={current.src}
+                  alt={current.alt}
+                  className="max-w-full max-h-[64vh] sm:max-h-[70vh] object-contain rounded-card ring-1 ring-white/10 bg-brand-dark-light"
                 />
-                <figcaption className="pt-4 text-center">
-                  <p className="font-editorial text-xl text-brand-dark">
-                    Gallery Image {pad(images[active].id)}
-                  </p>
-                  <p className="mt-1.5 flex items-center justify-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-brand-turquoise">
-                    <span className="w-5 h-px bg-brand-turquoise/50" />
-                    Gallery
-                    <span className="w-5 h-px bg-brand-turquoise/50" />
-                  </p>
-                </figcaption>
               </div>
-              <p className="mt-4 text-center text-xs font-semibold tracking-widest text-brand-cream/70">
-                {pad(active + 1)} / {pad(total)}
-              </p>
+              <figcaption className="mt-3 text-center text-sm text-brand-cream/80 max-w-2xl mx-auto line-clamp-2">
+                {captionFor(current)}
+              </figcaption>
+
+              <div className="mt-3 flex items-center justify-center gap-4">
+                <button
+                  type="button"
+                  onClick={goPrev}
+                  aria-label="Previous photo"
+                  className="w-11 h-11 rounded-full bg-white/10 border border-white/20 text-brand-cream flex items-center justify-center hover:bg-white/25 transition-colors"
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </button>
+                <span
+                  aria-live="polite"
+                  className="min-w-[74px] text-center text-sm font-semibold text-brand-cream/85 tabular-nums"
+                >
+                  {active + 1} / {images.length}
+                </span>
+                <button
+                  type="button"
+                  onClick={goNext}
+                  aria-label="Next photo"
+                  className="w-11 h-11 rounded-full bg-white/10 border border-white/20 text-brand-cream flex items-center justify-center hover:bg-white/25 transition-colors"
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </button>
+              </div>
             </motion.figure>
           </motion.div>
         )}
@@ -228,3 +217,5 @@ export const GalleryGrid: React.FC<{ images: GalleryImage[] }> = ({ images }) =>
     </>
   );
 };
+
+export default GalleryGrid;

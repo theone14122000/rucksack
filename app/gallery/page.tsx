@@ -22,8 +22,7 @@ export const metadata: Metadata = {
  * through unconditionally: server-side existsSync is unreliable on serverless
  * hosts (the function FS often lacks public/, which is served from build
  * output instead) and would hide images whose URLs actually work. The client
- * (GalleryGrid MemoryImage) already falls back to a themed placeholder when an
- * image really fails to load.
+ * grid falls back to a themed placeholder when an image really fails to load.
  */
 async function resolveGalleryImages(): Promise<GalleryImage[]> {
   const items = await getGalleryItems();
@@ -32,6 +31,8 @@ async function resolveGalleryImages(): Promise<GalleryImage[]> {
       id: i + 1,
       src: item.src,
       alt: item.alt || `Rucksack Adventures moment ${i + 1}`,
+      caption: item.caption || undefined,
+      featured: item.featured === true,
     }));
   }
   return galleryImages;
@@ -41,37 +42,41 @@ export default async function GalleryPage() {
   const images = await resolveGalleryImages();
   return (
     <>
-      {/* Page Hero */}
-      <div className="pt-24 sm:pt-28 pb-10 sm:pb-12 bg-brand-cream border-b border-brand-turquoise/20">
+      {/* Gallery intro */}
+      <div className="pt-24 sm:pt-28 pb-8 sm:pb-10 bg-brand-cream border-b border-brand-turquoise/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Breadcrumbs items={[{ label: "Gallery" }]} />
           <div className="pt-4 max-w-2xl space-y-3">
             <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-brand-turquoise">
-              <Camera className="w-3.5 h-3.5" /> Rucksack Adventures
+              <Camera className="w-3.5 h-3.5" /> Our Gallery
             </span>
             <h1 className="font-editorial text-4xl sm:text-5xl lg:text-6xl font-bold text-brand-dark tracking-tight">
-              Our Gallery
+              Moments That Make the Journey
             </h1>
             <p className="text-sm sm:text-base text-brand-dark/70 leading-relaxed">
-              Explore the journeys, places, people and moments that make every
-              adventure memorable.
+              Moments captured by travellers and clients during their journeys
+              with Rucksack Adventures — the places, people and memories that
+              make every adventure unforgettable.
             </p>
           </div>
         </div>
       </div>
 
-      {/* YouTube Video Placeholders */}
+      {/* Travel stories / videos */}
       <div className="bg-brand-cream">
         <GalleryVideos />
       </div>
 
-      {/* Photo Gallery */}
-      <section className="py-14 sm:py-20 bg-white">
+      {/* Photo gallery — editorial masonry-style grid */}
+      <section className="py-10 sm:py-14 lg:py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Reveal>
-            <div className="max-w-2xl mb-8 sm:mb-12 space-y-3">
-              <h2 className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-bold text-brand-dark tracking-tight">
-                Moments From Our Journeys
+            <div className="max-w-2xl mb-7 sm:mb-9 space-y-2.5">
+              <span className="block text-[11px] font-bold uppercase tracking-[0.25em] text-brand-turquoise">
+                Captured Along the Way
+              </span>
+              <h2 className="font-editorial text-2xl sm:text-3xl lg:text-4xl font-bold text-brand-dark tracking-tight">
+                Photo Gallery
               </h2>
               <p className="text-sm sm:text-base text-brand-dark/70 leading-relaxed">
                 A collection of places, people and memories captured along the

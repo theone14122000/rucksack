@@ -2,14 +2,17 @@ export interface GalleryVideo {
   id: number;
   title: string;
   description: string;
-  // Future: add youtubeId + thumbnail when real videos are ready.
-  // youtubeId?: string;
+  /** Optional YouTube video id — when set, the card shows its thumbnail and
+   *  opens a lightbox-style embed on click. */
+  youtubeId?: string;
 }
 
 export interface GalleryImage {
   id: number;
   src: string;
   alt: string;
+  caption?: string;
+  featured?: boolean;
 }
 
 export const galleryVideos: GalleryVideo[] = [
