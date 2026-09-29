@@ -11,7 +11,7 @@ const ALLOWED_TYPES: Record<string, string> = {
   "image/webp": ".webp",
   "image/avif": ".avif",
 };
-const MAX_BYTES = Number(process.env.MAX_UPLOAD_BYTES || 5 * 1024 * 1024);
+const MAX_BYTES = Number(process.env.MAX_UPLOAD_BYTES || 15 * 1024 * 1024);
 
 function ensureDir() {
   if (!fs.existsSync(UPLOAD_DIR)) {
