@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { MapPin, Phone, Mail, MessageSquare, ArrowUpRight, Compass, ArrowRight } from "lucide-react";
+import { MapPin, Phone, Mail, MessageSquare, ArrowUpRight, Compass, ArrowRight, LogIn } from "lucide-react";
 import { useContactSettings, telHref, waHref } from "@/components/cms/SettingsProvider";
 
 export const Footer: React.FC = () => {
@@ -138,6 +138,14 @@ export const Footer: React.FC = () => {
               <Link href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
               <Link href="/terms" className="hover:text-white transition-colors">Terms & Conditions</Link>
               <Link href="/faq" className="hover:text-white transition-colors">FAQ</Link>
+              <Link
+                href="/admin"
+                aria-label="Admin login"
+                title="Admin login"
+                className="text-white/30 hover:text-brand-turquoise transition-colors"
+              >
+                <LogIn className="w-3.5 h-3.5" />
+              </Link>
             </div>
           </div>
         </div>
