@@ -320,17 +320,47 @@ export async function saveState(doc: unknown): Promise<boolean> {
   }
 
   statements.push("COMMIT");
+  const sql = statements.join(";");
 
+  // Send with one retry: transient proxy/network blips are common, and a
+  // half-applied batch must never stay half-applied (ROLLBACK first).
   let conn: mysql.PoolConnection | null = null;
   try {
     await ensureTables(p);
-    conn = await p.getConnection();
-    await conn.query(statements.join(";"));
+    try {
+      conn = await p.getConnection();
+      await conn.query(sql);
+    } catch (firstErr) {
+      if (conn) {
+        try {
+          await conn.query("ROLLBACK");
+        } catch {
+          conn.destroy();
+        }
+        try {
+          conn.release();
+        } catch {
+          // already destroyed
+        }
+        conn = null;
+      }
+      console.warn(
+        `[cms-mysql] save attempt failed, retrying once: ${firstErr instanceof Error ? firstErr.message : String(firstErr)}`
+      );
+      await new Promise((r) => setTimeout(r, 400));
+      conn = await p.getConnection();
+      await conn.query(sql);
+    }
     persisted = next;
     return true;
   } catch (err) {
+    // Both attempts failed: the DB is now stale vs file/memory. Clear the
+    // last-good snapshot so the NEXT save rewrites every section (full
+    // resync) instead of skipping "unchanged" ones — that is what heals
+    // rows left behind by a rolled-back delete.
+    persisted = null;
     console.error(
-      `[cms-mysql] save failed (file copy still updated): ${err instanceof Error ? err.message : String(err)}`
+      `[cms-mysql] save failed after retry (file copy still updated; MySQL will fully resync on next save): ${err instanceof Error ? err.message : String(err)}`
     );
     tablesReady = false;
     if (conn) {
@@ -343,6 +373,12 @@ export async function saveState(doc: unknown): Promise<boolean> {
     }
     return false;
   } finally {
-    if (conn) await conn.release();
+    if (conn) {
+      try {
+        await conn.release();
+      } catch {
+        // destroyed above
+      }
+    }
   }
 }

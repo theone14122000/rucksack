@@ -158,7 +158,12 @@ async function saveDatabase(data: CMSDatabase) {
       err
     );
   }
-  await saveState(data);
+  const ok = await saveState(data);
+  if (!ok) {
+    console.error(
+      "[cms] MySQL save failed — changes are in memory + cms.json only and will fully resync to MySQL on the next save."
+    );
+  }
 }
 
 // ============ VISIBILITY / ORDERING HELPERS ============

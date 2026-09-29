@@ -53,3 +53,27 @@ export function uploadDir(): string {
   );
   return resolved;
 }
+
+/**
+ * True when a CMS media src (`/uploads/...` or a static `/gallery/...` etc.)
+ * points at a file that exists on THIS host. Runtime uploads may live in
+ * uploadDir() (writable dir), not necessarily under public/ — read-only
+ * deployments must not resolve against public/ alone.
+ */
+export function srcFileExists(src: string): boolean {
+  if (!src || !src.startsWith("/")) return false;
+  const rel = src.replace(/^\/+/, "");
+  try {
+    if (fs.existsSync(path.join(process.cwd(), "public", rel))) return true;
+  } catch {
+    // ignore — fall through to uploadDir check
+  }
+  if (src.startsWith("/uploads/") || src.startsWith("uploads/")) {
+    try {
+      return fs.existsSync(path.join(uploadDir(), path.basename(src)));
+    } catch {
+      return false;
+    }
+  }
+  return false;
+}

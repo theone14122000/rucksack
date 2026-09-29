@@ -10,6 +10,7 @@ import { CommunityCTA } from "@/components/sections/CommunityCTA";
 import { Reveal } from "@/components/ui/Reveal";
 import { galleryImages, type GalleryImage } from "@/lib/gallery-data";
 import { getGalleryItems } from "@/lib/cms/store";
+import { srcFileExists } from "@/lib/uploads";
 
 export const revalidate = 0;
 
@@ -29,14 +30,11 @@ async function resolveGalleryImages(): Promise<GalleryImage[]> {
   const dir = path.join(process.cwd(), "public", "gallery");
   const items = await getGalleryItems();
   if (items.length > 0) {
-    return items.map((item, i) => {
-      const file = path.join(process.cwd(), "public", item.src.replace(/^\/+/, ""));
-      return {
-        id: i + 1,
-        src: fs.existsSync(file) ? item.src : "",
-        alt: item.alt || `Rucksack Adventures moment ${i + 1}`,
-      };
-    });
+    return items.map((item, i) => ({
+      id: i + 1,
+      src: srcFileExists(item.src) ? item.src : "",
+      alt: item.alt || `Rucksack Adventures moment ${i + 1}`,
+    }));
   }
   return galleryImages.map((image) => {
     const base = `gallery${image.id}`;
