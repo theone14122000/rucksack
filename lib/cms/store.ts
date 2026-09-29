@@ -26,6 +26,7 @@ import {
   initialServices,
   initialContent,
 } from "./seed-data";
+import { loadState, saveState } from "./mysql";
 
 interface CMSDatabase {
   settings: SiteSettings;
@@ -107,26 +108,43 @@ function migrate(data: Partial<CMSDatabase>): CMSDatabase {
   return full;
 }
 
-function loadDatabase(): CMSDatabase {
+// Persistence order: MySQL (when DATABASE_URL/MYSQL_URL is set and reachable)
+// → .data/cms.json → bundled seed data. The document is cached in memory for
+// the process lifetime, matching the previous file-only behaviour.
+async function getDatabase(): Promise<CMSDatabase> {
   if (memoryDb) return memoryDb;
 
+  const remote = await loadState();
+  if (remote.ok && remote.data) {
+    try {
+      memoryDb = migrate(remote.data as Partial<CMSDatabase>);
+      return memoryDb;
+    } catch (err) {
+      console.error("Invalid CMS document in MySQL, falling back to file", err);
+    }
+  }
+
+  let fromFile: CMSDatabase | null = null;
   try {
     if (fs.existsSync(DATA_FILE)) {
-      const raw = fs.readFileSync(DATA_FILE, "utf-8");
-      memoryDb = migrate(JSON.parse(raw));
-      return memoryDb!;
+      fromFile = migrate(JSON.parse(fs.readFileSync(DATA_FILE, "utf-8")));
     }
   } catch (err) {
     console.error("Failed reading cms.json from disk, falling back to defaults", err);
   }
 
-  const fresh = getDefaultData();
-  memoryDb = fresh;
-  saveDatabase(fresh);
-  return fresh;
+  const data = fromFile ?? getDefaultData();
+  memoryDb = data;
+  // Push the snapshot to MySQL on first use of an empty row, and always seed
+  // the file when there was none. If MySQL is unreachable this only writes the
+  // file (or nothing, when a file already existed).
+  if (remote.ok || !fromFile) {
+    await saveDatabase(data);
+  }
+  return data;
 }
 
-function saveDatabase(data: CMSDatabase) {
+async function saveDatabase(data: CMSDatabase) {
   memoryDb = data;
   try {
     if (!fs.existsSync(DATA_DIR)) {
@@ -136,6 +154,7 @@ function saveDatabase(data: CMSDatabase) {
   } catch (err) {
     console.error("Failed persisting cms.json to disk", err);
   }
+  await saveState(data);
 }
 
 // ============ VISIBILITY / ORDERING HELPERS ============
@@ -156,14 +175,14 @@ function sortByOrder<T extends { order?: number }>(list: T[]): T[] {
 
 // ============ SITE SETTINGS ============
 export async function getSiteSettings(): Promise<SiteSettings> {
-  const db = loadDatabase();
+  const db = await getDatabase();
   return db.settings;
 }
 
 export async function updateSiteSettings(settings: Partial<SiteSettings>): Promise<SiteSettings> {
-  const db = loadDatabase();
+  const db = await getDatabase();
   db.settings = { ...db.settings, ...settings };
-  saveDatabase(db);
+  await saveDatabase(db);
   return db.settings;
 }
 
@@ -171,7 +190,7 @@ export async function updateSiteSettings(settings: Partial<SiteSettings>): Promi
 export async function getDestinations(
   filter?: { isDomestic?: boolean; featured?: boolean } & ListFilter
 ): Promise<Destination[]> {
-  const db = loadDatabase();
+  const db = await getDatabase();
   let list = applyStatus(db.destinations, filter);
   if (filter?.isDomestic !== undefined) {
     list = list.filter((d) => d.isDomestic === filter.isDomestic);
@@ -186,7 +205,7 @@ export async function getDestinationBySlug(
   slug: string,
   opts?: { includeHidden?: boolean }
 ): Promise<Destination | null> {
-  const db = loadDatabase();
+  const db = await getDatabase();
   const found = db.destinations.find((d) => d.slug === slug);
   if (!found) return null;
   if (!opts?.includeHidden && !isVisible(found)) return null;
@@ -194,23 +213,23 @@ export async function getDestinationBySlug(
 }
 
 export async function upsertDestination(dest: Destination): Promise<Destination> {
-  const db = loadDatabase();
+  const db = await getDatabase();
   const idx = db.destinations.findIndex((d) => d.id === dest.id || d.slug === dest.slug);
   if (idx >= 0) {
     db.destinations[idx] = { ...db.destinations[idx], ...dest };
   } else {
     db.destinations.push(dest);
   }
-  saveDatabase(db);
+  await saveDatabase(db);
   return dest;
 }
 
 export async function deleteDestination(id: string): Promise<boolean> {
-  const db = loadDatabase();
+  const db = await getDatabase();
   const lenBefore = db.destinations.length;
   db.destinations = db.destinations.filter((d) => d.id !== id);
   if (db.destinations.length !== lenBefore) {
-    saveDatabase(db);
+    await saveDatabase(db);
     return true;
   }
   return false;
@@ -220,7 +239,7 @@ export async function deleteDestination(id: string): Promise<boolean> {
 export async function getPackages(
   filter?: { destinationSlug?: string; featured?: boolean; isInternational?: boolean } & ListFilter
 ): Promise<Package[]> {
-  const db = loadDatabase();
+  const db = await getDatabase();
   let list = applyStatus(db.packages, filter);
   if (filter?.destinationSlug) {
     list = list.filter((p) => p.destinationSlug === filter.destinationSlug);
@@ -238,7 +257,7 @@ export async function getPackageBySlug(
   slug: string,
   opts?: { includeHidden?: boolean }
 ): Promise<Package | null> {
-  const db = loadDatabase();
+  const db = await getDatabase();
   const found = db.packages.find((p) => p.slug === slug);
   if (!found) return null;
   if (!opts?.includeHidden && !isVisible(found)) return null;
@@ -246,23 +265,23 @@ export async function getPackageBySlug(
 }
 
 export async function upsertPackage(pkg: Package): Promise<Package> {
-  const db = loadDatabase();
+  const db = await getDatabase();
   const idx = db.packages.findIndex((p) => p.id === pkg.id || p.slug === pkg.slug);
   if (idx >= 0) {
     db.packages[idx] = { ...db.packages[idx], ...pkg };
   } else {
     db.packages.push(pkg);
   }
-  saveDatabase(db);
+  await saveDatabase(db);
   return pkg;
 }
 
 export async function deletePackage(id: string): Promise<boolean> {
-  const db = loadDatabase();
+  const db = await getDatabase();
   const lenBefore = db.packages.length;
   db.packages = db.packages.filter((p) => p.id !== id);
   if (db.packages.length !== lenBefore) {
-    saveDatabase(db);
+    await saveDatabase(db);
     return true;
   }
   return false;
@@ -272,7 +291,7 @@ export async function deletePackage(id: string): Promise<boolean> {
 export async function getTreks(
   filter?: { featured?: boolean; difficulty?: string } & ListFilter
 ): Promise<Trek[]> {
-  const db = loadDatabase();
+  const db = await getDatabase();
   let list = applyStatus(db.treks, filter);
   if (filter?.featured !== undefined) {
     list = list.filter((t) => t.featured === filter.featured);
@@ -287,7 +306,7 @@ export async function getTrekBySlug(
   slug: string,
   opts?: { includeHidden?: boolean }
 ): Promise<Trek | null> {
-  const db = loadDatabase();
+  const db = await getDatabase();
   const found = db.treks.find((t) => t.slug === slug);
   if (!found) return null;
   if (!opts?.includeHidden && !isVisible(found)) return null;
@@ -295,23 +314,23 @@ export async function getTrekBySlug(
 }
 
 export async function upsertTrek(trek: Trek): Promise<Trek> {
-  const db = loadDatabase();
+  const db = await getDatabase();
   const idx = db.treks.findIndex((t) => t.id === trek.id || t.slug === trek.slug);
   if (idx >= 0) {
     db.treks[idx] = { ...db.treks[idx], ...trek };
   } else {
     db.treks.push(trek);
   }
-  saveDatabase(db);
+  await saveDatabase(db);
   return trek;
 }
 
 export async function deleteTrek(id: string): Promise<boolean> {
-  const db = loadDatabase();
+  const db = await getDatabase();
   const lenBefore = db.treks.length;
   db.treks = db.treks.filter((t) => t.id !== id);
   if (db.treks.length !== lenBefore) {
-    saveDatabase(db);
+    await saveDatabase(db);
     return true;
   }
   return false;
@@ -319,7 +338,7 @@ export async function deleteTrek(id: string): Promise<boolean> {
 
 // ============ EXPERIENCES ============
 export async function getExperiences(filter?: ListFilter): Promise<Experience[]> {
-  const db = loadDatabase();
+  const db = await getDatabase();
   return sortByOrder(applyStatus(db.experiences, filter));
 }
 
@@ -327,7 +346,7 @@ export async function getExperienceBySlug(
   slug: string,
   opts?: { includeHidden?: boolean }
 ): Promise<Experience | null> {
-  const db = loadDatabase();
+  const db = await getDatabase();
   const found = db.experiences.find((e) => e.slug === slug);
   if (!found) return null;
   if (!opts?.includeHidden && !isVisible(found)) return null;
@@ -335,23 +354,23 @@ export async function getExperienceBySlug(
 }
 
 export async function upsertExperience(exp: Experience): Promise<Experience> {
-  const db = loadDatabase();
+  const db = await getDatabase();
   const idx = db.experiences.findIndex((e) => e.id === exp.id || e.slug === exp.slug);
   if (idx >= 0) {
     db.experiences[idx] = { ...db.experiences[idx], ...exp };
   } else {
     db.experiences.push(exp);
   }
-  saveDatabase(db);
+  await saveDatabase(db);
   return exp;
 }
 
 export async function deleteExperience(id: string): Promise<boolean> {
-  const db = loadDatabase();
+  const db = await getDatabase();
   const lenBefore = db.experiences.length;
   db.experiences = db.experiences.filter((e) => e.id !== id);
   if (db.experiences.length !== lenBefore) {
-    saveDatabase(db);
+    await saveDatabase(db);
     return true;
   }
   return false;
@@ -359,28 +378,28 @@ export async function deleteExperience(id: string): Promise<boolean> {
 
 // ============ TESTIMONIALS ============
 export async function getTestimonials(filter?: ListFilter): Promise<Testimonial[]> {
-  const db = loadDatabase();
+  const db = await getDatabase();
   return sortByOrder(applyStatus(db.testimonials, filter));
 }
 
 export async function upsertTestimonial(item: Testimonial): Promise<Testimonial> {
-  const db = loadDatabase();
+  const db = await getDatabase();
   const idx = db.testimonials.findIndex((t) => t.id === item.id);
   if (idx >= 0) {
     db.testimonials[idx] = item;
   } else {
     db.testimonials.push(item);
   }
-  saveDatabase(db);
+  await saveDatabase(db);
   return item;
 }
 
 export async function deleteTestimonial(id: string): Promise<boolean> {
-  const db = loadDatabase();
+  const db = await getDatabase();
   const lenBefore = db.testimonials.length;
   db.testimonials = db.testimonials.filter((t) => t.id !== id);
   if (db.testimonials.length !== lenBefore) {
-    saveDatabase(db);
+    await saveDatabase(db);
     return true;
   }
   return false;
@@ -388,7 +407,7 @@ export async function deleteTestimonial(id: string): Promise<boolean> {
 
 // ============ FAQS ============
 export async function getFAQs(category?: string, filter?: ListFilter): Promise<FAQ[]> {
-  const db = loadDatabase();
+  const db = await getDatabase();
   let list = applyStatus(db.faqs, filter);
   if (category) {
     list = list.filter((f) => f.category === category);
@@ -397,23 +416,23 @@ export async function getFAQs(category?: string, filter?: ListFilter): Promise<F
 }
 
 export async function upsertFAQ(item: FAQ): Promise<FAQ> {
-  const db = loadDatabase();
+  const db = await getDatabase();
   const idx = db.faqs.findIndex((f) => f.id === item.id);
   if (idx >= 0) {
     db.faqs[idx] = item;
   } else {
     db.faqs.push(item);
   }
-  saveDatabase(db);
+  await saveDatabase(db);
   return item;
 }
 
 export async function deleteFAQ(id: string): Promise<boolean> {
-  const db = loadDatabase();
+  const db = await getDatabase();
   const lenBefore = db.faqs.length;
   db.faqs = db.faqs.filter((f) => f.id !== id);
   if (db.faqs.length !== lenBefore) {
-    saveDatabase(db);
+    await saveDatabase(db);
     return true;
   }
   return false;
@@ -423,7 +442,7 @@ export async function deleteFAQ(id: string): Promise<boolean> {
 export async function getGalleryItems(
   filter?: { featured?: boolean } & ListFilter
 ): Promise<GalleryItem[]> {
-  const db = loadDatabase();
+  const db = await getDatabase();
   let list = applyStatus(db.gallery, filter);
   if (filter?.featured !== undefined) {
     list = list.filter((g) => g.featured === filter.featured);
@@ -432,23 +451,23 @@ export async function getGalleryItems(
 }
 
 export async function upsertGalleryItem(item: GalleryItem): Promise<GalleryItem> {
-  const db = loadDatabase();
+  const db = await getDatabase();
   const idx = db.gallery.findIndex((g) => g.id === item.id);
   if (idx >= 0) {
     db.gallery[idx] = { ...db.gallery[idx], ...item, updatedAt: new Date().toISOString() };
   } else {
     db.gallery.push({ ...item, createdAt: item.createdAt || new Date().toISOString(), updatedAt: new Date().toISOString() });
   }
-  saveDatabase(db);
+  await saveDatabase(db);
   return item;
 }
 
 export async function deleteGalleryItem(id: string): Promise<boolean> {
-  const db = loadDatabase();
+  const db = await getDatabase();
   const lenBefore = db.gallery.length;
   db.gallery = db.gallery.filter((g) => g.id !== id);
   if (db.gallery.length !== lenBefore) {
-    saveDatabase(db);
+    await saveDatabase(db);
     return true;
   }
   return false;
@@ -456,28 +475,28 @@ export async function deleteGalleryItem(id: string): Promise<boolean> {
 
 // ============ SERVICES ============
 export async function getServices(filter?: ListFilter): Promise<Service[]> {
-  const db = loadDatabase();
+  const db = await getDatabase();
   return sortByOrder(applyStatus(db.services, filter));
 }
 
 export async function upsertService(item: Service): Promise<Service> {
-  const db = loadDatabase();
+  const db = await getDatabase();
   const idx = db.services.findIndex((s) => s.id === item.id);
   if (idx >= 0) {
     db.services[idx] = item;
   } else {
     db.services.push(item);
   }
-  saveDatabase(db);
+  await saveDatabase(db);
   return item;
 }
 
 export async function deleteService(id: string): Promise<boolean> {
-  const db = loadDatabase();
+  const db = await getDatabase();
   const lenBefore = db.services.length;
   db.services = db.services.filter((s) => s.id !== id);
   if (db.services.length !== lenBefore) {
-    saveDatabase(db);
+    await saveDatabase(db);
     return true;
   }
   return false;
@@ -485,12 +504,12 @@ export async function deleteService(id: string): Promise<boolean> {
 
 // ============ CONTENT BLOCKS ============
 export async function getContentBlocks(): Promise<ContentBlock[]> {
-  const db = loadDatabase();
+  const db = await getDatabase();
   return db.content;
 }
 
 export async function getContentMap(): Promise<Record<string, string>> {
-  const db = loadDatabase();
+  const db = await getDatabase();
   const map: Record<string, string> = {};
   for (const block of db.content) {
     map[block.key] = block.value;
@@ -501,7 +520,7 @@ export async function getContentMap(): Promise<Record<string, string>> {
 export async function updateContentBlocks(
   blocks: { key: string; value: string }[]
 ): Promise<ContentBlock[]> {
-  const db = loadDatabase();
+  const db = await getDatabase();
   const now = new Date().toISOString();
   for (const block of blocks) {
     const idx = db.content.findIndex((c) => c.key === block.key);
@@ -511,20 +530,20 @@ export async function updateContentBlocks(
       db.content.push({ key: block.key, value: block.value, updatedAt: now });
     }
   }
-  saveDatabase(db);
+  await saveDatabase(db);
   return db.content;
 }
 
 // ============ ENQUIRIES ============
 export async function getEnquiries(): Promise<Enquiry[]> {
-  const db = loadDatabase();
+  const db = await getDatabase();
   return [...db.enquiries].sort(
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   );
 }
 
 export async function addEnquiry(enquiry: Omit<Enquiry, "id" | "createdAt" | "status">): Promise<Enquiry> {
-  const db = loadDatabase();
+  const db = await getDatabase();
   const newEnquiry: Enquiry = {
     ...enquiry,
     id: "enq-" + Date.now().toString(36) + Math.random().toString(36).substring(2, 6),
@@ -532,27 +551,27 @@ export async function addEnquiry(enquiry: Omit<Enquiry, "id" | "createdAt" | "st
     createdAt: new Date().toISOString(),
   };
   db.enquiries.unshift(newEnquiry);
-  saveDatabase(db);
+  await saveDatabase(db);
   return newEnquiry;
 }
 
 export async function updateEnquiryStatus(id: string, status: Enquiry["status"]): Promise<boolean> {
-  const db = loadDatabase();
+  const db = await getDatabase();
   const item = db.enquiries.find((e) => e.id === id);
   if (item) {
     item.status = status;
-    saveDatabase(db);
+    await saveDatabase(db);
     return true;
   }
   return false;
 }
 
 export async function deleteEnquiry(id: string): Promise<boolean> {
-  const db = loadDatabase();
+  const db = await getDatabase();
   const lenBefore = db.enquiries.length;
   db.enquiries = db.enquiries.filter((e) => e.id !== id);
   if (db.enquiries.length !== lenBefore) {
-    saveDatabase(db);
+    await saveDatabase(db);
     return true;
   }
   return false;
@@ -580,8 +599,8 @@ const COLLECTION_KEYS: Record<CollectionType, keyof CMSDatabase> = {
   service: "services",
 };
 
-export function slugExists(type: CollectionType, slug: string, excludeId?: string): boolean {
-  const db = loadDatabase();
+export async function slugExists(type: CollectionType, slug: string, excludeId?: string): Promise<boolean> {
+  const db = await getDatabase();
   const key = COLLECTION_KEYS[type];
   const list = db[key] as { id: string; slug?: string }[] | undefined;
   if (!Array.isArray(list)) return false;
@@ -592,7 +611,7 @@ export async function reorderItems(
   type: CollectionType,
   items: { id: string; order: number }[]
 ): Promise<boolean> {
-  const db = loadDatabase();
+  const db = await getDatabase();
   const key = COLLECTION_KEYS[type];
   const list = db[key] as unknown as ({ id: string; order?: number }[]) | undefined;
   if (!Array.isArray(list)) return false;
@@ -600,13 +619,13 @@ export async function reorderItems(
     const item = list.find((i) => i.id === pair.id);
     if (item) item.order = pair.order;
   }
-  saveDatabase(db);
+  await saveDatabase(db);
   return true;
 }
 
 /** Scans all content collections for references to a media URL. */
-export function findMediaUsage(url: string): string | null {
-  const db = loadDatabase();
+export async function findMediaUsage(url: string): Promise<string | null> {
+  const db = await getDatabase();
   const collections: [string, unknown[]][] = [
     ["Gallery", db.gallery],
     ["Packages", db.packages],

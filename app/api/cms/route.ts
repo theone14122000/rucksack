@@ -176,7 +176,7 @@ export async function POST(req: NextRequest) {
 
     if (type === "content") {
       if (action === "update") {
-        const check = validateEntity("content", payload);
+        const check = await validateEntity("content", payload);
         if (!check.valid) {
           return NextResponse.json({ error: check.errors[0], errors: check.errors }, { status: 400 });
         }
@@ -221,7 +221,7 @@ export async function POST(req: NextRequest) {
     }
 
     if (action === "upsert") {
-      const check = validateEntity(type as CollectionType, payload, { excludeId: payload?.id });
+      const check = await validateEntity(type as CollectionType, payload, { excludeId: payload?.id });
       if (!check.valid) {
         return NextResponse.json({ error: check.errors[0], errors: check.errors }, { status: 400 });
       }

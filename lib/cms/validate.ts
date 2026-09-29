@@ -79,11 +79,11 @@ function validateSlug(errors: string[], payload: Raw): void {
   }
 }
 
-export function validateEntity(
+export async function validateEntity(
   type: CollectionType | "content",
   payload: unknown,
   opts?: { excludeId?: string }
-): ValidationResult {
+): Promise<ValidationResult> {
   const errors: string[] = [];
   if (!payload || typeof payload !== "object") {
     return { valid: false, errors: ["Invalid payload."] };
@@ -246,7 +246,7 @@ export function validateEntity(
 
   if (errors.length === 0) {
     const slug = p.slug;
-    if (isStr(slug) && slugExists(type as CollectionType, slug, opts?.excludeId)) {
+    if (isStr(slug) && (await slugExists(type as CollectionType, slug, opts?.excludeId))) {
       errors.push(`Slug "${slug}" is already used by another item.`);
     }
   }

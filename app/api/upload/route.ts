@@ -128,7 +128,7 @@ export async function DELETE(req: NextRequest) {
       return NextResponse.json({ error: "File not found." }, { status: 404 });
     }
 
-    const usedIn = findMediaUsage(`/uploads/${fileName}`);
+    const usedIn = await findMediaUsage(`/uploads/${fileName}`);
     if (usedIn) {
       return NextResponse.json(
         { error: `This image is still used in ${usedIn}. Remove it there before deleting.` },
