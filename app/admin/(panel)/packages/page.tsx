@@ -12,7 +12,7 @@ export default async function AdminPackagesPage() {
     id: pkg.id,
     title: pkg.title,
     subtitle: `${pkg.destination} · ${pkg.duration}`,
-    meta: `/packages/${pkg.slug} · ₹${pkg.price.toLocaleString("en-IN")}${pkg.featured ? " · ★ featured" : ""}`,
+    meta: `/packages/${pkg.slug}${pkg.featured ? " · ★ featured" : ""}`,
     status: pkg.status,
     editHref: `/admin/packages/${pkg.id}`,
     externalHref: `/packages/${pkg.slug}`,
@@ -31,7 +31,7 @@ export default async function AdminPackagesPage() {
         newLabel="New package"
         singular="package"
         emptyTitle="No packages yet"
-        emptyHint="Create your first tour package — add itinerary, inclusions, photos, pricing, then publish."
+        emptyHint="Create your first tour package — add itinerary, inclusions, photos, then publish."
       />
     </div>
   );

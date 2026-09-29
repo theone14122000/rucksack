@@ -108,15 +108,6 @@ export function PackageEditor({
           <Field label="Duration" required>
             <Input value={item.duration} onChange={(e) => patch({ duration: e.target.value })} placeholder="6 Days / 5 Nights" />
           </Field>
-          <Field label="Price (INR)" required>
-            <Input
-              type="number"
-              min={0}
-              value={item.price}
-              onChange={(e) => patch({ price: Number(e.target.value) })}
-              placeholder="24999"
-            />
-          </Field>
         </div>
         <div className="mt-4">
           <Field label="Short description" required hint="One or two sentences shown on cards">
