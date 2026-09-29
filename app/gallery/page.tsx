@@ -1,7 +1,5 @@
 import React from "react";
 import { Metadata } from "next";
-import fs from "fs";
-import path from "path";
 import { Camera } from "lucide-react";
 import { Breadcrumbs } from "@/components/navigation/Breadcrumbs";
 import { GalleryVideos } from "@/components/gallery/GalleryVideos";
@@ -10,7 +8,6 @@ import { CommunityCTA } from "@/components/sections/CommunityCTA";
 import { Reveal } from "@/components/ui/Reveal";
 import { galleryImages, type GalleryImage } from "@/lib/gallery-data";
 import { getGalleryItems } from "@/lib/cms/store";
-import { srcFileExists } from "@/lib/uploads";
 
 export const revalidate = 0;
 
@@ -21,28 +18,23 @@ export const metadata: Metadata = {
 };
 
 /**
- * CMS gallery items take priority (editable in /admin/gallery). Files that do
- * not exist get src: "" so the client renders a themed placeholder instead of
- * a broken image. When the CMS has no items we fall back to probing the
- * static files in /public/gallery at request time.
+ * CMS gallery items take priority (editable in /admin/gallery). Srcs are passed
+ * through unconditionally: server-side existsSync is unreliable on serverless
+ * hosts (the function FS often lacks public/, which is served from build
+ * output instead) and would hide images whose URLs actually work. The client
+ * (GalleryGrid MemoryImage) already falls back to a themed placeholder when an
+ * image really fails to load.
  */
 async function resolveGalleryImages(): Promise<GalleryImage[]> {
-  const dir = path.join(process.cwd(), "public", "gallery");
   const items = await getGalleryItems();
   if (items.length > 0) {
     return items.map((item, i) => ({
       id: i + 1,
-      src: srcFileExists(item.src) ? item.src : "",
+      src: item.src,
       alt: item.alt || `Rucksack Adventures moment ${i + 1}`,
     }));
   }
-  return galleryImages.map((image) => {
-    const base = `gallery${image.id}`;
-    if (fs.existsSync(path.join(dir, `${base}.jpeg`))) return image;
-    if (fs.existsSync(path.join(dir, `${base}.jpg`)))
-      return { ...image, src: `/gallery/${base}.jpg` };
-    return { ...image, src: "" };
-  });
+  return galleryImages;
 }
 
 export default async function GalleryPage() {
