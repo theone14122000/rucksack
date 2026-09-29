@@ -9,8 +9,10 @@ import { Button } from "../ui/Button";
 import { MobileMenu } from "./MobileMenu";
 import { EnquiryModal } from "../ui/EnquiryModal";
 import { cn } from "@/lib/utils";
+import { useContactSettings, telHref } from "@/components/cms/SettingsProvider";
 
 export const Navbar: React.FC = () => {
+  const contact = useContactSettings();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [enquiryModalOpen, setEnquiryModalOpen] = useState(false);
@@ -24,6 +26,8 @@ export const Navbar: React.FC = () => {
   }, []);
 
   useEffect(() => { setServicesDropdown(false); }, [pathname]);
+
+  if (pathname.startsWith("/admin")) return null;
 
   const navItems = [
     { href: "/", label: "Home" },
@@ -137,9 +141,9 @@ export const Navbar: React.FC = () => {
           </nav>
 
           <div className="hidden xl:flex items-center gap-3">
-            <a href="tel:+917018678064" className="flex items-center gap-2 text-[11px] font-semibold tracking-wider uppercase transition-all py-1.5 px-3 rounded-card border text-brand-dark/60 border-brand-turquoise/10 hover:border-brand-turquoise/20 hover:text-brand-dark">
+            <a href={telHref(contact.phone)} className="flex items-center gap-2 text-[11px] font-semibold tracking-wider uppercase transition-all py-1.5 px-3 rounded-card border text-brand-dark/60 border-brand-turquoise/10 hover:border-brand-turquoise/20 hover:text-brand-dark">
               <Phone className="w-3.5 h-3.5" />
-              7018678064
+              {contact.phone}
             </a>
             <Button variant="primary" size="sm" onClick={() => setEnquiryModalOpen(true)} icon={<Compass className="w-3.5 h-3.5" />}>
               Plan Your Journey
@@ -147,7 +151,7 @@ export const Navbar: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-2 xl:hidden">
-            <a href="tel:+917018678064" className="p-2 rounded-card border transition-all border-brand-turquoise/10 text-brand-dark hover:bg-brand-turquoise/5" aria-label="Call Rucksack Adventures">
+            <a href={telHref(contact.phone)} className="p-2 rounded-card border transition-all border-brand-turquoise/10 text-brand-dark hover:bg-brand-turquoise/5" aria-label="Call Rucksack Adventures">
               <Phone className="w-4 h-4" />
             </a>
             <button onClick={() => setMobileMenuOpen(true)} className="p-2 rounded-card transition-all border bg-brand-turquoise text-white border-brand-turquoise hover:bg-brand-turquoise-light" aria-label="Open Navigation Menu">

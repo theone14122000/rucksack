@@ -1,6 +1,7 @@
 import React from "react";
 import { Metadata } from "next";
 import { Breadcrumbs } from "@/components/navigation/Breadcrumbs";
+import { getSiteSettings } from "@/lib/cms/store";
 
 export const metadata: Metadata = {
   title: "Privacy Policy | Rucksack Adventures",
@@ -8,7 +9,8 @@ export const metadata: Metadata = {
     "Read the privacy policy of Rucksack Adventures. Understand how we collect, use, and protect your personal information.",
 };
 
-export default function PrivacyPolicyPage() {
+export default async function PrivacyPolicyPage() {
+  const settings = await getSiteSettings();
   return (
     <div className="pt-24 pb-20 bg-brand-cream">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -125,9 +127,9 @@ export default function PrivacyPolicyPage() {
             </p>
             <p className="mt-2">
               <strong className="text-brand-dark">Rucksack Adventures</strong><br />
-              Chotta Shimla to Kusumpti Rd, SDA Complex, Kasumpti, Shimla, Himachal Pradesh 171009<br />
-              Email: info@rucksackadventures.com<br />
-              Phone: 7018678064
+              {settings.address}<br />
+              Email: {settings.email}<br />
+              Phone: {settings.phone}
             </p>
           </section>
         </div>

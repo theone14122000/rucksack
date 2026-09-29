@@ -1,4 +1,15 @@
-import { Destination, Package, Trek, Experience, Testimonial, FAQ, SiteSettings } from "./types";
+import {
+  Destination,
+  Package,
+  Trek,
+  Experience,
+  Testimonial,
+  FAQ,
+  SiteSettings,
+  GalleryItem,
+  Service,
+  ContentBlock,
+} from "./types";
 
 export const initialSiteSettings: SiteSettings = {
   brandName: "Rucksack Adventures",
@@ -8,11 +19,13 @@ export const initialSiteSettings: SiteSettings = {
   phone: "7018678064",
   alternatePhone: "7018678064",
   whatsapp: "7018678064",
-  email: "curate@rucksackadventures.com",
+  email: "info@rucksackadventures.com",
   experienceYears: "8+",
   rating: 4.6,
   ratingsCount: 242,
   curatedJourneysCount: "3,800+",
+  footerDescription:
+    "An independent, mountain-first travel atelier headquartered in Kasumpti, Shimla. Curating transformative journeys for over 8 years.",
   socialLinks: {
     instagram: "https://www.instagram.com/realitywithriss/",
     facebook: "https://www.facebook.com/adventuresrucksack/",
@@ -20,20 +33,29 @@ export const initialSiteSettings: SiteSettings = {
     linkedin: "https://in.linkedin.com/in/rucksack-adventures-2a7198179",
   },
   seoDefaults: {
-    title: "Rucksack Adventures | Premium Travel Agency in Shimla, Himachal Pradesh",
-    description: "Explore curated Himalayan journeys, custom tour packages, trekking expeditions, Pilgrimage Tour packages, Nepal and Bhutan holidays, and trusted taxi services from Kasumpti, Shimla with 8+ years of expertise.",
+    title: "Rucksack Adventures | Premium Himalayan Travel & Trekking",
+    description:
+      "Curated Himalayan journeys, high altitude trekking expeditions, custom domestic & international tour packages, and trusted cab services based in Kasumpti, Shimla.",
     keywords: [
       "travel agency in Shimla",
       "Himachal tour packages",
       "Kashmir tour packages",
       "Leh Ladakh tour packages",
-      "Himalayan trekking expeditions",
-      "Shimla taxi service",
+      "Uttarakhand tour packages",
+      "North East India tours",
+      "Himalayan trekking",
+      "Chopta Chandrashila Trek",
+      "Bhaba Pass Trek",
+      "Triund Trek",
       "Pilgrimage Tour packages",
       "Nepal tour packages",
       "Bhutan tour packages",
+      "Shimla cab service",
       "Rucksack Adventures",
     ],
+    ogDescription:
+      "Explore curated Himalayan journeys, custom tour packages, trekking expeditions, and trusted cab services from Kasumpti, Shimla with 8+ years of expertise.",
+    twitterDescription: "Premium travel company based in Shimla, Himachal Pradesh.",
   },
 };
 
@@ -894,4 +916,73 @@ export const initialFAQs: FAQ[] = [
     answer: "Absolutely. We design family-friendly itineraries with comfortable pacing, child-safe accommodations, private vehicles, and gentle sightseeing. For high-altitude treks like Spiti or Ladakh, we recommend children aged 8 and above due to acclimatization requirements.",
     category: "booking"
   }
+];
+
+export const initialGallery: GalleryItem[] = [
+  { id: "gal-1", src: "/gallery/gallery1.jpg", alt: "Rucksack Adventures moment 1", featured: true, createdAt: "2026-01-01T00:00:00.000Z", updatedAt: "2026-01-01T00:00:00.000Z" },
+  { id: "gal-2", src: "/gallery/gallery2.jpg", alt: "Rucksack Adventures moment 2", featured: true, createdAt: "2026-01-01T00:00:00.000Z", updatedAt: "2026-01-01T00:00:00.000Z" },
+  { id: "gal-3", src: "/gallery/gallery3.jpg", alt: "Rucksack Adventures moment 3", featured: true, createdAt: "2026-01-01T00:00:00.000Z", updatedAt: "2026-01-01T00:00:00.000Z" },
+  { id: "gal-4", src: "/gallery/gallery4.jpg", alt: "Rucksack Adventures moment 4", featured: true, createdAt: "2026-01-01T00:00:00.000Z", updatedAt: "2026-01-01T00:00:00.000Z" },
+  { id: "gal-5", src: "/gallery/gallery5.jpg", alt: "Rucksack Adventures moment 5", featured: true, createdAt: "2026-01-01T00:00:00.000Z", updatedAt: "2026-01-01T00:00:00.000Z" },
+  { id: "gal-6", src: "/gallery/gallery6.jpg", alt: "Rucksack Adventures moment 6", featured: true, createdAt: "2026-01-01T00:00:00.000Z", updatedAt: "2026-01-01T00:00:00.000Z" },
+  { id: "gal-7", src: "/gallery/gallery7.jpg", alt: "Rucksack Adventures moment 7", featured: true, createdAt: "2026-01-01T00:00:00.000Z", updatedAt: "2026-01-01T00:00:00.000Z" },
+  { id: "gal-8", src: "/gallery/gallery8.jpg", alt: "Rucksack Adventures moment 8", featured: true, createdAt: "2026-01-01T00:00:00.000Z", updatedAt: "2026-01-01T00:00:00.000Z" },
+  { id: "gal-9", src: "/gallery/gallery9.jpg", alt: "Rucksack Adventures moment 9", featured: true, createdAt: "2026-01-01T00:00:00.000Z", updatedAt: "2026-01-01T00:00:00.000Z" },
+  { id: "gal-10", src: "/gallery/galler10.jpg", alt: "Rucksack Adventures moment 10", featured: true, createdAt: "2026-01-01T00:00:00.000Z", updatedAt: "2026-01-01T00:00:00.000Z" },
+];
+
+export const initialServices: Service[] = [
+  {
+    id: "svc-cabs",
+    icon: "\ud83d\ude97",
+    title: "Premium Cab Services",
+    description: "Airport transfers, local sightseeing, and mountain 4x4 transfers to Kinnaur and Spiti.",
+    href: "/taxi-services",
+    items: ["Toyota Innova Crysta & 4x4 Scorpio", "Professional mountain chauffeurs", "Transparent pricing"],
+  },
+  {
+    id: "svc-pilgrimage",
+    icon: "\ud83d\ude95",
+    title: "Pilgrimage Tour Packages",
+    description: "Comprehensive pilgrimage coordination across Char Dham and temple circuits.",
+    href: "/pilgrimage-tour",
+    items: ["Helicopter ticket support", "Private vehicle transfers", "Medical guidelines & packing"],
+  },
+  {
+    id: "svc-bus",
+    icon: "\ud83d\ude82",
+    title: "Bus & Toy Train",
+    description: "Heritage toy train rides and luxury Volvo buses connecting Delhi, Shimla, and Manali.",
+    href: "/bus-booking",
+    items: ["Kalka-Shimla Toy Train", "HPTDC & premium Volvo buses", "Express enquiry response"],
+  },
+];
+
+export const initialContent: ContentBlock[] = [
+  { key: "home.hero.eyebrow", value: "Kasumpti, Shimla \u2022 Since 2018" },
+  { key: "home.hero.line1", value: "Discover the" },
+  { key: "home.hero.line2", value: "Himalayas" },
+  { key: "home.hero.line3", value: "Like Never Before" },
+  { key: "home.hero.subtitle", value: "Curated Himalayan journeys, high altitude trekking expeditions, custom domestic & international tour packages, and trusted cab services \u2014 all from our mountain headquarters in Shimla." },
+  { key: "home.philosophy.eyebrow", value: "Our Philosophy" },
+  { key: "home.philosophy.titleA", value: "Travel Should Be" },
+  { key: "home.philosophy.titleB", value: "Deliberate" },
+  { key: "home.philosophy.body", value: "From the first conversation to the last mile of your journey, we handle every detail. Curated itineraries, verified accommodations, experienced guides, and round-the-hour support \u2014 all from our mountain headquarters in Shimla." },
+  { key: "home.services.eyebrow", value: "Reliable Ground Logistics" },
+  { key: "home.services.titleA", value: "Specialized Transport &" },
+  { key: "home.services.titleB", value: "Pilgrimage" },
+  { key: "home.services.titleC", value: "Desk" },
+  { key: "home.services.note", value: "Need cabs, pilgrimage support, or something entirely bespoke? Talk directly to our Shimla travel desk." },
+  { key: "home.treks.eyebrow", value: "High Himalayan Ascents" },
+  { key: "home.treks.titleA", value: "Into the" },
+  { key: "home.treks.titleB", value: "Mountains" },
+  { key: "home.treks.description", value: "Curated Himalayan trekking experiences for explorers seeking something beyond conventional travel." },
+  { key: "home.testimonials.eyebrow", value: "Guest Reflections" },
+  { key: "home.testimonials.titleA", value: "Words From Our" },
+  { key: "home.testimonials.titleB", value: "Travelers" },
+  { key: "home.enquiry.eyebrow", value: "Direct Himalayan Concierge" },
+  { key: "home.enquiry.titleA", value: "Begin Your Travel" },
+  { key: "home.enquiry.titleB", value: "Story" },
+  { key: "home.enquiry.note", value: "Share your travel aspirations. Our planners in Kasumpti, Shimla craft each journey individually." },
+  { key: "footer.description", value: "An independent, mountain-first travel atelier headquartered in Kasumpti, Shimla. Curating transformative journeys for over 8 years." },
 ];

@@ -2,9 +2,19 @@
 
 import React from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { MapPin, Phone, Mail, MessageSquare, ArrowUpRight, Compass, ArrowRight } from "lucide-react";
+import { useContactSettings, telHref, waHref } from "@/components/cms/SettingsProvider";
 
 export const Footer: React.FC = () => {
+  const contact = useContactSettings();
+  const pathname = usePathname();
+  if (pathname.startsWith("/admin")) return null;
+  const address = contact.address.replace("Himachal Pradesh", "HP");
+  const socials = [
+    { href: contact.socialLinks.instagram, label: "Instagram", icon: "instagram" as const },
+    { href: contact.socialLinks.linkedin, label: "LinkedIn", icon: "linkedin" as const },
+  ].filter((s) => s.href);
   return (
     <footer className="bg-brand-dark text-white relative overflow-hidden">
       {/* Inject shimmer keyframes directly */}
@@ -31,7 +41,7 @@ export const Footer: React.FC = () => {
             <Link href="/contact" className="inline-flex items-center gap-2 px-8 py-3.5 bg-brand-dark text-white text-xs font-bold uppercase tracking-wider rounded-full hover:bg-brand-dark-light transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5">
               <Compass className="w-4 h-4" /> Start Planning <ArrowRight className="w-4 h-4" />
             </Link>
-            <a href="https://wa.me/917018678064" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#25D366] text-white text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#1EBE5D] transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5">
+            <a href={waHref(contact.whatsappWaLink)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#25D366] text-white text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#1EBE5D] transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5">
               <MessageSquare className="w-4 h-4" /> WhatsApp Us
             </a>
           </div>
@@ -52,23 +62,12 @@ export const Footer: React.FC = () => {
                   <span className="font-hand text-brand-turquoise-bright text-sm block mt-0.5">Shimla &bull; Est. 2018</span>
                 </div>
               </Link>
-              <p className="text-xs sm:text-sm text-white/40 leading-relaxed max-w-sm">An independent, mountain-first travel atelier headquartered in Kasumpti, Shimla. Curating transformative journeys for over 8 years.</p>
+              <p className="text-xs sm:text-sm text-white/40 leading-relaxed max-w-sm">{contact.footerDescription}</p>
               <div className="flex items-center gap-3">
-                {[
-                  { href: "https://www.instagram.com/realitywithriss/", label: "Instagram", icon: "instagram" as const },
-                  { href: "https://www.facebook.com/adventuresrucksack/", label: "Facebook", icon: "facebook" as const },
-                  { href: "https://www.youtube.com/@rucksackadventures6559", label: "YouTube", icon: "youtube" as const },
-                  { href: "https://in.linkedin.com/in/rucksack-adventures-2a7198179", label: "LinkedIn", icon: "linkedin" as const },
-                ].map((social) => (
+                {socials.map((social) => (
                   <a key={social.href} href={social.href} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center hover:bg-brand-turquoise hover:border-brand-turquoise hover:text-white transition-all duration-300 hover:scale-110" aria-label={social.label}>
                     {social.icon === "instagram" && (
                       <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-                    )}
-                    {social.icon === "facebook" && (
-                      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-                    )}
-                    {social.icon === "youtube" && (
-                      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19.13C5.12 19.56 12 19.56 12 19.56s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
                     )}
                     {social.icon === "linkedin" && (
                       <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
@@ -125,10 +124,10 @@ export const Footer: React.FC = () => {
                 <div className="w-6 h-px bg-brand-turquoise" /> Headquarters
               </h4>
               <div className="space-y-3 text-xs text-white/45">
-                <p className="flex items-start gap-2.5 leading-relaxed"><MapPin className="w-4 h-4 shrink-0 mt-0.5 text-brand-turquoise/60" /><span>Chotta Shimla to Kusumpti Rd, SDA Complex, Kasumpti, Shimla, HP 171009</span></p>
-                <p className="flex items-center gap-2.5"><Phone className="w-4 h-4 shrink-0 text-brand-turquoise/60" /><a href="tel:+917018678064" className="hover:text-white transition-colors font-mono">7018678064</a></p>
-                <p className="flex items-center gap-2.5"><MessageSquare className="w-4 h-4 shrink-0 text-[#25D366]/70" /><a href="https://wa.me/917018678064" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">WhatsApp Travel Concierge</a></p>
-                <p className="flex items-center gap-2.5"><Mail className="w-4 h-4 shrink-0 text-brand-turquoise/60" /><a href="mailto:info@rucksackadventures.com" className="hover:text-white transition-colors">info@rucksackadventures.com</a></p>
+                <p className="flex items-start gap-2.5 leading-relaxed"><MapPin className="w-4 h-4 shrink-0 mt-0.5 text-brand-turquoise/60" /><span>{address}</span></p>
+                <p className="flex items-center gap-2.5"><Phone className="w-4 h-4 shrink-0 text-brand-turquoise/60" /><a href={telHref(contact.phone)} className="hover:text-white transition-colors font-mono">{contact.phone}</a></p>
+                <p className="flex items-center gap-2.5"><MessageSquare className="w-4 h-4 shrink-0 text-[#25D366]/70" /><a href={waHref(contact.whatsappWaLink)} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">WhatsApp Travel Concierge</a></p>
+                <p className="flex items-center gap-2.5"><Mail className="w-4 h-4 shrink-0 text-brand-turquoise/60" /><a href={`mailto:${contact.email}`} className="hover:text-white transition-colors">{contact.email}</a></p>
               </div>
             </div>
           </div>

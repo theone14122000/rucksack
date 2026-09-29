@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useContactSettings, telHref, waHref } from "@/components/cms/SettingsProvider";
 import Link from "next/link";
 import { X, MapPin, Phone, Mail, Compass, ChevronRight, MessageSquare } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -31,6 +32,8 @@ const navLinks = [
 ];
 
 export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, onOpenEnquiry }) => {
+  const contact = useContactSettings();
+  const address = contact.address.replace(", Himachal Pradesh", "");
   return (
     <AnimatePresence>
       {isOpen && (
@@ -76,16 +79,16 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, onOpenE
                 Plan Your Journey
               </Button>
               <div className="grid grid-cols-2 gap-2">
-                <a href="tel:+917018678064" className="flex items-center justify-center gap-1.5 py-2.5 text-xs text-brand-dark/70 border border-brand-turquoise/10 rounded-card hover:bg-brand-turquoise/5 hover:text-brand-dark transition-colors">
+                <a href={telHref(contact.phone)} className="flex items-center justify-center gap-1.5 py-2.5 text-xs text-brand-dark/70 border border-brand-turquoise/10 rounded-card hover:bg-brand-turquoise/5 hover:text-brand-dark transition-colors">
                   <Phone className="w-3.5 h-3.5" /> Call Office
                 </a>
-                <a href="https://wa.me/917018678064" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-1.5 py-2.5 text-xs text-[#25D366] bg-[#25D366]/8 border border-[#25D366]/20 rounded-card hover:bg-[#25D366]/15 transition-colors">
+                <a href={waHref(contact.whatsappWaLink)} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-1.5 py-2.5 text-xs text-[#25D366] bg-[#25D366]/8 border border-[#25D366]/20 rounded-card hover:bg-[#25D366]/15 transition-colors">
                   <MessageSquare className="w-3.5 h-3.5" /> WhatsApp
                 </a>
               </div>
               <div className="pt-2 text-[11px] text-brand-taupe space-y-1">
-                <p className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5 shrink-0" /> Chotta Shimla to Kusumpti Rd, SDA Complex, Kasumpti, Shimla 171009</p>
-                <p className="flex items-center gap-1.5"><Mail className="w-3.5 h-3.5 shrink-0" /> info@rucksackadventures.com</p>
+                <p className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5 shrink-0" /> {address}</p>
+                <p className="flex items-center gap-1.5"><Mail className="w-3.5 h-3.5 shrink-0" /> {contact.email}</p>
               </div>
             </div>
           </motion.div>

@@ -14,7 +14,30 @@ const heroSlides = [
   { src: "/images/hero/slide-5.jpg", alt: "Dubai skyline", label: "Dubai" },
 ];
 
-export const HeroSection: React.FC = () => {
+const DEFAULT_HERO = {
+  eyebrow: "Kasumpti, Shimla \u2022 Since 2018",
+  line1: "Discover the",
+  line2: "Himalayas",
+  line3: "Like Never Before",
+  subtitle:
+    "Curated Himalayan journeys, high altitude trekking expeditions, custom domestic & international tour packages, and trusted cab services \u2014 all from our mountain headquarters in Shimla.",
+};
+
+interface HeroSectionProps {
+  eyebrow?: string;
+  line1?: string;
+  line2?: string;
+  line3?: string;
+  subtitle?: string;
+}
+
+export const HeroSection: React.FC<HeroSectionProps> = ({
+  eyebrow = DEFAULT_HERO.eyebrow,
+  line1 = DEFAULT_HERO.line1,
+  line2 = DEFAULT_HERO.line2,
+  line3 = DEFAULT_HERO.line3,
+  subtitle = DEFAULT_HERO.subtitle,
+}) => {
   const [current, setCurrent] = useState(0);
 
   const next = useCallback(() => {
@@ -118,7 +141,7 @@ export const HeroSection: React.FC = () => {
           >
             <div className="w-8 h-px bg-gradient-to-r from-brand-turquoise to-brand-turquoise-bright" />
             <span className="text-[10px] font-mono font-semibold uppercase tracking-[0.25em] text-brand-turquoise-light">
-              Kasumpti, Shimla &bull; Since 2018
+              {eyebrow}
             </span>
           </motion.div>
 
@@ -129,11 +152,11 @@ export const HeroSection: React.FC = () => {
             transition={{ duration: 0.7, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
             className="font-editorial text-4xl sm:text-5xl lg:text-7xl xl:text-8xl font-bold text-white tracking-tight leading-[0.95] mb-6"
           >
-            Discover the
+            {line1}
             <br />
-            <span className="text-shimmer">Himalayas</span>
+            <span className="text-shimmer">{line2}</span>
             <br />
-            <span className="font-hand text-shimmer text-[0.85em]">Like Never Before</span>
+            <span className="font-hand text-shimmer text-[0.85em]">{line3}</span>
           </motion.h1>
 
           {/* Supporting Content */}
@@ -143,7 +166,7 @@ export const HeroSection: React.FC = () => {
             transition={{ duration: 0.6, delay: 0.5 }}
             className="text-sm sm:text-base text-white/60 max-w-xl leading-relaxed mb-10"
           >
-            Curated Himalayan journeys, high altitude trekking expeditions, custom domestic & international tour packages, and trusted cab services — all from our mountain headquarters in Shimla.
+            {subtitle}
           </motion.p>
 
           {/* CTAs */}

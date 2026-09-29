@@ -1,14 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { ADMIN_CREDENTIALS, setAdminSession, clearAdminSession, verifyAdminSession } from "../../../lib/auth";
+import { checkCredentials, setAdminSession, clearAdminSession, verifyAdminSession } from "@/lib/auth";
 
 export async function POST(req: NextRequest) {
   try {
     const { username, password } = await req.json();
 
-    if (
-      username === ADMIN_CREDENTIALS.username &&
-      password === ADMIN_CREDENTIALS.password
-    ) {
+    if (typeof username === "string" && typeof password === "string" && (await checkCredentials(username, password))) {
       await setAdminSession();
       return NextResponse.json({ success: true, message: "Authenticated successfully" });
     }
@@ -17,7 +14,7 @@ export async function POST(req: NextRequest) {
       { error: "Invalid administrator credentials" },
       { status: 401 }
     );
-  } catch (err) {
+  } catch {
     return NextResponse.json({ error: "Authentication failed" }, { status: 500 });
   }
 }

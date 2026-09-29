@@ -1,6 +1,7 @@
 import React from "react";
 import { Metadata } from "next";
 import { Breadcrumbs } from "@/components/navigation/Breadcrumbs";
+import { getSiteSettings } from "@/lib/cms/store";
 
 export const metadata: Metadata = {
   title: "Terms & Conditions | Rucksack Adventures",
@@ -8,7 +9,8 @@ export const metadata: Metadata = {
     "Read the terms and conditions governing bookings, cancellations, and travel services provided by Rucksack Adventures.",
 };
 
-export default function TermsPage() {
+export default async function TermsPage() {
+  const settings = await getSiteSettings();
   return (
     <div className="pt-24 pb-20 bg-brand-cream">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -128,9 +130,9 @@ export default function TermsPage() {
             </p>
             <p className="mt-2">
               <strong className="text-brand-dark">Rucksack Adventures</strong><br />
-              Chotta Shimla to Kusumpti Rd, SDA Complex, Kasumpti, Shimla, Himachal Pradesh 171009<br />
-              Email: info@rucksackadventures.com<br />
-              Phone: 7018678064
+              {settings.address}<br />
+              Email: {settings.email}<br />
+              Phone: {settings.phone}
             </p>
           </section>
         </div>

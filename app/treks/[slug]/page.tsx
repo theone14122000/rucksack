@@ -7,12 +7,16 @@ import { Breadcrumbs } from "@/components/navigation/Breadcrumbs";
 import { getTrekImage } from "@/lib/utils/images";
 import { TrekCard } from "@/components/cards/TrekCard";
 import { EnquiryForm } from "@/components/ui/EnquiryForm";
-import { getTrekBySlug, getTreks } from "@/lib/cms/store";
+import { RichText } from "@/components/ui/RichText";
+import { getTrekBySlug, getTreks, getSiteSettings } from "@/lib/cms/store";
+import { waHref } from "@/lib/contact-links";
+import { verifyAdminSession } from "@/lib/auth";
 
 export const revalidate = 0;
 
 interface TrekPageProps {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<{ preview?: string }>;
 }
 
 export async function generateMetadata({ params }: TrekPageProps): Promise<Metadata> {
@@ -30,15 +34,17 @@ export async function generateMetadata({ params }: TrekPageProps): Promise<Metad
   };
 }
 
-export default async function TrekDetailPage({ params }: TrekPageProps) {
+export default async function TrekDetailPage({ params, searchParams }: TrekPageProps) {
   const { slug } = await params;
-  const trek = await getTrekBySlug(slug);
+  const { preview } = await searchParams;
+  const canPreview = Boolean(preview) && (await verifyAdminSession());
+  const trek = await getTrekBySlug(slug, { includeHidden: canPreview });
 
   if (!trek) {
     notFound();
   }
 
-  const allTreks = await getTreks();
+  const [allTreks, settings] = await Promise.all([getTreks(), getSiteSettings()]);
   const relatedTreks = allTreks.filter((t) => t.id !== trek.id).slice(0, 3);
 
   return (
@@ -80,7 +86,7 @@ export default async function TrekDetailPage({ params }: TrekPageProps) {
         <div className="mb-10 sm:mb-14 rounded-card-lg overflow-hidden border border-brand-gold/15 shadow-2xl">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={getTrekImage(trek.slug)}
+            src={trek.heroImage || getTrekImage(trek.slug)}
             alt={trek.name}
             className="w-full h-auto object-cover aspect-[16/9] sm:aspect-[21/9]"
             loading="lazy"
@@ -94,9 +100,9 @@ export default async function TrekDetailPage({ params }: TrekPageProps) {
               <h2 className="font-editorial text-2xl sm:text-3xl font-bold text-brand-cream">
                 Expedition Overview
               </h2>
-              <p className="text-sm sm:text-base text-brand-cream/75 leading-relaxed whitespace-pre-line">
-                {trek.overview}
-              </p>
+              <div className="text-sm sm:text-base text-brand-cream/75 leading-relaxed">
+                <RichText value={trek.overview} />
+              </div>
             </section>
 
             <section className="space-y-6">
@@ -246,9 +252,7 @@ export default async function TrekDetailPage({ params }: TrekPageProps) {
                   Book This Expedition
                 </a>
                 <a
-                  href={`https://wa.me/917018678064?text=Hello%20Rucksack%20Adventures%2C%20I%20am%20enquiring%20about%20the%20${encodeURIComponent(
-                    trek.name
-                  )}%20trek`}
+                  href={waHref(settings.whatsapp, `Hello Rucksack Adventures, I am enquiring about the ${trek.name} trek`)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full py-3 px-4 rounded-card bg-[#25D366] text-white text-xs font-semibold uppercase tracking-wider text-center block hover:bg-[#1EBE5D] transition-colors"

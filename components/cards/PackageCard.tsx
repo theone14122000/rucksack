@@ -5,15 +5,18 @@ import Link from "next/link";
 import { Clock, MapPin, ArrowRight, MessageCircle } from "lucide-react";
 import { Package } from "@/lib/cms/types";
 import { getPackageImage } from "@/lib/utils/images";
+import { useContactSettings, waHref } from "@/components/cms/SettingsProvider";
 
 interface PackageCardProps {
   pkg: Package;
 }
 
-const WHATSAPP_NUMBER = "917018678064";
-
 export const PackageCard: React.FC<PackageCardProps> = ({ pkg }) => {
-  const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Hello Rucksack Adventures! I'm interested in the "${pkg.title}" adventure. Please share the details and itinerary.`)}`;
+  const contact = useContactSettings();
+  const whatsappUrl = waHref(
+    contact.whatsappWaLink,
+    `Hello Rucksack Adventures! I'm interested in the "${pkg.title}" adventure. Please share the details and itinerary.`
+  );
 
   return (
     <div className="group bg-white rounded-card-2xl overflow-hidden flex flex-col justify-between transition-all duration-500 hover:shadow-luxury-hover hover:-translate-y-1 border border-brand-turquoise/5 hover:border-brand-turquoise/12">
@@ -21,7 +24,7 @@ export const PackageCard: React.FC<PackageCardProps> = ({ pkg }) => {
         <div className="relative overflow-hidden aspect-[16/10]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={getPackageImage(pkg.slug)}
+            src={pkg.heroImage || getPackageImage(pkg.slug)}
             alt={pkg.title}
             className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
             loading="lazy"

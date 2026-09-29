@@ -19,7 +19,7 @@ export const DestinationCard: React.FC<DestinationCardProps> = ({ destination })
       <div className="relative overflow-hidden aspect-[4/3]">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={getDestinationImage(destination.slug)}
+          src={destination.heroImage || getDestinationImage(destination.slug)}
           alt={destination.name}
           className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
           loading="lazy"

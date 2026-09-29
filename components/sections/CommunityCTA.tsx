@@ -1,15 +1,15 @@
 import React from "react";
 import { Users } from "lucide-react";
-import { initialSiteSettings } from "@/lib/cms/seed-data";
+import { getSiteSettings } from "@/lib/cms/store";
 
-const socials = [
-  { href: initialSiteSettings.socialLinks.instagram, label: "Instagram" },
-  { href: initialSiteSettings.socialLinks.facebook, label: "Facebook" },
-  { href: initialSiteSettings.socialLinks.youtube ?? "", label: "YouTube" },
-  { href: initialSiteSettings.socialLinks.linkedin ?? "", label: "LinkedIn" },
-].filter((s) => s.href);
-
-export const CommunityCTA: React.FC = () => {
+export const CommunityCTA: React.FC = async () => {
+  const settings = await getSiteSettings();
+  const socials = [
+    { href: settings.socialLinks.instagram, label: "Instagram" },
+    { href: settings.socialLinks.facebook, label: "Facebook" },
+    { href: settings.socialLinks.youtube ?? "", label: "YouTube" },
+    { href: settings.socialLinks.linkedin ?? "", label: "LinkedIn" },
+  ].filter((s) => s.href);
   return (
     <div className="text-center max-w-2xl mx-auto space-y-4">
       <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-brand-turquoise">

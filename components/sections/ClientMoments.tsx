@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { Camera, ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const MOMENT_IMAGES = [
+const DEFAULT_MOMENT_IMAGES = [
   "/gallery/gallery1.jpg",
   "/gallery/gallery2.jpg",
   "/gallery/gallery3.jpg",
@@ -18,7 +18,7 @@ const MOMENT_IMAGES = [
   "/gallery/galler10.jpg",
 ];
 
-const TOTAL = MOMENT_IMAGES.length;
+
 const AUTOPLAY_MS = 2000; // required: auto-advance exactly every 2 seconds
 const TRANSITION_MS = 550; // slide animation (must stay under AUTOPLAY_MS)
 const SNAP_MS = 40; // micro-delay used for seamless backward-loop jumps
@@ -40,7 +40,9 @@ function getVisibleCount(): number {
   return 1;
 }
 
-export const ClientMoments: React.FC = () => {
+export const ClientMoments: React.FC<{ images?: string[] }> = ({ images }) => {
+  const MOMENT_IMAGES = images && images.length > 0 ? images : DEFAULT_MOMENT_IMAGES;
+  const TOTAL = MOMENT_IMAGES.length;
   const [visible, setVisible] = useState(1);
   const [index, setIndex] = useState(0);
   const [instant, setInstant] = useState(false);
@@ -67,7 +69,7 @@ export const ClientMoments: React.FC = () => {
       if (typeof document !== "undefined" && document.hidden) return;
       setIndex((i) => (i >= TOTAL ? TOTAL : i + 1));
     }, AUTOPLAY_MS);
-  }, [stopAutoplay]);
+  }, [stopAutoplay, TOTAL]);
 
   // Mount: responsive listener + start the ONE autoplay timer.
   // Unmount: clear it. Runs once (TOTAL is a stable module constant).
@@ -80,7 +82,7 @@ export const ClientMoments: React.FC = () => {
       stopAutoplay();
       window.removeEventListener("resize", onResize);
     };
-  }, [startAutoplay, stopAutoplay]);
+  }, [startAutoplay, stopAutoplay, TOTAL]);
 
   // Snap from the trailing clones back to the real first slide (no visual jump).
   useEffect(() => {
@@ -96,7 +98,7 @@ export const ClientMoments: React.FC = () => {
   const goNext = useCallback(() => {
     setInstant(false);
     setIndex((i) => (i >= TOTAL ? TOTAL : i + 1));
-  }, []);
+  }, [TOTAL]);
 
   const goPrev = useCallback(() => {
     const current = indexRef.current;
@@ -113,7 +115,7 @@ export const ClientMoments: React.FC = () => {
         setIndex(TOTAL - 1);
       }, SNAP_MS);
     }
-  }, []);
+  }, [TOTAL]);
 
   const goTo = useCallback((page: number) => {
     setInstant(false);

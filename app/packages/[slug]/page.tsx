@@ -7,15 +7,17 @@ import { Breadcrumbs } from "@/components/navigation/Breadcrumbs";
 import { getPackageImage } from "@/lib/utils/images";
 import { PackageCard } from "@/components/cards/PackageCard";
 import { EnquiryForm } from "@/components/ui/EnquiryForm";
-import { getPackageBySlug, getPackages } from "@/lib/cms/store";
+import { RichText } from "@/components/ui/RichText";
+import { getPackageBySlug, getPackages, getSiteSettings } from "@/lib/cms/store";
+import { waHref } from "@/lib/contact-links";
+import { verifyAdminSession } from "@/lib/auth";
 
 export const revalidate = 0;
 
 interface PackagePageProps {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<{ preview?: string }>;
 }
-
-const WHATSAPP_NUMBER = "917018678064";
 
 export async function generateMetadata({ params }: PackagePageProps): Promise<Metadata> {
   const { slug } = await params;
@@ -32,22 +34,25 @@ export async function generateMetadata({ params }: PackagePageProps): Promise<Me
   };
 }
 
-export default async function PackageDetailPage({ params }: PackagePageProps) {
+export default async function PackageDetailPage({ params, searchParams }: PackagePageProps) {
   const { slug } = await params;
-  const pkg = await getPackageBySlug(slug);
+  const { preview } = await searchParams;
+  const canPreview = Boolean(preview) && (await verifyAdminSession());
+  const pkg = await getPackageBySlug(slug, { includeHidden: canPreview });
 
   if (!pkg) {
     notFound();
   }
 
-  const allPackages = await getPackages();
+  const [allPackages, settings] = await Promise.all([getPackages(), getSiteSettings()]);
   const relatedPackages = allPackages
     .filter((p) => p.id !== pkg.id)
     .slice(0, 3);
 
-  const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+  const whatsappUrl = waHref(
+    settings.whatsapp,
     `Hello Rucksack Adventures! I'm interested in the "${pkg.title}" adventure. Please share the details and itinerary.`
-  )}`;
+  );
 
   return (
     <div className="pt-24 pb-20 bg-brand-cream">
@@ -87,7 +92,7 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
         <div className="mb-10 sm:mb-14 rounded-card-lg overflow-hidden border border-brand-turquoise/12 shadow-luxury">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={getPackageImage(pkg.slug)}
+            src={pkg.heroImage || getPackageImage(pkg.slug)}
             alt={pkg.title}
             className="w-full h-auto object-cover aspect-[16/9] sm:aspect-[21/9]"
             loading="lazy"
@@ -102,9 +107,9 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
               <h2 className="font-editorial text-2xl sm:text-3xl font-bold text-brand-dark">
                 Journey Overview
               </h2>
-              <p className="text-sm sm:text-base text-brand-dark/80 leading-relaxed whitespace-pre-line">
-                {pkg.overview}
-              </p>
+              <div className="text-sm sm:text-base text-brand-dark/80 leading-relaxed">
+                <RichText value={pkg.overview} />
+              </div>
             </section>
 
             <section className="space-y-6">

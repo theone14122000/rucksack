@@ -3,6 +3,7 @@ import { Metadata } from "next";
 import { Sparkles, CheckCircle2, ArrowRight } from "lucide-react";
 import { Breadcrumbs } from "@/components/navigation/Breadcrumbs";
 import { EnquiryForm } from "@/components/ui/EnquiryForm";
+import { RichText } from "@/components/ui/RichText";
 import { getExperiences } from "@/lib/cms/store";
 
 export const metadata: Metadata = {
@@ -53,9 +54,9 @@ export default async function ExperiencesPage() {
                   {exp.name}
                 </h2>
 
-                <p className="text-xs sm:text-sm text-brand-dark/80 leading-relaxed">
-                  {exp.fullDescription}
-                </p>
+                <div className="text-xs sm:text-sm text-brand-dark/80 leading-relaxed">
+                  <RichText value={exp.fullDescription} />
+                </div>
 
                 <div className="pt-4 border-t border-brand-turquoise/20 space-y-2">
                   <span className="text-[11px] font-semibold uppercase tracking-wider text-brand-dark block">

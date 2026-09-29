@@ -15,18 +15,18 @@ import {
   getLevelLabel,
   type AdventureLevelKey,
 } from "@/lib/activities";
+import { useContactSettings, waHref } from "@/components/cms/SettingsProvider";
 
 type Filter = "all" | AdventureLevelKey;
 
 const levelBadge: Record<AdventureLevelKey, string> = {
   basic: "bg-emerald-50 text-emerald-700 border-emerald-200",
-  moderate: "bg-brand-yellow-50 text-amber-700 border-amber-200",
+  moderate: "bg-brand-yellow-50 text-amber-700 border-brand-yellow",
   extreme: "bg-rose-50 text-rose-700 border-rose-200",
 };
 
-const WHATSAPP_NUMBER = "917018678064";
-
 export const ActivitiesExplorer: React.FC = () => {
+  const contact = useContactSettings();
   const [filter, setFilter] = useState<Filter>("all");
   const [expanded, setExpanded] = useState<string | null>(null);
   const [enquiryActivity, setEnquiryActivity] = useState<string | null>(null);
@@ -68,9 +68,10 @@ export const ActivitiesExplorer: React.FC = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
         {visible.map((activity) => {
           const isOpen = expanded === activity.slug;
-          const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+          const whatsappUrl = waHref(
+            contact.whatsappWaLink,
             `Hello Rucksack Adventures! I'm interested in the "${activity.name}" activity (${getLevelLabel(activity.level)}). Please share the details.`
-          )}`;
+          );
           return (
             <div
               key={activity.slug}

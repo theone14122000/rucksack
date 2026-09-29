@@ -7,13 +7,16 @@ import { getDestinationImage } from "@/lib/utils/images";
 import { PackageCard } from "@/components/cards/PackageCard";
 import { TrekCard } from "@/components/cards/TrekCard";
 import { EnquiryForm } from "@/components/ui/EnquiryForm";
+import { RichText } from "@/components/ui/RichText";
 import { getDestinationBySlug, getPackages, getTreks } from "@/lib/cms/store";
 import { getTouristDestinationSchema } from "@/lib/seo";
+import { verifyAdminSession } from "@/lib/auth";
 
 export const revalidate = 0;
 
 interface DestinationPageProps {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<{ preview?: string }>;
 }
 
 export async function generateMetadata({ params }: DestinationPageProps): Promise<Metadata> {
@@ -31,9 +34,11 @@ export async function generateMetadata({ params }: DestinationPageProps): Promis
   };
 }
 
-export default async function DestinationDetailPage({ params }: DestinationPageProps) {
+export default async function DestinationDetailPage({ params, searchParams }: DestinationPageProps) {
   const { slug } = await params;
-  const destination = await getDestinationBySlug(slug);
+  const { preview } = await searchParams;
+  const canPreview = Boolean(preview) && (await verifyAdminSession());
+  const destination = await getDestinationBySlug(slug, { includeHidden: canPreview });
 
   if (!destination) {
     notFound();
@@ -94,7 +99,7 @@ export default async function DestinationDetailPage({ params }: DestinationPageP
           <div className="mb-10 sm:mb-14 rounded-card overflow-hidden border border-brand-turquoise/30 shadow-luxury">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={getDestinationImage(destination.slug)}
+              src={destination.heroImage || getDestinationImage(destination.slug)}
               alt={destination.name}
               className="w-full h-auto object-cover aspect-[16/9] sm:aspect-[21/9]"
               loading="lazy"
@@ -107,9 +112,9 @@ export default async function DestinationDetailPage({ params }: DestinationPageP
               <h2 className="font-editorial text-2xl sm:text-3xl font-bold text-brand-dark">
                 The Essence of {destination.name}
               </h2>
-              <p className="text-sm sm:text-base text-brand-dark/85 leading-relaxed">
-                {destination.fullDescription}
-              </p>
+              <div className="text-sm sm:text-base text-brand-dark/85 leading-relaxed">
+                <RichText value={destination.fullDescription} />
+              </div>
 
               <div className="pt-4">
                 <h3 className="text-xs font-semibold uppercase tracking-widest text-brand-turquoise mb-4">

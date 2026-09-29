@@ -9,6 +9,9 @@ import { GalleryGrid } from "@/components/gallery/GalleryGrid";
 import { CommunityCTA } from "@/components/sections/CommunityCTA";
 import { Reveal } from "@/components/ui/Reveal";
 import { galleryImages, type GalleryImage } from "@/lib/gallery-data";
+import { getGalleryItems } from "@/lib/cms/store";
+
+export const revalidate = 0;
 
 export const metadata: Metadata = {
   title: "Gallery",
@@ -17,13 +20,24 @@ export const metadata: Metadata = {
 };
 
 /**
- * Resolve which gallery files actually exist in /public/gallery at build time.
- * Missing files get src: "" so the client renders a themed placeholder instead
- * of a broken image. Dropping real files into public/gallery + redeploying
- * makes them appear automatically.
+ * CMS gallery items take priority (editable in /admin/gallery). Files that do
+ * not exist get src: "" so the client renders a themed placeholder instead of
+ * a broken image. When the CMS has no items we fall back to probing the
+ * static files in /public/gallery at request time.
  */
-function resolveGalleryImages(): GalleryImage[] {
+async function resolveGalleryImages(): Promise<GalleryImage[]> {
   const dir = path.join(process.cwd(), "public", "gallery");
+  const items = await getGalleryItems();
+  if (items.length > 0) {
+    return items.map((item, i) => {
+      const file = path.join(process.cwd(), "public", item.src.replace(/^\/+/, ""));
+      return {
+        id: i + 1,
+        src: fs.existsSync(file) ? item.src : "",
+        alt: item.alt || `Rucksack Adventures moment ${i + 1}`,
+      };
+    });
+  }
   return galleryImages.map((image) => {
     const base = `gallery${image.id}`;
     if (fs.existsSync(path.join(dir, `${base}.jpeg`))) return image;
@@ -33,7 +47,8 @@ function resolveGalleryImages(): GalleryImage[] {
   });
 }
 
-export default function GalleryPage() {
+export default async function GalleryPage() {
+  const images = await resolveGalleryImages();
   return (
     <>
       {/* Page Hero */}
@@ -74,7 +89,7 @@ export default function GalleryPage() {
               </p>
             </div>
           </Reveal>
-          <GalleryGrid images={resolveGalleryImages()} />
+          <GalleryGrid images={images} />
         </div>
       </section>
 

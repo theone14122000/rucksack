@@ -9,6 +9,10 @@ import {
   FAQ,
   Enquiry,
   SiteSettings,
+  GalleryItem,
+  Service,
+  ContentBlock,
+  PublishStatus,
 } from "./types";
 import {
   initialSiteSettings,
@@ -18,6 +22,9 @@ import {
   initialExperiences,
   initialTestimonials,
   initialFAQs,
+  initialGallery,
+  initialServices,
+  initialContent,
 } from "./seed-data";
 
 interface CMSDatabase {
@@ -29,10 +36,19 @@ interface CMSDatabase {
   testimonials: Testimonial[];
   faqs: FAQ[];
   enquiries: Enquiry[];
+  gallery: GalleryItem[];
+  services: Service[];
+  content: ContentBlock[];
 }
 
 const DATA_DIR = path.join(process.cwd(), ".data");
 const DATA_FILE = path.join(DATA_DIR, "cms.json");
+
+export type StatusFilter = "published" | "all";
+
+interface ListFilter {
+  status?: StatusFilter;
+}
 
 function getDefaultData(): CMSDatabase {
   return {
@@ -73,10 +89,23 @@ function getDefaultData(): CMSDatabase {
         createdAt: "2026-03-02T14:15:00.000Z",
       },
     ],
+    gallery: initialGallery,
+    services: initialServices,
+    content: initialContent,
   };
 }
 
 let memoryDb: CMSDatabase | null = null;
+
+function migrate(data: Partial<CMSDatabase>): CMSDatabase {
+  const full = { ...getDefaultData(), ...data } as CMSDatabase;
+  if (!Array.isArray(full.gallery)) full.gallery = [...initialGallery];
+  if (!Array.isArray(full.services)) full.services = [...initialServices];
+  if (!Array.isArray(full.content)) full.content = [...initialContent];
+  if (!full.settings || typeof full.settings !== "object") full.settings = initialSiteSettings;
+  if (!Array.isArray(full.enquiries)) full.enquiries = [];
+  return full;
+}
 
 function loadDatabase(): CMSDatabase {
   if (memoryDb) return memoryDb;
@@ -84,7 +113,7 @@ function loadDatabase(): CMSDatabase {
   try {
     if (fs.existsSync(DATA_FILE)) {
       const raw = fs.readFileSync(DATA_FILE, "utf-8");
-      memoryDb = JSON.parse(raw);
+      memoryDb = migrate(JSON.parse(raw));
       return memoryDb!;
     }
   } catch (err) {
@@ -109,6 +138,22 @@ function saveDatabase(data: CMSDatabase) {
   }
 }
 
+// ============ VISIBILITY / ORDERING HELPERS ============
+export function isVisible(item: { status?: PublishStatus }): boolean {
+  return !item.status || item.status === "published";
+}
+
+function applyStatus<T extends { status?: PublishStatus }>(list: T[], filter?: ListFilter): T[] {
+  if (filter?.status === "all") return list;
+  return list.filter(isVisible);
+}
+
+function sortByOrder<T extends { order?: number }>(list: T[]): T[] {
+  return [...list].sort(
+    (a, b) => (a.order ?? Number.MAX_SAFE_INTEGER) - (b.order ?? Number.MAX_SAFE_INTEGER)
+  );
+}
+
 // ============ SITE SETTINGS ============
 export async function getSiteSettings(): Promise<SiteSettings> {
   const db = loadDatabase();
@@ -123,21 +168,29 @@ export async function updateSiteSettings(settings: Partial<SiteSettings>): Promi
 }
 
 // ============ DESTINATIONS ============
-export async function getDestinations(filter?: { isDomestic?: boolean; featured?: boolean }): Promise<Destination[]> {
+export async function getDestinations(
+  filter?: { isDomestic?: boolean; featured?: boolean } & ListFilter
+): Promise<Destination[]> {
   const db = loadDatabase();
-  let list = db.destinations;
+  let list = applyStatus(db.destinations, filter);
   if (filter?.isDomestic !== undefined) {
     list = list.filter((d) => d.isDomestic === filter.isDomestic);
   }
   if (filter?.featured !== undefined) {
     list = list.filter((d) => d.featured === filter.featured);
   }
-  return list;
+  return sortByOrder(list);
 }
 
-export async function getDestinationBySlug(slug: string): Promise<Destination | null> {
+export async function getDestinationBySlug(
+  slug: string,
+  opts?: { includeHidden?: boolean }
+): Promise<Destination | null> {
   const db = loadDatabase();
-  return db.destinations.find((d) => d.slug === slug) || null;
+  const found = db.destinations.find((d) => d.slug === slug);
+  if (!found) return null;
+  if (!opts?.includeHidden && !isVisible(found)) return null;
+  return found;
 }
 
 export async function upsertDestination(dest: Destination): Promise<Destination> {
@@ -164,9 +217,11 @@ export async function deleteDestination(id: string): Promise<boolean> {
 }
 
 // ============ PACKAGES ============
-export async function getPackages(filter?: { destinationSlug?: string; featured?: boolean; isInternational?: boolean }): Promise<Package[]> {
+export async function getPackages(
+  filter?: { destinationSlug?: string; featured?: boolean; isInternational?: boolean } & ListFilter
+): Promise<Package[]> {
   const db = loadDatabase();
-  let list = db.packages;
+  let list = applyStatus(db.packages, filter);
   if (filter?.destinationSlug) {
     list = list.filter((p) => p.destinationSlug === filter.destinationSlug);
   }
@@ -176,12 +231,18 @@ export async function getPackages(filter?: { destinationSlug?: string; featured?
   if (filter?.isInternational !== undefined) {
     list = list.filter((p) => p.isInternational === filter.isInternational);
   }
-  return list;
+  return sortByOrder(list);
 }
 
-export async function getPackageBySlug(slug: string): Promise<Package | null> {
+export async function getPackageBySlug(
+  slug: string,
+  opts?: { includeHidden?: boolean }
+): Promise<Package | null> {
   const db = loadDatabase();
-  return db.packages.find((p) => p.slug === slug) || null;
+  const found = db.packages.find((p) => p.slug === slug);
+  if (!found) return null;
+  if (!opts?.includeHidden && !isVisible(found)) return null;
+  return found;
 }
 
 export async function upsertPackage(pkg: Package): Promise<Package> {
@@ -208,21 +269,29 @@ export async function deletePackage(id: string): Promise<boolean> {
 }
 
 // ============ TREKS ============
-export async function getTreks(filter?: { featured?: boolean; difficulty?: string }): Promise<Trek[]> {
+export async function getTreks(
+  filter?: { featured?: boolean; difficulty?: string } & ListFilter
+): Promise<Trek[]> {
   const db = loadDatabase();
-  let list = db.treks;
+  let list = applyStatus(db.treks, filter);
   if (filter?.featured !== undefined) {
     list = list.filter((t) => t.featured === filter.featured);
   }
   if (filter?.difficulty) {
     list = list.filter((t) => t.difficulty.toLowerCase() === filter.difficulty?.toLowerCase());
   }
-  return list;
+  return sortByOrder(list);
 }
 
-export async function getTrekBySlug(slug: string): Promise<Trek | null> {
+export async function getTrekBySlug(
+  slug: string,
+  opts?: { includeHidden?: boolean }
+): Promise<Trek | null> {
   const db = loadDatabase();
-  return db.treks.find((t) => t.slug === slug) || null;
+  const found = db.treks.find((t) => t.slug === slug);
+  if (!found) return null;
+  if (!opts?.includeHidden && !isVisible(found)) return null;
+  return found;
 }
 
 export async function upsertTrek(trek: Trek): Promise<Trek> {
@@ -249,9 +318,20 @@ export async function deleteTrek(id: string): Promise<boolean> {
 }
 
 // ============ EXPERIENCES ============
-export async function getExperiences(): Promise<Experience[]> {
+export async function getExperiences(filter?: ListFilter): Promise<Experience[]> {
   const db = loadDatabase();
-  return db.experiences;
+  return sortByOrder(applyStatus(db.experiences, filter));
+}
+
+export async function getExperienceBySlug(
+  slug: string,
+  opts?: { includeHidden?: boolean }
+): Promise<Experience | null> {
+  const db = loadDatabase();
+  const found = db.experiences.find((e) => e.slug === slug);
+  if (!found) return null;
+  if (!opts?.includeHidden && !isVisible(found)) return null;
+  return found;
 }
 
 export async function upsertExperience(exp: Experience): Promise<Experience> {
@@ -278,9 +358,9 @@ export async function deleteExperience(id: string): Promise<boolean> {
 }
 
 // ============ TESTIMONIALS ============
-export async function getTestimonials(): Promise<Testimonial[]> {
+export async function getTestimonials(filter?: ListFilter): Promise<Testimonial[]> {
   const db = loadDatabase();
-  return db.testimonials;
+  return sortByOrder(applyStatus(db.testimonials, filter));
 }
 
 export async function upsertTestimonial(item: Testimonial): Promise<Testimonial> {
@@ -307,12 +387,13 @@ export async function deleteTestimonial(id: string): Promise<boolean> {
 }
 
 // ============ FAQS ============
-export async function getFAQs(category?: string): Promise<FAQ[]> {
+export async function getFAQs(category?: string, filter?: ListFilter): Promise<FAQ[]> {
   const db = loadDatabase();
+  let list = applyStatus(db.faqs, filter);
   if (category) {
-    return db.faqs.filter((f) => f.category === category);
+    list = list.filter((f) => f.category === category);
   }
-  return db.faqs;
+  return sortByOrder(list);
 }
 
 export async function upsertFAQ(item: FAQ): Promise<FAQ> {
@@ -336,6 +417,102 @@ export async function deleteFAQ(id: string): Promise<boolean> {
     return true;
   }
   return false;
+}
+
+// ============ GALLERY ============
+export async function getGalleryItems(
+  filter?: { featured?: boolean } & ListFilter
+): Promise<GalleryItem[]> {
+  const db = loadDatabase();
+  let list = applyStatus(db.gallery, filter);
+  if (filter?.featured !== undefined) {
+    list = list.filter((g) => g.featured === filter.featured);
+  }
+  return sortByOrder(list);
+}
+
+export async function upsertGalleryItem(item: GalleryItem): Promise<GalleryItem> {
+  const db = loadDatabase();
+  const idx = db.gallery.findIndex((g) => g.id === item.id);
+  if (idx >= 0) {
+    db.gallery[idx] = { ...db.gallery[idx], ...item, updatedAt: new Date().toISOString() };
+  } else {
+    db.gallery.push({ ...item, createdAt: item.createdAt || new Date().toISOString(), updatedAt: new Date().toISOString() });
+  }
+  saveDatabase(db);
+  return item;
+}
+
+export async function deleteGalleryItem(id: string): Promise<boolean> {
+  const db = loadDatabase();
+  const lenBefore = db.gallery.length;
+  db.gallery = db.gallery.filter((g) => g.id !== id);
+  if (db.gallery.length !== lenBefore) {
+    saveDatabase(db);
+    return true;
+  }
+  return false;
+}
+
+// ============ SERVICES ============
+export async function getServices(filter?: ListFilter): Promise<Service[]> {
+  const db = loadDatabase();
+  return sortByOrder(applyStatus(db.services, filter));
+}
+
+export async function upsertService(item: Service): Promise<Service> {
+  const db = loadDatabase();
+  const idx = db.services.findIndex((s) => s.id === item.id);
+  if (idx >= 0) {
+    db.services[idx] = item;
+  } else {
+    db.services.push(item);
+  }
+  saveDatabase(db);
+  return item;
+}
+
+export async function deleteService(id: string): Promise<boolean> {
+  const db = loadDatabase();
+  const lenBefore = db.services.length;
+  db.services = db.services.filter((s) => s.id !== id);
+  if (db.services.length !== lenBefore) {
+    saveDatabase(db);
+    return true;
+  }
+  return false;
+}
+
+// ============ CONTENT BLOCKS ============
+export async function getContentBlocks(): Promise<ContentBlock[]> {
+  const db = loadDatabase();
+  return db.content;
+}
+
+export async function getContentMap(): Promise<Record<string, string>> {
+  const db = loadDatabase();
+  const map: Record<string, string> = {};
+  for (const block of db.content) {
+    map[block.key] = block.value;
+  }
+  return map;
+}
+
+export async function updateContentBlocks(
+  blocks: { key: string; value: string }[]
+): Promise<ContentBlock[]> {
+  const db = loadDatabase();
+  const now = new Date().toISOString();
+  for (const block of blocks) {
+    const idx = db.content.findIndex((c) => c.key === block.key);
+    if (idx >= 0) {
+      db.content[idx] = { ...db.content[idx], value: block.value, updatedAt: now };
+    } else {
+      db.content.push({ key: block.key, value: block.value, updatedAt: now });
+    }
+  }
+  saveDatabase(db);
+  return db.content;
 }
 
 // ============ ENQUIRIES ============
@@ -379,4 +556,69 @@ export async function deleteEnquiry(id: string): Promise<boolean> {
     return true;
   }
   return false;
+}
+
+// ============ ADMIN HELPERS ============
+export type CollectionType =
+  | "destination"
+  | "package"
+  | "trek"
+  | "experience"
+  | "testimonial"
+  | "faq"
+  | "gallery"
+  | "service";
+
+const COLLECTION_KEYS: Record<CollectionType, keyof CMSDatabase> = {
+  destination: "destinations",
+  package: "packages",
+  trek: "treks",
+  experience: "experiences",
+  testimonial: "testimonials",
+  faq: "faqs",
+  gallery: "gallery",
+  service: "services",
+};
+
+export function slugExists(type: CollectionType, slug: string, excludeId?: string): boolean {
+  const db = loadDatabase();
+  const key = COLLECTION_KEYS[type];
+  const list = db[key] as { id: string; slug?: string }[] | undefined;
+  if (!Array.isArray(list)) return false;
+  return list.some((item) => item.slug === slug && item.id !== excludeId);
+}
+
+export async function reorderItems(
+  type: CollectionType,
+  items: { id: string; order: number }[]
+): Promise<boolean> {
+  const db = loadDatabase();
+  const key = COLLECTION_KEYS[type];
+  const list = db[key] as unknown as ({ id: string; order?: number }[]) | undefined;
+  if (!Array.isArray(list)) return false;
+  for (const pair of items) {
+    const item = list.find((i) => i.id === pair.id);
+    if (item) item.order = pair.order;
+  }
+  saveDatabase(db);
+  return true;
+}
+
+/** Scans all content collections for references to a media URL. */
+export function findMediaUsage(url: string): string | null {
+  const db = loadDatabase();
+  const collections: [string, unknown[]][] = [
+    ["Gallery", db.gallery],
+    ["Packages", db.packages],
+    ["Destinations", db.destinations],
+    ["Treks", db.treks],
+    ["Experiences", db.experiences],
+    ["Services", db.services],
+    ["Content", db.content],
+    ["Settings", [db.settings]],
+  ];
+  for (const [name, items] of collections) {
+    if (JSON.stringify(items).includes(url)) return name;
+  }
+  return null;
 }

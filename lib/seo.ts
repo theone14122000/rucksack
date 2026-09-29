@@ -1,14 +1,15 @@
-import { initialSiteSettings } from "./cms/seed-data";
+import { getSiteSettings } from "./cms/store";
 
-export function getLocalBusinessSchema() {
+export async function getLocalBusinessSchema() {
+  const settings = await getSiteSettings();
   return {
     "@context": "https://schema.org",
     "@type": ["TravelAgency", "LocalBusiness"],
-    name: initialSiteSettings.brandName,
-    description: initialSiteSettings.seoDefaults.description,
+    name: settings.brandName,
+    description: settings.seoDefaults.description,
     url: "https://rucksackadventures.com",
-    telephone: initialSiteSettings.phone,
-    email: initialSiteSettings.email,
+    telephone: settings.phone,
+    email: settings.email,
     address: {
       "@type": "PostalAddress",
       streetAddress: "Chotta Shimla to Kusumpti Rd, SDA Complex, Kasumpti",
@@ -24,8 +25,8 @@ export function getLocalBusinessSchema() {
     },
     aggregateRating: {
       "@type": "AggregateRating",
-      ratingValue: initialSiteSettings.rating.toString(),
-      reviewCount: initialSiteSettings.ratingsCount.toString(),
+      ratingValue: settings.rating.toString(),
+      reviewCount: settings.ratingsCount.toString(),
       bestRating: "5",
       worstRating: "1",
     },
@@ -46,10 +47,10 @@ export function getLocalBusinessSchema() {
       },
     ],
     sameAs: [
-      initialSiteSettings.socialLinks.instagram,
-      initialSiteSettings.socialLinks.facebook,
-      initialSiteSettings.socialLinks.youtube,
-      initialSiteSettings.socialLinks.linkedin,
+      settings.socialLinks.instagram,
+      settings.socialLinks.facebook,
+      settings.socialLinks.youtube,
+      settings.socialLinks.linkedin,
     ].filter(Boolean),
   };
 }

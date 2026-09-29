@@ -1,4 +1,11 @@
-﻿export interface Destination {
+﻿export type PublishStatus = "published" | "draft" | "archived";
+
+export interface WithPublishMeta {
+  status?: PublishStatus;
+  order?: number;
+}
+
+export interface Destination extends WithPublishMeta {
   id: string;
   name: string;
   slug: string;
@@ -28,7 +35,7 @@ export interface ItineraryItem {
   stay?: string;
 }
 
-export interface Package {
+export interface Package extends WithPublishMeta {
   id: string;
   title: string;
   slug: string;
@@ -51,7 +58,7 @@ export interface Package {
   seoDescription?: string;
 }
 
-export interface Trek {
+export interface Trek extends WithPublishMeta {
   id: string;
   name: string;
   slug: string;
@@ -74,7 +81,7 @@ export interface Trek {
   seoDescription?: string;
 }
 
-export interface Experience {
+export interface Experience extends WithPublishMeta {
   id: string;
   name: string;
   slug: string;
@@ -86,7 +93,7 @@ export interface Experience {
   featured: boolean;
 }
 
-export interface Testimonial {
+export interface Testimonial extends WithPublishMeta {
   id: string;
   customerName: string;
   review: string;
@@ -96,7 +103,7 @@ export interface Testimonial {
   tripType: string;
 }
 
-export interface FAQ {
+export interface FAQ extends WithPublishMeta {
   id: string;
   question: string;
   answer: string;
@@ -131,6 +138,7 @@ export interface SiteSettings {
   rating: number;
   ratingsCount: number;
   curatedJourneysCount: string;
+  footerDescription?: string;
   socialLinks: {
     instagram: string;
     facebook: string;
@@ -141,5 +149,33 @@ export interface SiteSettings {
     title: string;
     description: string;
     keywords: string[];
+    ogDescription?: string;
+    twitterDescription?: string;
   };
+}
+
+export interface GalleryItem extends WithPublishMeta {
+  id: string;
+  src: string;
+  alt: string;
+  caption?: string;
+  credit?: string;
+  featured: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Service extends WithPublishMeta {
+  id: string;
+  icon: string;
+  title: string;
+  description: string;
+  href: string;
+  items: string[];
+}
+
+export interface ContentBlock {
+  key: string;
+  value: string;
+  updatedAt?: string;
 }

@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Mountain, Star, MapPin, Clock } from "lucide-react";
 import { useInView, useReducedMotion } from "framer-motion";
+import { useSiteSettings } from "@/components/cms/SettingsProvider";
 
 interface Stat {
   icon: React.ElementType;
@@ -12,14 +13,6 @@ interface Stat {
   suffix?: string;
   display?: string;
 }
-
-// Values come from the existing site data; only numeric stats animate.
-const stats: Stat[] = [
-  { icon: Mountain, value: 50, suffix: "+", label: "Destinations" },
-  { icon: Star, value: 4.6, decimals: 1, label: "Google Rating" },
-  { icon: MapPin, value: 8, suffix: "+", label: "Years in Shimla" },
-  { icon: Clock, display: "24/7", label: "Service" },
-];
 
 const AnimatedValue: React.FC<{ value: number; decimals?: number; suffix?: string }> = ({
   value,
@@ -53,6 +46,17 @@ const AnimatedValue: React.FC<{ value: number; decimals?: number; suffix?: strin
 };
 
 export const StatsBar: React.FC = () => {
+  const settings = useSiteSettings();
+  const yearsRaw = String(settings?.experienceYears ?? "8+");
+  const yearsValue = parseFloat(yearsRaw);
+  const stats: Stat[] = [
+    { icon: Mountain, value: 50, suffix: "+", label: "Destinations" },
+    { icon: Star, value: settings?.rating ?? 4.6, decimals: 1, label: "Google Rating" },
+    Number.isFinite(yearsValue)
+      ? { icon: MapPin, value: yearsValue, suffix: yearsRaw.includes("+") ? "+" : "", label: "Years in Shimla" }
+      : { icon: MapPin, display: yearsRaw, label: "Years in Shimla" },
+    { icon: Clock, display: "24/7", label: "Service" },
+  ];
   return (
     <section className="relative -mt-1 z-20 bg-white border-b border-brand-turquoise/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

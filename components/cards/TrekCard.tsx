@@ -5,14 +5,14 @@ import Link from "next/link";
 import { Clock, MapPin, ArrowRight, MessageCircle, TrendingUp } from "lucide-react";
 import { Trek } from "@/lib/cms/types";
 import { getTrekImage } from "@/lib/utils/images";
+import { useContactSettings, waHref } from "@/components/cms/SettingsProvider";
 
 interface TrekCardProps {
   trek: Trek;
 }
 
-const WHATSAPP_NUMBER = "917018678064";
-
 export const TrekCard: React.FC<TrekCardProps> = ({ trek }) => {
+  const contact = useContactSettings();
   const difficultyConfig = {
     Easy: { bg: "bg-emerald-50", text: "text-emerald-700", border: "border-emerald-200" },
     Moderate: { bg: "bg-brand-yellow-50", text: "text-amber-700", border: "border-amber-200" },
@@ -20,7 +20,10 @@ export const TrekCard: React.FC<TrekCardProps> = ({ trek }) => {
     Difficult: { bg: "bg-rose-50", text: "text-rose-700", border: "border-rose-200" },
   }[trek.difficulty] || { bg: "bg-brand-cream", text: "text-brand-dark", border: "border-brand-turquoise/10" };
 
-  const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Hello Rucksack Adventures! I'm interested in the "${trek.name}" trek. Please share the details and batch dates.`)}`;
+  const whatsappUrl = waHref(
+    contact.whatsappWaLink,
+    `Hello Rucksack Adventures! I'm interested in the "${trek.name}" trek. Please share the details and batch dates.`
+  );
 
   return (
     <div className="group bg-white rounded-card-2xl overflow-hidden flex flex-col justify-between transition-all duration-500 hover:shadow-luxury-hover hover:-translate-y-1 border border-brand-turquoise/5 hover:border-brand-turquoise/12">
@@ -28,7 +31,7 @@ export const TrekCard: React.FC<TrekCardProps> = ({ trek }) => {
         <div className="relative overflow-hidden aspect-[16/10]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={getTrekImage(trek.slug)}
+            src={trek.heroImage || getTrekImage(trek.slug)}
             alt={trek.name}
             className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
             loading="lazy"

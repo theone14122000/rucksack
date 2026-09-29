@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { Send, CheckCircle2, MessageSquare, AlertCircle, Loader2 } from "lucide-react";
 import { Button } from "./Button";
+import { useContactSettings, waHref } from "@/components/cms/SettingsProvider";
 
 interface EnquiryFormProps {
   defaultDestination?: string;
@@ -32,6 +33,7 @@ export const EnquiryForm: React.FC<EnquiryFormProps> = ({
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const contact = useContactSettings();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -67,7 +69,7 @@ export const EnquiryForm: React.FC<EnquiryFormProps> = ({
 \`Dates: ${formData.travelDate || "Upcoming"}
 \`Name: ${formData.name || "Traveler"}`
     );
-    window.open(`https://wa.me/917018678064?text=${text}`, "_blank");
+    window.open(waHref(contact.whatsappWaLink, text), "_blank");
   };
 
   if (submitted) {

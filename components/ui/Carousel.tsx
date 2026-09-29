@@ -63,7 +63,7 @@ export const Carousel: React.FC<CarouselProps> = ({
   };
 
   return (
-    <div className={cn("relative", className)}>
+    <div className={cn("relative overflow-x-clip", className)}>
       {showArrows && canScrollLeft && (
         <button onClick={() => scroll("left")} className="absolute left-2 sm:left-0 top-1/2 -translate-y-1/2 sm:-translate-x-4 z-20 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white shadow-elevated border border-brand-turquoise/10 flex items-center justify-center text-brand-dark hover:bg-brand-turquoise hover:text-white hover:border-brand-turquoise transition-all duration-300" aria-label="Scroll left">
           <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />

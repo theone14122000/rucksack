@@ -17,19 +17,27 @@ import { HomeActivities } from "@/components/sections/HomeActivities";
 import { WhyChooseUs } from "@/components/sections/WhyChooseUs";
 import { CommunityCTA } from "@/components/sections/CommunityCTA";
 import { InternationalCarousel } from "@/components/sections/InternationalCarousel";
-import { getDestinations, getPackages, getTreks, getExperiences, getTestimonials, getFAQs } from "@/lib/cms/store";
+import { getDestinations, getPackages, getTreks, getExperiences, getTestimonials, getFAQs, getServices, getContentMap, getGalleryItems, getSiteSettings } from "@/lib/cms/store";
+import { waHref } from "@/lib/contact-links";
 
 export const revalidate = 0;
 
 export default async function HomePage() {
-  const [destinations, featuredPackages, featuredTreks, experiences, testimonials, faqs] = await Promise.all([
+  const [destinations, featuredPackages, featuredTreks, experiences, testimonials, faqs, services, content, galleryItems, settings] = await Promise.all([
     getDestinations(),
     getPackages({ featured: true }),
     getTreks({ featured: true }),
     getExperiences(),
     getTestimonials(),
     getFAQs(),
+    getServices(),
+    getContentMap(),
+    getGalleryItems({ featured: true }),
+    getSiteSettings(),
   ]);
+
+  const text = (key: string, fallback: string) => (content[key] ?? fallback);
+  const momentImages = galleryItems.length > 0 ? galleryItems.map((g) => g.src) : undefined;
 
   const domesticDestinations = destinations.filter((d) => d.isDomestic);
   const internationalDestinations = destinations.filter((d) => !d.isDomestic);
@@ -69,7 +77,16 @@ export default async function HomePage() {
   return (
     <div>
       {/* 1. HERO - Auto-Toggle Image Carousel */}
-      <HeroSection />
+      <HeroSection
+        eyebrow={text("home.hero.eyebrow", "Kasumpti, Shimla \u2022 Since 2018")}
+        line1={text("home.hero.line1", "Discover the")}
+        line2={text("home.hero.line2", "Himalayas")}
+        line3={text("home.hero.line3", "Like Never Before")}
+        subtitle={text(
+          "home.hero.subtitle",
+          "Curated Himalayan journeys, high altitude trekking expeditions, custom domestic & international tour packages, and trusted cab services \u2014 all from our mountain headquarters in Shimla."
+        )}
+      />
 
       {/* 2. STATS BAR - Single Strip */}
       <StatsBar />
@@ -80,14 +97,17 @@ export default async function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-16 lg:gap-24 items-center">
             <Reveal className="space-y-6">
               <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-turquoise flex items-center gap-2">
-                <div className="w-8 h-px bg-brand-turquoise" /> Our Philosophy
+                <div className="w-8 h-px bg-brand-turquoise" /> {text("home.philosophy.eyebrow", "Our Philosophy")}
               </span>
               <h2 className="font-editorial text-4xl sm:text-5xl lg:text-6xl font-bold text-brand-dark tracking-tight leading-[1.05]">
-                Travel Should Be{" "}
-                <span className="font-hand text-shimmer text-[1.1em]">Deliberate</span>
+                {text("home.philosophy.titleA", "Travel Should Be")}{" "}
+                <span className="font-hand text-shimmer text-[1.1em]">{text("home.philosophy.titleB", "Deliberate")}</span>
               </h2>
               <p className="text-base sm:text-lg text-brand-dark/60 leading-relaxed max-w-lg">
-                From the first conversation to the last mile of your journey, we handle every detail. Curated itineraries, verified accommodations, experienced guides, and round-the-hour support — all from our mountain headquarters in Shimla.
+                {text(
+                  "home.philosophy.body",
+                  "From the first conversation to the last mile of your journey, we handle every detail. Curated itineraries, verified accommodations, experienced guides, and round-the-hour support \u2014 all from our mountain headquarters in Shimla."
+                )}
               </p>
             </Reveal>
             <Reveal delay={0.15} className="relative">
@@ -260,13 +280,13 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Reveal className="text-center max-w-2xl mx-auto mb-8 sm:mb-14 space-y-3">
             <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-turquoise flex items-center justify-center gap-2">
-              <Mountain className="w-3.5 h-3.5" /> High Himalayan Ascents
+              <Mountain className="w-3.5 h-3.5" /> {text("home.treks.eyebrow", "High Himalayan Ascents")}
             </span>
             <h2 className="font-editorial text-3xl sm:text-5xl font-bold text-brand-dark tracking-tight">
-              Into the <span className="font-hand text-shimmer text-[1.1em]">Mountains</span>
+              {text("home.treks.titleA", "Into the")} <span className="font-hand text-shimmer text-[1.1em]">{text("home.treks.titleB", "Mountains")}</span>
             </h2>
             <p className="text-sm sm:text-base text-brand-dark/60 leading-relaxed">
-              Curated Himalayan trekking experiences for explorers seeking something beyond conventional travel.
+              {text("home.treks.description", "Curated Himalayan trekking experiences for explorers seeking something beyond conventional travel.")}
             </p>
           </Reveal>
         </div>
@@ -287,24 +307,21 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Reveal className="text-center max-w-2xl mx-auto mb-10 sm:mb-14 space-y-3">
             <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-turquoise">
-              Reliable Ground Logistics
+              {text("home.services.eyebrow", "Reliable Ground Logistics")}
             </span>
             <h2 className="font-editorial text-3xl sm:text-5xl font-bold text-brand-dark tracking-tight">
-              Specialized Transport &{" "}
-              <span className="font-hand text-shimmer text-[1.1em]">Pilgrimage</span> Desk
+              {text("home.services.titleA", "Specialized Transport &")}{" "}
+              <span className="font-hand text-shimmer text-[1.1em]">{text("home.services.titleB", "Pilgrimage")}</span>{" "}
+              {text("home.services.titleC", "Desk")}
             </h2>
           </Reveal>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-8">
-            {[
-              { icon: "🚗", title: "Premium Cab Services", desc: "Airport transfers, local sightseeing, and mountain 4x4 transfers to Kinnaur and Spiti.", href: "/taxi-services", items: ["Toyota Innova Crysta & 4x4 Scorpio", "Professional mountain chauffeurs", "Transparent pricing"] },
-              { icon: "🛕", title: "Pilgrimage Tour Packages", desc: "Comprehensive pilgrimage coordination across Char Dham and temple circuits.", href: "/pilgrimage-tour", items: ["Helicopter ticket support", "Private vehicle transfers", "Medical guidelines & packing"] },
-              { icon: "🚂", title: "Bus & Toy Train", desc: "Heritage toy train rides and luxury Volvo buses connecting Delhi, Shimla, and Manali.", href: "/bus-booking", items: ["Kalka-Shimla Toy Train", "HPTDC & premium Volvo buses", "Express enquiry response"] },
-            ].map((service, idx) => (
+            {services.map((service, idx) => (
               <Link key={service.href} href={service.href} className="group bg-white rounded-card-xl p-5 sm:p-7 hover:shadow-luxury transition-all duration-500 hover:-translate-y-1 border border-brand-turquoise/5 hover:border-brand-turquoise/15 relative overflow-hidden">
                 <div className="absolute top-5 right-5 text-[80px] font-editorial font-bold text-brand-turquoise/[0.03] leading-none select-none pointer-events-none">0{idx + 1}</div>
                 <span className="text-3xl mb-4 block">{service.icon}</span>
                 <h3 className="font-editorial text-xl font-bold text-brand-dark group-hover:text-brand-turquoise transition-colors mb-2">{service.title}</h3>
-                <p className="text-sm text-brand-dark/60 leading-relaxed mb-4">{service.desc}</p>
+                <p className="text-sm text-brand-dark/60 leading-relaxed mb-4">{service.description}</p>
                 <ul className="space-y-2 mb-6">
                   {service.items.map((item, i) => (
                     <li key={i} className="text-xs text-brand-taupe flex items-start gap-2">
@@ -320,14 +337,14 @@ export default async function HomePage() {
           </div>
           <Reveal className="mt-10 sm:mt-14 text-center space-y-4">
             <p className="text-sm text-brand-dark/60 max-w-xl mx-auto">
-              Need cabs, pilgrimage support, or something entirely bespoke? Talk directly to our Shimla travel desk.
+              {text("home.services.note", "Need cabs, pilgrimage support, or something entirely bespoke? Talk directly to our Shimla travel desk.")}
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <Button variant="primary" size="lg" href="/custom-package">
                 Request a Custom Trip
               </Button>
               <a
-                href={`https://wa.me/917018678064?text=${encodeURIComponent("Hello Rucksack Adventures! I need help with transport and travel planning.")}`}
+                href={waHref(settings.whatsapp, "Hello Rucksack Adventures! I need help with transport and travel planning.")}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 font-bold text-xs uppercase tracking-wider rounded-full transition-all duration-300 btn-premium bg-white text-brand-dark border border-brand-turquoise/15 hover:border-brand-turquoise/30 hover:bg-brand-turquoise-50 shadow-soft py-4 px-8"
@@ -344,10 +361,11 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Reveal className="text-center max-w-2xl mx-auto mb-8 sm:mb-14 space-y-3">
             <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-gold flex items-center justify-center gap-2">
-              <Star className="w-3.5 h-3.5" /> Guest Reflections
+              <Star className="w-3.5 h-3.5" /> {text("home.testimonials.eyebrow", "Guest Reflections")}
             </span>
             <h2 className="font-editorial text-3xl sm:text-5xl font-bold text-brand-dark tracking-tight">
-              Words From Our <span className="font-hand text-shimmer text-[1.1em]">Travelers</span>
+              {text("home.testimonials.titleA", "Words From Our")}{" "}
+              <span className="font-hand text-shimmer text-[1.1em]">{text("home.testimonials.titleB", "Travelers")}</span>
             </h2>
           </Reveal>
         </div>
@@ -359,7 +377,7 @@ export default async function HomePage() {
       </section>
 
       {/* 8b. CLIENT MOMENTS - Auto-Playing Gallery */}
-      <ClientMoments />
+      <ClientMoments images={momentImages} />
 
       {/* 8c. WHY CHOOSE US */}
       <section className="py-16 lg:py-28 bg-brand-cream">
@@ -386,11 +404,12 @@ export default async function HomePage() {
       <section className="py-16 lg:py-28 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <Reveal className="text-center mb-10 space-y-2">
-            <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-turquoise">Direct Himalayan Concierge</span>
+            <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-turquoise">{text("home.enquiry.eyebrow", "Direct Himalayan Concierge")}</span>
             <h2 className="font-editorial text-3xl sm:text-5xl font-bold text-brand-dark">
-              Begin Your Travel <span className="font-hand text-shimmer text-[1.1em]">Story</span>
+              {text("home.enquiry.titleA", "Begin Your Travel")}{" "}
+              <span className="font-hand text-shimmer text-[1.1em]">{text("home.enquiry.titleB", "Story")}</span>
             </h2>
-            <p className="text-xs sm:text-sm text-brand-taupe max-w-md mx-auto">Share your travel aspirations. Our planners in Kasumpti, Shimla craft each journey individually.</p>
+            <p className="text-xs sm:text-sm text-brand-taupe max-w-md mx-auto">{text("home.enquiry.note", "Share your travel aspirations. Our planners in Kasumpti, Shimla craft each journey individually.")}</p>
           </Reveal>
           <Reveal delay={0.1}>
             <div className="bg-brand-cream border border-brand-turquoise/5 p-6 sm:p-10 rounded-card-2xl shadow-luxury">

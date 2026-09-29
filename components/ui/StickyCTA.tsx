@@ -1,17 +1,22 @@
 "use client";
 
 import React, { useState } from "react";
+import { usePathname } from "next/navigation";
 import { Phone, Compass } from "lucide-react";
 import { EnquiryModal } from "./EnquiryModal";
+import { useContactSettings, telHref, waHref } from "@/components/cms/SettingsProvider";
 
 export const StickyCTA: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const contact = useContactSettings();
+  const pathname = usePathname();
+  if (pathname.startsWith("/admin")) return null;
 
   return (
     <>
       {/* Call — circular, bottom-left, all viewports */}
       <a
-        href="tel:+917018678064"
+        href={telHref(contact.phone)}
         aria-label="Call Rucksack Adventures"
         className="fixed left-4 sm:left-6 bottom-[calc(1rem+env(safe-area-inset-bottom))] sm:bottom-[calc(1.5rem+env(safe-area-inset-bottom))] z-40 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white border border-brand-turquoise/15 text-brand-dark flex items-center justify-center shadow-lg hover:shadow-xl hover:bg-brand-turquoise hover:text-white hover:border-brand-turquoise hover:scale-105 transition-all duration-300"
       >
@@ -28,7 +33,7 @@ export const StickyCTA: React.FC = () => {
 
       {/* WhatsApp — circular brand button, bottom-right, all viewports */}
       <a
-        href="https://wa.me/917018678064"
+        href={waHref(contact.whatsappWaLink)}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat with Rucksack Adventures on WhatsApp"

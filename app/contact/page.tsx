@@ -3,6 +3,8 @@ import { Metadata } from "next";
 import { Phone, Mail, MapPin, MessageCircle, Clock } from "lucide-react";
 import { Breadcrumbs } from "@/components/navigation/Breadcrumbs";
 import { EnquiryForm } from "@/components/ui/EnquiryForm";
+import { getSiteSettings } from "@/lib/cms/store";
+import { telHref, waHref } from "@/lib/contact-links";
 
 export const metadata: Metadata = {
   title: "Contact Rucksack Adventures | Get in Touch",
@@ -11,15 +13,15 @@ export const metadata: Metadata = {
 
 export const revalidate = 0;
 
-const contactMethods = [
-  { icon: Phone, label: "Phone", value: "7018678064", href: "tel:+917018678064" },
-  { icon: MessageCircle, label: "WhatsApp", value: "7018678064", href: "https://wa.me/917018678064" },
-  { icon: Mail, label: "Email", value: "info@rucksackadventures.com", href: "mailto:info@rucksackadventures.com" },
-  { icon: MapPin, label: "Office", value: "Chotta Shimla to Kusumpti Rd, SDA Complex, Kasumpti, Shimla, Himachal Pradesh 171009", href: "https://maps.google.com/?q=SDA+Complex+Kasumpti+Shimla+Himachal+Pradesh+171009" },
-  { icon: Clock, label: "Hours", value: "8:00 AM – 8:00 PM, All Days", href: undefined },
-];
-
-export default function ContactPage() {
+export default async function ContactPage() {
+  const settings = await getSiteSettings();
+  const contactMethods = [
+    { icon: Phone, label: "Phone", value: settings.phone, href: telHref(settings.phone) },
+    { icon: MessageCircle, label: "WhatsApp", value: settings.phone, href: waHref(settings.whatsapp) },
+    { icon: Mail, label: "Email", value: settings.email, href: `mailto:${settings.email}` },
+    { icon: MapPin, label: "Office", value: settings.address, href: "https://maps.google.com/?q=SDA+Complex+Kasumpti+Shimla+Himachal+Pradesh+171009" },
+    { icon: Clock, label: "Hours", value: "8:00 AM – 8:00 PM, All Days", href: undefined },
+  ];
   return (
     <div className="pt-24 pb-20 bg-brand-cream">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
