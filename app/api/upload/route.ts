@@ -3,6 +3,7 @@ import path from "path";
 import { NextRequest, NextResponse } from "next/server";
 import { verifyAdminSession } from "@/lib/auth";
 import { findMediaUsage } from "@/lib/cms/store";
+import { deleteMediaRow, listMediaRows, saveMedia } from "@/lib/cms/mysql";
 import { uploadDir } from "@/lib/uploads";
 
 const ALLOWED_TYPES: Record<string, string> = {
@@ -12,6 +13,14 @@ const ALLOWED_TYPES: Record<string, string> = {
   "image/avif": ".avif",
 };
 const MAX_BYTES = Number(process.env.MAX_UPLOAD_BYTES || 15 * 1024 * 1024);
+
+/** URL prefix for stored media — /api/media guarantees the request reaches
+ *  the Next server on every host (static /uploads paths can be swallowed by
+ *  CDNs/read-only bundles); the handler falls back to MySQL when the local
+ *  disk copy is gone. */
+function mediaUrl(name: string): string {
+  return `/api/media/${name}`;
+}
 
 function ensureDir() {
   uploadDir();
@@ -34,19 +43,30 @@ export async function GET() {
   }
   try {
     ensureDir();
-    const files = fs
+    // MySQL is the source of truth (survives restarts/instances); the local
+    // dir is a fast cache. Merge both so the library is complete either way.
+    const fromDb = await listMediaRows();
+    const seen = new Set(fromDb.map((m) => m.name));
+    const files = fromDb.map((m) => ({
+      name: m.name,
+      url: mediaUrl(m.name),
+      size: m.size,
+      modifiedAt: m.createdAt,
+    }));
+    const diskOnly = fs
       .readdirSync(uploadDir())
-      .filter((name) => /\.(jpe?g|png|webp|avif)$/i.test(name))
+      .filter((name) => /\.(jpe?g|png|webp|avif)$/i.test(name) && !seen.has(name))
       .map((name) => {
         const stat = fs.statSync(path.join(uploadDir(), name));
         return {
           name,
-          url: `/uploads/${name}`,
+          url: mediaUrl(name),
           size: stat.size,
           modifiedAt: stat.mtime.toISOString(),
         };
-      })
-      .sort((a, b) => b.modifiedAt.localeCompare(a.modifiedAt));
+      });
+    files.push(...diskOnly);
+    files.sort((a, b) => b.modifiedAt.localeCompare(a.modifiedAt));
     return NextResponse.json({ files });
   } catch (err) {
     console.error("Media list failed:", err);
@@ -98,8 +118,23 @@ export async function POST(req: NextRequest) {
         finalPath = path.join(uploadDir(), fileName);
         counter++;
       }
-      fs.writeFileSync(finalPath, buffer);
-      saved.push({ url: `/uploads/${fileName}`, name: fileName, size: file.size });
+      try {
+        fs.writeFileSync(finalPath, buffer);
+      } catch (diskErr) {
+        console.error(
+          "[upload] local disk write failed (read-only host?) — storing in MySQL only:",
+          diskErr instanceof Error ? diskErr.message : diskErr
+        );
+      }
+      // Durable copy in MySQL — this is what keeps the image rendering after
+      // restarts and on other instances of the deployment.
+      const stored = await saveMedia(fileName, file.type, buffer);
+      if (!stored) {
+        console.error(
+          `[upload] MySQL media save failed for ${fileName} — image will only work on this instance.`
+        );
+      }
+      saved.push({ url: mediaUrl(fileName), name: fileName, size: file.size });
     }
 
     return NextResponse.json({ success: true, files: saved });
@@ -117,16 +152,13 @@ export async function DELETE(req: NextRequest) {
 
   try {
     const { url } = await req.json();
-    if (typeof url !== "string" || !url.startsWith("/uploads/")) {
+    if (typeof url !== "string" || !/^\/(?:uploads|api\/media)\//.test(url)) {
       return NextResponse.json({ error: "Invalid media path." }, { status: 400 });
     }
     const fileName = path.basename(url);
-    const filePath = path.join(uploadDir(), fileName);
-    if (!fs.existsSync(filePath)) {
-      return NextResponse.json({ error: "File not found." }, { status: 404 });
-    }
-
-    const usedIn = await findMediaUsage(`/uploads/${fileName}`);
+    const usedIn =
+      (await findMediaUsage(`/uploads/${fileName}`)) ||
+      (await findMediaUsage(`/api/media/${fileName}`));
     if (usedIn) {
       return NextResponse.json(
         { error: `This image is still used in ${usedIn}. Remove it there before deleting.` },
@@ -134,7 +166,20 @@ export async function DELETE(req: NextRequest) {
       );
     }
 
-    fs.unlinkSync(filePath);
+    const removedFromDb = await deleteMediaRow(fileName);
+    let removedFromDisk = false;
+    try {
+      const filePath = path.join(uploadDir(), fileName);
+      if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath);
+        removedFromDisk = true;
+      }
+    } catch (diskErr) {
+      console.error("[upload] disk delete failed:", diskErr);
+    }
+    if (!removedFromDb && !removedFromDisk) {
+      return NextResponse.json({ error: "File not found." }, { status: 404 });
+    }
     return NextResponse.json({ success: true });
   } catch (err) {
     console.error("Media delete failed:", err);

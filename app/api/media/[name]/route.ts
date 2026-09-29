@@ -1,10 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { mediaContentType, serveMediaFile } from "@/lib/uploads";
 
-// Public files are snapshotted at build time, so CMS uploads (written after
-// the build) are not served by the static handler. Serve them from the local
-// upload dir first, then from the cms_media table so images survive restarts
-// and render on every instance of read-only/serverless deployments.
+/**
+ * Durable public image endpoint.
+ *
+ * New CMS uploads get URLs under /api/media/… — API routes are guaranteed to
+ * reach the Next server on every hosting setup (unlike static asset paths),
+ * and the handler serves from the local disk cache or the cms_media table in
+ * MySQL, so images keep rendering after restarts and across instances.
+ */
 export async function GET(_req: NextRequest, { params }: { params: Promise<{ name: string }> }) {
   const { name } = await params;
   const fileName = decodeURIComponent(name).split("/").pop() || "";

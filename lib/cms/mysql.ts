@@ -73,6 +73,23 @@ CREATE TABLE IF NOT EXISTS cms_content (
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`;
 
+const MEDIA_DDL = `
+CREATE TABLE IF NOT EXISTS cms_media (
+  name VARCHAR(255) NOT NULL PRIMARY KEY,
+  mime VARCHAR(100) NOT NULL DEFAULT 'application/octet-stream',
+  size INT UNSIGNED NOT NULL DEFAULT 0,
+  data MEDIUMBLOB NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`;
+
+let mediaReady = false;
+
+async function ensureMediaTable(p: mysql.Pool): Promise<void> {
+  if (mediaReady) return;
+  await p.query(MEDIA_DDL);
+  mediaReady = true;
+}
+
 export interface RemoteState {
   ok: boolean;
   data: Record<string, unknown> | null;
@@ -380,5 +397,111 @@ export async function saveState(doc: unknown): Promise<boolean> {
         // destroyed above
       }
     }
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * cms_media — durable image storage.
+ *
+ * Serverless hosts (Lambda-style /var/task + /tmp) have per-instance,
+ * ephemeral disks: a file written by one instance/restart is invisible to the
+ * next, which made freshly uploaded CMS images render as placeholders on the
+ * live site. The bytes therefore live in MySQL (shared + durable); the local
+ * upload dir is only a fast cache checked first when serving.
+ * ------------------------------------------------------------------------- */
+
+export interface MediaRow {
+  name: string;
+  mime: string;
+  data: Buffer;
+}
+
+export interface MediaMeta {
+  name: string;
+  size: number;
+  createdAt: string;
+}
+
+/** Store (or replace) an uploaded image. Returns false when MySQL is down —
+ *  the caller may still keep a local-disk copy for this instance. */
+export async function saveMedia(name: string, mime: string, data: Buffer): Promise<boolean> {
+  const p = await getPool();
+  if (!p) return false;
+  try {
+    await ensureMediaTable(p);
+    await p.query(
+      "INSERT INTO cms_media (name, mime, size, data) VALUES (?, ?, ?, ?) " +
+        "ON DUPLICATE KEY UPDATE mime = VALUES(mime), size = VALUES(size), data = VALUES(data)",
+      [name, mime, data.length, data]
+    );
+    return true;
+  } catch (err) {
+    mediaReady = false;
+    console.error(
+      `[cms-mysql] media save failed for ${name}: ${err instanceof Error ? err.message : String(err)}`
+    );
+    return false;
+  }
+}
+
+/** Fetch image bytes by stored file name (null when absent/MySQL down). */
+export async function fetchMedia(name: string): Promise<MediaRow | null> {
+  const p = await getPool();
+  if (!p) return null;
+  try {
+    await ensureMediaTable(p);
+    const [rows] = await p.query("SELECT mime, data FROM cms_media WHERE name = ? LIMIT 1", [
+      name,
+    ]);
+    const row = (rows as { mime: string; data: Buffer }[])[0];
+    if (!row) return null;
+    return { name, mime: row.mime, data: row.data };
+  } catch (err) {
+    mediaReady = false;
+    console.error(
+      `[cms-mysql] media fetch failed for ${name}: ${err instanceof Error ? err.message : String(err)}`
+    );
+    return null;
+  }
+}
+
+/** Delete an image row; true when a row was removed. */
+export async function deleteMediaRow(name: string): Promise<boolean> {
+  const p = await getPool();
+  if (!p) return false;
+  try {
+    await ensureMediaTable(p);
+    const [res] = await p.query("DELETE FROM cms_media WHERE name = ?", [name]);
+    return Number((res as { affectedRows?: number }).affectedRows ?? 0) > 0;
+  } catch (err) {
+    mediaReady = false;
+    console.error(
+      `[cms-mysql] media delete failed for ${name}: ${err instanceof Error ? err.message : String(err)}`
+    );
+    return false;
+  }
+}
+
+/** Metadata for the media library (newest first). Empty list when unavailable. */
+export async function listMediaRows(): Promise<MediaMeta[]> {
+  const p = await getPool();
+  if (!p) return [];
+  try {
+    await ensureMediaTable(p);
+    const [rows] = await p.query(
+      "SELECT name, size, created_at FROM cms_media ORDER BY created_at DESC, name DESC"
+    );
+    return (rows as { name: string; size: number; created_at: Date | string }[]).map((r) => ({
+      name: r.name,
+      size: Number(r.size ?? 0),
+      createdAt:
+        typeof r.created_at === "string" ? r.created_at : new Date(r.created_at).toISOString(),
+    }));
+  } catch (err) {
+    mediaReady = false;
+    console.error(
+      `[cms-mysql] media list failed: ${err instanceof Error ? err.message : String(err)}`
+    );
+    return [];
   }
 }

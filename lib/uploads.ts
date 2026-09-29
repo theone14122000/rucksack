@@ -1,6 +1,8 @@
 import fs from "fs";
 import os from "os";
 import path from "path";
+import { NextResponse } from "next/server";
+import { fetchMedia } from "./cms/mysql";
 
 /**
  * Writable directory for CMS uploads.
@@ -52,4 +54,59 @@ export function uploadDir(): string {
     `[uploads] no writable upload directory found; tried: ${candidates.join(", ")}. Set UPLOAD_DIR env var.`
   );
   return resolved;
+}
+
+/* ---------------------------------------------------------------------------
+ * Media serving — disk cache first, MySQL second.
+ *
+ * The local upload dir is only a per-instance cache (serverless /tmp is wiped
+ * on restart and not shared between instances). Every uploaded image also
+ * lives in cms_media, so a disk miss falls back to the database and the image
+ * still renders. Responses are immutable because file names are unique.
+ * ------------------------------------------------------------------------- */
+
+const MEDIA_CONTENT_TYPES: Record<string, string> = {
+  ".jpg": "image/jpeg",
+  ".jpeg": "image/jpeg",
+  ".png": "image/png",
+  ".webp": "image/webp",
+  ".avif": "image/avif",
+};
+
+export function mediaContentType(fileName: string): string | null {
+  return MEDIA_CONTENT_TYPES[path.extname(fileName).toLowerCase()] || null;
+}
+
+/** Serve an uploaded image from disk (fast path) or MySQL (durable path).
+ *  Returns null when the file does not exist anywhere. */
+export async function serveMediaFile(fileName: string): Promise<Response | null> {
+  const fallbackType = mediaContentType(fileName);
+  if (!fallbackType) return null;
+  const headers = (type: string) => ({
+    "Content-Type": type,
+    "Cache-Control": "public, max-age=31536000, immutable",
+  });
+
+  try {
+    const diskPath = path.join(uploadDir(), fileName);
+    if (fs.existsSync(diskPath)) {
+      const buffer = fs.readFileSync(diskPath);
+      return new NextResponse(new Uint8Array(buffer), { headers: headers(fallbackType) });
+    }
+  } catch (err) {
+    console.error(`[media] disk read failed for ${fileName}:`, err);
+  }
+
+  try {
+    const row = await fetchMedia(fileName);
+    if (row && row.data) {
+      return new NextResponse(new Uint8Array(row.data), {
+        headers: headers(row.mime || fallbackType),
+      });
+    }
+  } catch (err) {
+    console.error(`[media] database read failed for ${fileName}:`, err);
+  }
+
+  return null;
 }
